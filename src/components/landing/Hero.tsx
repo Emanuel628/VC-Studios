@@ -16,7 +16,7 @@ export function Hero() {
         </p>
 
         <div className={styles.heroActions}>
-          <PrimaryLink href="#learning-paths">Begin the course</PrimaryLink>
+          <PrimaryLink href="/register">Begin the course</PrimaryLink>
           <a className={styles.secondaryLink} href="#learning-paths">
             See the two learning paths <span aria-hidden="true">→</span>
           </a>

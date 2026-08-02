@@ -15,7 +15,7 @@ export function Nav() {
           <a href="#about-course">About the course</a>
         </nav>
 
-        <PrimaryLink href="#learning-paths">Start learning</PrimaryLink>
+        <PrimaryLink href="/register">Start learning</PrimaryLink>
       </div>
     </header>
   );

@@ -9,7 +9,7 @@ export function FinalCta() {
       <p>
         Start with the course introduction, understand what will be expected, and select the learning path that fits you.
       </p>
-      <PrimaryLink href="#learning-paths">Begin the course</PrimaryLink>
+      <PrimaryLink href="/register">Begin the course</PrimaryLink>
     </section>
   );
 }

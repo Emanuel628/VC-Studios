@@ -22,11 +22,11 @@ Website Foundations does **not** claim that the student has learned:
 - Authentication
 - Backend services
 - API integration
-- API-key management for application integrations
+- API-key setup or management for application integrations
 - Desktop-software development
 - Phone-application development
 
-Those capabilities belong to later programs.
+Those capabilities belong to later, separately gated programs.
 
 ---
 
@@ -65,7 +65,7 @@ The student must produce a working website that:
 - Uses accessible labels, headings, focus states, and readable contrast
 - Contains no database, authentication, backend, or application API dependency
 
-If a later program teaches those capabilities, it must remain a separately gated program rather than expanding Website Foundations beyond this boundary.
+If a later program teaches those capabilities, it must remain separately gated rather than expanding Website Foundations beyond this boundary.
 
 ### Minimum page floor
 
@@ -84,7 +84,7 @@ The project must demonstrate clear file responsibilities.
 
 Required evidence includes:
 
-- Dedicated page files
+- One dedicated page component per page file
 - Focused shared components where appropriate
 - Shared design tokens or foundation styles
 - Clear route ownership
@@ -170,7 +170,7 @@ The student must provide evidence of:
 
 ## 2.8 Structured Final Explanation
 
-The student must answer the same six final questions used across both learning paths:
+The student must answer these six questions:
 
 1. What does the website do?
 2. Who does it serve?
@@ -186,8 +186,6 @@ The explanation must be specific to the completed project.
 # 3. Coursework-Only Completion Evidence
 
 Coursework-Only is a complete and legitimate path. It does not require the student to publish a website, but it cannot be completed through passive reading.
-
-A Coursework-Only student must produce:
 
 ## 3.1 Complete Website Blueprint
 
@@ -207,6 +205,7 @@ The blueprint must include:
 
 The student must propose a maintainable project structure showing:
 
+- One page component per proposed page file
 - Page responsibilities
 - Shared components
 - Routes
@@ -214,13 +213,13 @@ The student must propose a maintainable project structure showing:
 - Assets
 - Configuration responsibilities
 
-The student must explain why each major file or group exists and identify examples of responsibilities that should not be combined.
+The student must explain why each major file or group exists and identify responsibilities that should not be combined.
 
 ## 3.3 Tool-Selection Reasoning
 
 The student must explain which tools are appropriate for a basic website and reject tools or services that add unnecessary complexity.
 
-This includes identifying why a basic website normally does not require a database, authentication system, backend service, or unrelated framework.
+This includes explaining why a basic website normally does not require a database, authentication system, backend service, or unrelated framework.
 
 ## 3.4 Controlled-AI Exercises
 
@@ -234,6 +233,8 @@ The student must complete exercises involving:
 - Identifying exposed secrets or inappropriate API-key placement
 - Rejecting unnecessary databases or services
 - Correcting polished output that fails the stated user goal
+
+Website Foundations may teach students to recognize that secrets and API keys do not belong in public client code. It does not teach students to set up or integrate application APIs; that belongs to a later program.
 
 ## 3.5 Testing Plan
 
@@ -278,7 +279,7 @@ The student must demonstrate understanding of:
 
 ## 3.7 Structured Final Explanation
 
-The Coursework-Only student must answer a parallel version of the same six final questions:
+The Coursework-Only student must answer a parallel version of the same six questions:
 
 1. What would the planned website do?
 2. Who would it serve?
@@ -291,13 +292,17 @@ The Coursework-Only student must answer a parallel version of the same six final
 
 # 4. Required Human-Review Checkpoints
 
-Website Foundations has three required human-review checkpoints.
+Website Foundations has three required human-review checkpoints for both learning paths. The evidence reviewed at each checkpoint is adapted to the path.
 
 The program must not add routine human review to every chapter unless staffing capacity and review standards are formally expanded.
 
-## 4.1 Website Plan Approval
+## 4.1 Website Plan or Blueprint Approval
 
-This review occurs before substantial building.
+This review occurs before substantial building or later cumulative architecture work.
+
+For Guided Build-Along, the reviewer examines the Website Build Plan.
+
+For Coursework-Only, the reviewer examines the website blueprint.
 
 The reviewer checks:
 
@@ -306,34 +311,36 @@ The reviewer checks:
 - Is the first version realistic?
 - Are unnecessary features excluded?
 - Does every proposed page serve a real purpose?
-- Is the project appropriate for Website Foundations?
+- Is the plan appropriate for Website Foundations?
 
-## 4.2 Architecture Checkpoint
+## 4.2 Architecture or File-Map Checkpoint
 
-This review occurs after the shared foundation and first meaningful page exist, but before the project multiplies into many pages.
+For Guided Build-Along, this review occurs after the shared foundation and first meaningful page exist, but before the project multiplies into many pages.
+
+For Coursework-Only, this review occurs after the proposed modular file map and early architecture-correction exercises are complete, before the later cumulative evidence is built on them.
 
 The reviewer checks:
 
-- Is the project modular?
-- Are pages, components, routes, and styles separated appropriately?
-- Is AI creating duplication?
+- Are page, component, route, and style responsibilities separated appropriately?
+- Is one page component assigned to each page file?
+- Is AI creating duplication or mixed responsibilities?
 - Is a giant file beginning to form?
-- Are shared design rules established?
+- Are shared design rules established or correctly proposed?
 - Has unnecessary complexity been introduced?
 - Can the student explain the major responsibilities?
 
-Structural problems must be corrected before later guided work is approved.
+Structural problems must be corrected before later work is approved.
 
 ## 4.3 Final Completion Review
 
 The reviewer checks:
 
 - The completed Build Plan or Coursework-Only blueprint
-- Required page count or approved equivalent
-- Responsive behavior
-- Modular structure
+- Required page count or approved Guided equivalent
+- Responsive behavior for Guided Build-Along
+- Modular structure or proposed modular file map
 - Controlled-AI evidence
-- GitHub history
+- GitHub history or GitHub scenarios
 - Recovery evidence
 - Testing record or defect walkthrough
 - Public deployment for Guided Build-Along

@@ -1076,6 +1076,18 @@ The Resend API key must exist only on the backend. Transactional messages, optio
 
 Frontend, backend, and complete user-flow testing are required. The exact testing libraries remain open.
 
+## 18.9 Deployment Instruction Research System
+
+The repository includes a deployment-research system for Website Foundations:
+
+- [`tools/deployment_research/`](tools/deployment_research/) contains the official-source crawler and change detector.
+- [`docs/deployment/`](docs/deployment/) contains the candidate Vercel and Railway student guides, structured provider map, and verification protocol.
+- [`.github/workflows/deployment-docs-watch.yml`](.github/workflows/deployment-docs-watch.yml) performs a recurring official-documentation check.
+
+The crawler uses an explicit first-party source allowlist, checks `robots.txt`, rate limits requests, stores normalized snapshots, and flags documentation changes for human review. It does not log into dashboards or automatically publish lesson changes.
+
+A deployment guide is not final course material until the authenticated dashboard flow is manually verified with a clean test account, the real deployment succeeds, nested routes are tested, and a beginner completes the instructions without undocumented help.
+
 ---
 
 # 19. Professional Product and Design Standard
@@ -1285,7 +1297,7 @@ The work should proceed in this order:
 11. Scale the corrected pattern across the remaining program.
 12. Beta test the full student journey before public release.
 
-Platform foundation work may continue in parallel for public pages, authentication preparation, accessibility, routing, design-system components, and Vercel deployment configuration. It must not invent unapproved lesson content, assessments, program claims, prices, chapter counts, path-transition promises, or backend behavior.
+Platform foundation work may continue in parallel for public pages, authentication preparation, accessibility, routing, design-system components, Vercel deployment configuration, and deployment-guide verification. It must not invent unapproved lesson content, assessments, program claims, prices, chapter counts, path-transition promises, or backend behavior.
 
 No page, chapter, animation, quiz, setup task, project, upgrade prompt, or reminder should exist merely to fill space.
 

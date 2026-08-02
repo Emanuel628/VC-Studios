@@ -9,11 +9,11 @@ export function LessonPreview() {
           <span className={styles.previewSeparator} aria-hidden="true">·</span>
           <span>Introduction</span>
         </div>
-        <span>1 of 8</span>
+        <span>Lesson preview</span>
       </div>
 
       <div className={styles.previewBody}>
-        <p className={styles.previewKicker}>How the course builds</p>
+        <p className={styles.previewKicker}>How the program builds</p>
         <h2>Each lesson strengthens what you already learned.</h2>
         <p>
           You will learn one clear idea, see it in practice, and use it before moving to the next chapter.
@@ -30,7 +30,7 @@ export function LessonPreview() {
 
         <div className={styles.guidedStep}>
           <span className={styles.guidedLabel}>Guided build step</span>
-          <p>Choose the simple website or software project you want to build as the course progresses.</p>
+          <p>Choose the approved basic website project you want to build as Website Foundations progresses.</p>
         </div>
 
         <div className={styles.previewProgress} aria-hidden="true">

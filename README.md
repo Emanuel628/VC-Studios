@@ -726,12 +726,15 @@ The Guided path will require or may require:
 - **Visual Studio Code**
 - **A preferred external AI tool or approved alternative**
 - **GitHub**
-- **An approved static website deployment service**
-- **A domain provider**, only when the student chooses to connect a domain
+- **Vercel**, the default frontend deployment service
+- **Railway**, an approved alternative frontend deployment service
+- **A domain provider**, only when the student chooses to connect a custom domain
 
-The preferred AI tool and default student deployment service remain open.
+Vercel is the primary deployment path taught in Website Foundations. Railway may also be used because it can deploy the frontend and provide a generated public URL quickly. A student should not be required to deploy the same project to both services.
 
-Resend, PostgreSQL, Prisma, authentication services, backend hosting, and application API keys are not Website Foundations student requirements.
+The preferred external AI tool remains open.
+
+Resend, PostgreSQL, Prisma, authentication services, backend development, and application API keys are not Website Foundations student requirements.
 
 ## 13.2 Later-Program Tools
 
@@ -1017,9 +1020,13 @@ They do not yet:
 
 Their development-state messages must remain honest until those behaviors exist.
 
-## 18.3 Current Deployment Configuration
+## 18.3 Frontend Hosting Decision and Current Configuration
 
-The repository currently includes Railway deployment support for the frontend:
+**Vercel is the primary production frontend host for Platinum VC Studios.**
+
+Railway remains an approved alternative frontend host. It may be used for quick previews, temporary deployments, fallback hosting, or projects where its generated public URL and unified deployment experience are useful.
+
+The repository currently contains Railway frontend deployment configuration:
 
 - Railpack builder
 - `npm run build`
@@ -1027,9 +1034,9 @@ The repository currently includes Railway deployment support for the frontend:
 - Static single-page fallback through `serve`
 - `/` health check
 
-Railway is the operationally configured frontend host in the current repository.
+That current Railway configuration does not change the primary Vercel decision. Vercel deployment configuration must be added before the platform frontend is treated as production-ready. The Railway configuration may remain only when it is intentionally supported as a secondary deployment path.
 
-Earlier planning named Vercel as the frontend target. The final long-term frontend-host decision must be explicitly confirmed before production rather than inferred from either the earlier plan or the current configuration.
+The Platinum VC Studios backend and PostgreSQL database remain hosted on Railway.
 
 ## 18.4 Future Backend
 
@@ -1232,7 +1239,6 @@ The following have not been finalized:
 - Rules for changing learning paths or projects
 - Catch-up process for beginning a Guided project later
 - Preferred external AI tool and approved alternatives
-- Default student website deployment service
 - Exact final names and boundaries of later programs
 - Whether “software” and “desktop applications” are one program or separate concepts
 - Final release order after the shared web-application foundation
@@ -1241,7 +1247,6 @@ The following have not been finalized:
 - Final public name and terms for the All-Access package
 - Future-update promises
 - Refund, tax, regional-pricing, and upgrade-credit policies
-- Final long-term frontend host: current Railway configuration versus the earlier Vercel plan
 - Final authentication library after proof of concept
 - Final server-side password policy
 - Exact testing libraries
@@ -1254,6 +1259,8 @@ The following have not been finalized:
 - Later-program capstones
 - Final logo mark and tagline
 - Final expanded backend and commerce repository structure
+
+The primary platform frontend host and the default Website Foundations deployment service are no longer open decisions: both use Vercel, with Railway approved as an alternative frontend deployment service.
 
 ---
 
@@ -1278,7 +1285,7 @@ The work should proceed in this order:
 11. Scale the corrected pattern across the remaining program.
 12. Beta test the full student journey before public release.
 
-Platform foundation work may continue in parallel for public pages, authentication preparation, accessibility, routing, and design-system components. It must not invent unapproved lesson content, assessments, program claims, prices, chapter counts, path-transition promises, or backend behavior.
+Platform foundation work may continue in parallel for public pages, authentication preparation, accessibility, routing, design-system components, and Vercel deployment configuration. It must not invent unapproved lesson content, assessments, program claims, prices, chapter counts, path-transition promises, or backend behavior.
 
 No page, chapter, animation, quiz, setup task, project, upgrade prompt, or reminder should exist merely to fill space.
 

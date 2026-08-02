@@ -9,7 +9,7 @@
 
 ## Purpose of This README
 
-This README is the source of truth for the Platinum VC Studios course philosophy, teaching method, writing standards, assessment rules, guided build-along model, project-review model, lesson-delivery format, product architecture, and website design direction.
+This README is the source of truth for the Platinum VC Studios course philosophy, teaching method, writing standards, assessment rules, guided build-along model, project-review model, lesson-delivery format, approved product technology, product architecture, and website design direction.
 
 The complete course has **not** yet been divided into its final modules and chapters. That work begins only after this foundation is accurate and approved.
 
@@ -485,6 +485,99 @@ A serious monolithic-file problem may prevent a guided project milestone from be
 
 ---
 
+# Approved Product Technology Stack
+
+This section records the approved product-level technology for the Platinum VC Studios platform.
+
+It does **not** define the final repository layout, folder tree, file names, or exact internal structure. Those decisions will be made deliberately when development begins. The modular architecture rule above remains binding regardless of the final structure.
+
+## Frontend
+
+The Platinum VC Studios frontend will use:
+
+- **React** for the user interface
+- **Vite** for the frontend development and build system
+- **TypeScript** for application code
+- **React Router** for page and route navigation
+- **CSS Modules** with shared design tokens and global foundation styles
+- **Vercel** for frontend deployment
+
+This keeps the browser-facing application clear and separate from the backend. It also supports dedicated page, route, component, and style files without requiring the course platform to use a combined full-stack framework.
+
+The product will not use Next.js as its primary framework unless this decision is formally revisited before development begins.
+
+## Backend
+
+The Platinum VC Studios backend will use:
+
+- **Node.js**
+- **Express**
+- **TypeScript**
+- **Railway** for backend hosting
+
+Railway is the center of the backend. The Express API will handle server-side responsibilities such as accounts, course progress, quiz results, project submissions, reviews, permissions, email requests, and other protected application behavior.
+
+The frontend must not connect directly to private database credentials or contain server-only business logic.
+
+## Database
+
+The platform will use:
+
+- **PostgreSQL hosted on Railway**
+- **Prisma ORM** for the database schema, migrations, and TypeScript database access
+
+Railway PostgreSQL is the actual database host. Prisma is the application’s database tool; it is not a separate database-hosting service.
+
+Platinum VC Studios will not use Supabase for its database, authentication, storage, or backend platform.
+
+## Authentication
+
+Authentication must run through the controlled backend and use the Railway PostgreSQL database rather than Supabase Auth.
+
+**Better Auth is the leading authentication candidate**, but it is not locked until a focused proof of concept confirms that it handles the required registration, login, session, verification, password-reset, protected-route, and account-deletion flows cleanly with Express and Railway.
+
+The exact authentication library remains an open technical decision. The requirement that authentication remains modular, secure, server-controlled, and separate from page components is locked.
+
+## Transactional Email
+
+The platform will use **Resend** for transactional email, including flows such as:
+
+- Email verification
+- Password reset
+- Submission confirmation
+- Review notifications
+- Other required account or course messages
+
+Resend must be called from the backend. Its private API key must never be placed in the React frontend.
+
+## Source Control and Deployment
+
+The current deployment model is:
+
+- **GitHub** for source control
+- **Vercel** for the React frontend
+- **Railway** for the Express backend
+- **Railway PostgreSQL** for the database
+- **Resend** for transactional email
+
+The production flow should remain understandable:
+
+> The student’s browser uses the React website. The React website communicates with the Express API on Railway. The Express API handles protected work and communicates with PostgreSQL and Resend.
+
+## Testing
+
+The platform must include frontend, backend, and complete user-flow testing.
+
+The exact testing libraries have not been approved yet. They will be selected when development begins based on the final implementation, without changing the requirement that critical flows be tested.
+
+## Scope of This Decision
+
+This approved stack applies to the Platinum VC Studios production platform.
+
+The guided project catalog has not yet been selected. Guided projects may use this same foundation when it supports the learning goal, but the course will not automatically force every project to use every service. Each guided project’s stack must remain simple, necessary, and appropriate to what the student is building.
+
+---
+
 # Registration and Personalization
 
 The registration page must collect the student’s first name.
@@ -746,7 +839,7 @@ The student must never submit the Resend API key to Platinum VC Studios.
 
 Students will create and control their own deployment account.
 
-Depending on the selected project and approved technical stack, the course may use:
+Depending on the selected guided project and its approved technical stack, the course may use:
 
 - Vercel
 - Railway
@@ -1557,12 +1650,14 @@ The following details have not been approved and must not be treated as final:
 - Which project is the default recommendation
 - Whether students may change guided projects after building begins
 - The catch-up flow for coursework-only students who begin building later
-- The course website’s technical stack
-- The exact folder conventions for each approved framework or stack
+- The final repository layout, folder tree, and exact file conventions
+- The final authentication library after a proof of concept
+- The exact testing libraries
+- Whether every guided project uses the Platinum VC Studios stack or only the projects that need it
 - The preferred AI tool and approved alternatives
 - The exact timing of each outside-account setup
 - Which projects require Resend
-- Whether Vercel, Railway, or both are used for each project
+- Whether Vercel, Railway, or both are used for each guided project
 - The final brand palette
 - The logo and visual identity
 - The final tagline
@@ -1601,7 +1696,7 @@ The sequence should be:
 14. Define the cumulative guided project and review rubric for every module.
 15. Define the coursework-only cumulative exercise for every module.
 16. Decide where transfer challenges belong.
-17. Define the baseline modular architecture and file-map expectations for every guided project.
+17. Define the baseline modular architecture expectations for every guided project without prematurely locking a folder tree.
 18. Define the final capstones and honest completion labels.
 19. Review the full sequence for gaps, repetition, hidden prerequisites, and unnecessary complexity.
 20. Confirm that every earlier skill continues to appear after it is introduced.

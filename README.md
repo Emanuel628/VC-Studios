@@ -5,7 +5,7 @@
 **VC means:** Vibe Code  
 **Product:** One connected course platform with separately gated learning programs  
 **Current program:** Website Foundations  
-**Current stage:** Website Foundations completion standard locked; high-level module mapping is next; landing and frontend authentication interfaces are implemented  
+**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module mapping is the next build artifact; landing and frontend authentication interfaces are implemented  
 **Last fully audited:** August 2, 2026
 
 ## Source-of-Truth Order
@@ -16,7 +16,8 @@ The source-of-truth order is:
 
 1. This README for platform, program, access, technology, design, and implementation decisions.
 2. [`docs/website-foundations-completion-standard.md`](docs/website-foundations-completion-standard.md) for the exact Website Foundations completion evidence and review requirements.
-3. Implemented code and configuration for what currently exists.
+3. [`docs/deployment/`](docs/deployment/) and the accepted snapshots in [`tools/deployment_research/snapshots/baseline/`](tools/deployment_research/snapshots/baseline/) for deployment-research evidence and candidate student instructions.
+4. Implemented code and configuration for what currently exists.
 
 For Website Foundations, the locked Completion Standard controls if a general summary in this README is less specific.
 
@@ -732,6 +733,10 @@ The Guided path will require or may require:
 
 Vercel is the primary deployment path taught in Website Foundations. Railway may also be used because it can deploy the frontend and provide a generated public URL quickly. A student should not be required to deploy the same project to both services.
 
+The official-documentation baseline currently contains five Vercel sources served as Markdown and four Railway sources served as HTML. The baseline was accepted in commit `57e384c` after all nine sources crawled successfully, all parser tests passed, and the normalized snapshots were inspected for meaningful content.
+
+The candidate deployment guides remain under `docs/deployment/`. They are not production-verified student instructions until clean-account dashboard walkthroughs confirm current labels, generated URLs, routing behavior, build logs, custom-domain behavior, and screenshots for both providers.
+
 The preferred external AI tool remains open.
 
 Resend, PostgreSQL, Prisma, authentication services, backend development, and application API keys are not Website Foundations student requirements.
@@ -1038,6 +1043,42 @@ That current Railway configuration does not change the primary Vercel decision. 
 
 The Platinum VC Studios backend and PostgreSQL database remain hosted on Railway.
 
+## 18.3.1 Deployment Documentation Research State
+
+The repository includes a standard-library Python research tool in `tools/deployment_research/` that:
+
+- Crawls only approved first-party Vercel and Railway documentation
+- Supports both HTML and Markdown documentation responses
+- Checks `robots.txt`
+- Rate limits requests
+- Extracts normalized headings, instructions, and code blocks
+- Stores content hashes and source metadata
+- Compares new crawls with an accepted baseline
+- Produces a human-readable change report
+- Never logs into accounts or automatically rewrites student lessons
+
+The accepted baseline contains:
+
+- Five Vercel sources served as Markdown
+- Four Railway sources served as HTML
+- Nine reviewed JSON snapshots total
+- Eight passing crawler/parser tests at the time the baseline was accepted
+
+Commit `57e384c` is the initial official-documentation baseline checkpoint. Future crawls must run `crawl.py check` against this baseline, and documentation changes require human review.
+
+This baseline proves that the official public documentation was captured correctly. It does **not** yet prove that every authenticated dashboard label or screenshot is current. Before either deployment guide becomes production course material, clean-account walkthroughs must verify:
+
+1. Account creation and GitHub authorization
+2. Repository import and project configuration
+3. Successful React + Vite deployment
+4. Generated public URL behavior
+5. Root and nested-route refresh behavior
+6. Preview and production deployments where relevant
+7. Build and runtime logs
+8. Custom-domain setup
+9. Exact dashboard labels and screenshots
+10. A beginner completing the flow using only the written guide
+
 ## 18.4 Future Backend
 
 The approved backend direction is:
@@ -1075,18 +1116,6 @@ The Resend API key must exist only on the backend. Transactional messages, optio
 ## 18.8 Testing
 
 Frontend, backend, and complete user-flow testing are required. The exact testing libraries remain open.
-
-## 18.9 Deployment Instruction Research System
-
-The repository includes a deployment-research system for Website Foundations:
-
-- [`tools/deployment_research/`](tools/deployment_research/) contains the official-source crawler and change detector.
-- [`docs/deployment/`](docs/deployment/) contains the candidate Vercel and Railway student guides, structured provider map, and verification protocol.
-- [`.github/workflows/deployment-docs-watch.yml`](.github/workflows/deployment-docs-watch.yml) performs a recurring official-documentation check.
-
-The crawler uses an explicit first-party source allowlist, checks `robots.txt`, rate limits requests, stores normalized snapshots, and flags documentation changes for human review. It does not log into dashboards or automatically publish lesson changes.
-
-A deployment guide is not final course material until the authenticated dashboard flow is manually verified with a clean test account, the real deployment succeeds, nested routes are tested, and a beginner completes the instructions without undocumented help.
 
 ---
 
@@ -1274,30 +1303,70 @@ The following have not been finalized:
 
 The primary platform frontend host and the default Website Foundations deployment service are no longer open decisions: both use Vercel, with Railway approved as an alternative frontend deployment service.
 
+The deployment documentation baseline is also no longer open. Authenticated dashboard verification remains required work, but it does not reopen the hosting decision.
+
 ---
 
 # 22. Next Planning and Build Phase
 
 The Website Foundations Completion Standard is locked.
 
-The next curriculum document is the **Website Foundations High-Level Module Map**.
+## 22.1 Immediate Next Build Artifact
 
-The work should proceed in this order:
+The next overall build step is the **Website Foundations High-Level Module Map**.
 
-1. Derive each module directly from required completion evidence.
-2. Define one cumulative outcome for each module.
-3. Map Guided and Coursework-Only evidence for each module.
-4. Place the three path-equivalent human-review checkpoints at the correct stages.
-5. Confirm that every module reuses earlier skills.
-6. Divide approved modules into focused chapters.
-7. Define the practical action and Check Your Understanding activity for each chapter.
-8. Build one complete pilot module.
-9. Observe real beginners using it without intervention.
-10. Correct the lesson pattern, workload, language, progress messages, and support level.
-11. Scale the corrected pattern across the remaining program.
-12. Beta test the full student journey before public release.
+Create:
 
-Platform foundation work may continue in parallel for public pages, authentication preparation, accessibility, routing, design-system components, Vercel deployment configuration, and deployment-guide verification. It must not invent unapproved lesson content, assessments, program claims, prices, chapter counts, path-transition promises, or backend behavior.
+`docs/website-foundations-high-level-module-map.md`
+
+The map should be derived directly from the Completion Standard and should aim for approximately seven to nine modules without forcing an arbitrary count. Each proposed module must define:
+
+- One cumulative student capability
+- The Completion Standard evidence it produces
+- Guided Build-Along evidence
+- Coursework-Only evidence
+- Earlier knowledge and habits it reuses
+- The level of scaffolding or independence expected
+- Whether one of the three human-review checkpoints occurs
+- What the student can demonstrably do after completing the module
+
+The module map must place the three review checkpoints naturally:
+
+1. Plan or blueprint approval
+2. Architecture or file-map checkpoint
+3. Final completion review
+
+It must not contain full lessons, invented chapter counts, detailed quizzes, or unapproved project instructions. Those come only after the module map is audited and approved.
+
+## 22.2 Work Immediately After the Module Map
+
+After the module map is locked:
+
+1. Choose the preferred external AI tool and approved alternatives.
+2. Choose the small Guided website project catalog and default project.
+3. Divide approved modules into focused chapters.
+4. Define the practical action and Check Your Understanding activity for each chapter.
+5. Build one complete pilot module.
+6. Observe real beginners using it without intervention.
+7. Correct the lesson pattern, workload, language, progress messages, and support level.
+8. Scale the corrected pattern across the remaining program.
+9. Beta test the full student journey before public release.
+
+## 22.3 Parallel Technical Work
+
+The following may continue in parallel without blocking the module map:
+
+- Clean-account Vercel and Railway deployment walkthroughs
+- Current dashboard-label and screenshot verification
+- Vercel deployment configuration for the Platinum VC Studios frontend
+- Accessibility corrections
+- Responsive behavior
+- Shared design-system components
+- Existing authentication-interface refinement
+- Routing and honest development states
+- Scheduled deployment-documentation change checks
+
+Parallel technical work must not invent unapproved lesson content, assessments, program claims, prices, chapter counts, path-transition promises, or backend behavior.
 
 No page, chapter, animation, quiz, setup task, project, upgrade prompt, or reminder should exist merely to fill space.
 

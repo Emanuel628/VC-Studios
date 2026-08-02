@@ -1,0 +1,463 @@
+{
+  "schema_version": 2,
+  "source_id": "vercel-spa-rewrite",
+  "platform": "vercel",
+  "configured_title": "Programmatic configuration and SPA rewrites",
+  "page_title": "Programmatic Configuration with vercel.ts",
+  "url": "https://vercel.com/docs/project-configuration/vercel-ts",
+  "fetched_at": "2026-08-02T18:09:37.570015+00:00",
+  "http_status": 200,
+  "content_type": "text/markdown; charset=utf-8",
+  "document_format": "markdown",
+  "etag": null,
+  "last_modified": null,
+  "content_hash": "4ffda1aabebec9cdde061d7b7ce9695283304be7aa332d45131b20be28c2940b",
+  "headings": [
+    {
+      "level": 1,
+      "text": "Programmatic Configuration with vercel.ts"
+    },
+    {
+      "level": 2,
+      "text": "Getting Started"
+    },
+    {
+      "level": 3,
+      "text": "Requirements"
+    },
+    {
+      "level": 3,
+      "text": "Install @vercel/config"
+    },
+    {
+      "level": 3,
+      "text": "Migrating from vercel.json"
+    },
+    {
+      "level": 2,
+      "text": "Config export options"
+    },
+    {
+      "level": 2,
+      "text": "schema autocomplete"
+    },
+    {
+      "level": 2,
+      "text": "buildCommand"
+    },
+    {
+      "level": 2,
+      "text": "bunVersion"
+    },
+    {
+      "level": 2,
+      "text": "cleanUrls"
+    },
+    {
+      "level": 2,
+      "text": "crons"
+    },
+    {
+      "level": 3,
+      "text": "Cron object definition"
+    },
+    {
+      "level": 2,
+      "text": "devCommand"
+    },
+    {
+      "level": 2,
+      "text": "fluid"
+    },
+    {
+      "level": 2,
+      "text": "framework"
+    },
+    {
+      "level": 2,
+      "text": "functions"
+    },
+    {
+      "level": 3,
+      "text": "Key definition"
+    },
+    {
+      "level": 3,
+      "text": "Value definition"
+    },
+    {
+      "level": 3,
+      "text": "Description"
+    },
+    {
+      "level": 4,
+      "text": "functions property with Vercel functions"
+    },
+    {
+      "level": 4,
+      "text": "functions property with ISR"
+    },
+    {
+      "level": 4,
+      "text": "Per-function regions and functionFailoverRegions"
+    },
+    {
+      "level": 3,
+      "text": "Using unsupported runtimes"
+    },
+    {
+      "level": 2,
+      "text": "headers"
+    },
+    {
+      "level": 3,
+      "text": "Header object definition"
+    },
+    {
+      "level": 3,
+      "text": "Header has or missing object definition"
+    },
+    {
+      "level": 2,
+      "text": "ignoreCommand"
+    },
+    {
+      "level": 2,
+      "text": "installCommand"
+    },
+    {
+      "level": 2,
+      "text": "images"
+    },
+    {
+      "level": 3,
+      "text": "Value definition"
+    },
+    {
+      "level": 2,
+      "text": "outputDirectory"
+    },
+    {
+      "level": 2,
+      "text": "public"
+    },
+    {
+      "level": 2,
+      "text": "redirects"
+    },
+    {
+      "level": 3,
+      "text": "Redirects examples"
+    },
+    {
+      "level": 3,
+      "text": "Redirect object definition"
+    },
+    {
+      "level": 3,
+      "text": "Redirect has or missing object definition"
+    },
+    {
+      "level": 2,
+      "text": "bulkRedirectsPath"
+    },
+    {
+      "level": 3,
+      "text": "CSV"
+    },
+    {
+      "level": 3,
+      "text": "JSON"
+    },
+    {
+      "level": 3,
+      "text": "JSONL"
+    },
+    {
+      "level": 3,
+      "text": "Bulk redirect field definition"
+    },
+    {
+      "level": 2,
+      "text": "regions"
+    },
+    {
+      "level": 2,
+      "text": "functionFailoverRegions"
+    },
+    {
+      "level": 2,
+      "text": "rewrites"
+    },
+    {
+      "level": 3,
+      "text": "Rewrites examples"
+    },
+    {
+      "level": 3,
+      "text": "Rewrite object definition"
+    },
+    {
+      "level": 3,
+      "text": "Rewrite has or missing object definition"
+    },
+    {
+      "level": 2,
+      "text": "trailingSlash"
+    },
+    {
+      "level": 3,
+      "text": "false"
+    },
+    {
+      "level": 3,
+      "text": "true"
+    },
+    {
+      "level": 3,
+      "text": "undefined"
+    },
+    {
+      "level": 2,
+      "text": "Legacy properties"
+    }
+  ],
+  "instructions": [
+    "The vercel.ts file lets you configure and override the default behavior of Vercel from within your project. Unlike vercel.json, which is static, vercel.ts executes at build time, which lets you dynamically generate configuration. For example, you can fetch content from APIs, use environment variables to conditionally set routes, or compute configuration values based on your project structure.",
+    "Use only one configuration file: vercel.ts or vercel.json.",
+    "You can have any sort of code in your vercel.ts file, but the final set of rules and configuration properties must be in a config struct export. Use the same property names as vercel.json in your config export. For rewrites, redirects, headers, and transforms, prefer the helper functions from routes:",
+    "To migrate from vercel.json, copy its contents into your config export, then add new capabilities as needed.",
+    "Install the NPM package to get access to types and helpers.",
+    "Create a vercel.ts in your project root and export a typed config. The example below shows how to configure build commands, framework settings, routing rules (rewrites and redirects), and headers:",
+    "💡 Note: You can also use vercel.js, vercel.mjs, vercel.cjs, or vercel.mts to create this configuration file.",
+    "To migrate from an existing vercel.json, paste its contents into a config export in a new vercel.ts file:",
+    "Then install the @vercel/config package and enhance your configuration:",
+    "schema autocomplete",
+    "buildCommand",
+    "bunVersion",
+    "cleanUrls",
+    "crons",
+    "devCommand",
+    "fluid",
+    "framework",
+    "functions",
+    "headers",
+    "ignoreCommand",
+    "images",
+    "installCommand",
+    "outputDirectory",
+    "public",
+    "redirects",
+    "bulkRedirectsPath",
+    "regions",
+    "functionFailoverRegions",
+    "rewrites",
+    "trailingSlash",
+    "legacy",
+    "Via the types imported from the @vercel/config package, autocomplete for all config properties and helpers are automatically available in vercel.ts.",
+    "Type: string | null",
+    "The buildCommand property can be used to override the Build Command in the Project Settings dashboard, and the build script from the package.json file for a given deployment. For more information on the default behavior of the Build Command, visit the Configure a Build - Build Command section.",
+    "This value overrides the Build Command in Project Settings.",
+    "🔒 Permissions Required: The Bun runtime",
+    "Type: string",
+    "Value: \"1.x\"",
+    "The bunVersion property configures your project to use the Bun runtime instead of Node.js. When set, all Vercel Functions and Routing Middleware not using the Edge runtime will run using the specified Bun version.",
+    "💡 Note: Vercel manages the Bun minor and patch versions automatically. 1.x is the",
+    "only valid value currently.",
+    "When using Next.js with ISR (Incremental Static Regeneration), you must also update your build and dev commands in package.json:",
+    "To learn more about using Bun with Vercel Functions, see the Bun runtime documentation.",
+    "Type: Boolean.",
+    "Default Value: false.",
+    "When set to true, all HTML files and Vercel functions will have their extension removed. When visiting a path that ends with the extension, a 308 response will redirect the client to the extensionless path.",
+    "For example, a static file named about.html will be served when visiting the /about path. Visiting /about.html will redirect to /about.",
+    "Similarly, a Vercel Function named api/user.go will be served when visiting /api/user. Visiting /api/user.go will redirect to /api/user.",
+    "If you are using Next.js and running vercel dev, you will get a 404 error when visiting a route configured with cleanUrls locally. It does however work fine when deployed to Vercel. In the example above, visiting /about locally will give you a 404 with vercel dev but /about will render correctly on Vercel.",
+    "Used to configure cron jobs for the production deployment of a project.",
+    "Type: Array of cron Object.",
+    "Limits:",
+    "A maximum of string length of 512 for the path value.",
+    "A maximum of string length of 256 for the schedule value.",
+    "path - Required - The path to invoke when the cron job is triggered. Must start with /.",
+    "schedule - Required - The cron schedule expression to use for the cron job.",
+    "This value overrides the Development Command in Project Settings.",
+    "The devCommand property can be used to override the Development Command in the Project Settings dashboard. For more information on the default behavior of the Development Command, visit the Configure a Build - Development Command section.",
+    "This value allows you to enable Fluid compute programmatically.",
+    "Type: boolean | null",
+    "The fluid property allows you to test Fluid compute on a per-deployment or per custom environment basis when using branch tracking, without needing to enable Fluid in production.",
+    "💡 Note: As of April 23, 2025, Fluid compute is enabled by default for new projects.",
+    "This value overrides the Framework in Project Settings.",
+    "Available framework slugs:",
+    "The framework property can be used to override the Framework Preset in the Project Settings dashboard. The value must be a valid framework slug. For more information on the default behavior of the Framework Preset, visit the Configure a Build - Framework Preset section.",
+    "💡 Note: To select \"Other\" as the Framework Preset, use null.",
+    "Type: Object of key String and value Object.",
+    "A glob pattern that matches the paths of the Vercel functions you would like to customize:",
+    "api/*.js (matches one level e.g. api/hello.js but not api/hello/world.js)",
+    "api//*.ts (matches all levels api/hello.ts and api/hello/world.ts)",
+    "src/pages//* (matches all functions from src/pages)",
+    "api/test.js",
+    "runtime (optional): The npm package name of a Runtime, including its version.",
+    "memory: Memory cannot be set in vercel.ts with Fluid compute enabled. Instead set it in the Functions section in your project dashboard sidebar. See setting default function memory for more information.",
+    "maxDuration (optional): How long your Vercel Function can run on each request. Set an integer number of seconds between 1 and your plan's maximum limit. See max duration.",
+    "supportsCancellation (optional): A boolean defining whether your Vercel Function should support request cancellation. This is only available when you're using the Node.js runtime.",
+    "includeFiles (optional): A glob pattern to match files that should be included in your Vercel Function. If you're using a Community Runtime, the behavior might vary. Please consult its documentation for more details. (Not supported in Next.js, instead use outputFileTracingIncludes in next.config.js )",
+    "excludeFiles (optional): A glob pattern to match files that should be excluded from your Vercel Function. If you're using a Community Runtime, the behavior might vary. Please consult its documentation for more details. (Not supported in Next.js, instead use outputFileTracingExcludes in next.config.js )",
+    "regions (optional): An array of region identifiers specifying where this specific function should be deployed. This overrides the project-level regions setting for the matched functions. See per-function region configuration for more details.",
+    "functionFailoverRegions (optional): An array of region identifiers specifying passive regions this specific function can fail over to during an outage. This overrides the project-level functionFailoverRegions setting for the matched functions. Enterprise only. See per-function region configuration for more details.",
+    "By default, no configuration is needed to deploy Vercel functions to Vercel.",
+    "For all officially supported runtimes, the only requirement is to create an api directory at the root of your project directory, placing your Vercel functions inside.",
+    "The functions property cannot be used in combination with builds. Since the latter is a legacy configuration property, we recommend dropping it in favor of the new one.",
+    "Because Incremental Static Regeneration (ISR) uses Vercel functions, the same configurations apply. The ISR route can be defined using a glob pattern, and accepts the same properties as when using Vercel functions.",
+    "When deployed, each Vercel Function uses your project's default memory and maximum duration. See Vercel Functions limits for plan limits and defaults.",
+    "With Fluid compute enabled, set memory in the Functions section of your project dashboard, not in vercel.ts. To override the maximum duration for matched functions, add the functions property.",
+    "You can set regions and functionFailoverRegions on individual functions to override the project-level defaults. This is useful when different functions need to run in different regions, for example when they access different data sources.",
+    "In the example above, api/eu-data.js runs in Paris (cdg1) with London (lhr1) as a failover, while api/us-data.js runs in San Francisco (sfo1) and Washington, D.C. (iad1) with Portland (pdx1) as a failover. All other functions use the project-level default of iad1.",
+    "In order to use a runtime that is not officially supported, you can add a runtime property to the definition:",
+    "In the example above, the api/test.php Vercel Function does not use one of the officially supported runtimes. In turn, a runtime property was added in order to invoke the vercel-php community runtime.",
+    "For more information on Runtimes, see the Runtimes documentation:",
+    "Type: Array of header Object.",
+    "Valid values: a list of header definitions.",
+    "This example configures custom response headers for static files, Vercel functions, and a wildcard that matches all routes.",
+    "| Property | Description | | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | A pattern that matches each incoming pathname (excluding querystring). | | headers | A non-empty array of key/value pairs representing each response header. | | has | An optional array of has objects with the type, key and value properties. Used for conditional path matching based on the presence of specified properties. | | missing | An optional array of missing objects with the type, key and value properties. Used for conditional path matching based on the absence of specified properties. |",
+    "If value is an object, it has one or more of the following fields:",
+    "This example demonstrates using the expressive value object to append the header x-authorized: true if the X-Custom-Header request header's value is prefixed by valid and ends with value.",
+    "Learn more about headers on Vercel and see limitations.",
+    "This value overrides the Ignored Build Step in Project Settings.",
+    "This ignoreCommand property will override the Command for Ignoring the Build Step for a given deployment. When the command exits with code 1, the build will continue. When the command exits with 0, the build is ignored. For more information on the default behavior of the Ignore Command, visit the Ignored Build Step section.",
+    "This value overrides the Install Command in Project Settings.",
+    "The installCommand property can be used to override the Install Command in the Project Settings dashboard for a given deployment. This setting is useful for trying out a new package manager for the project. An empty string value will cause the Install Command to be skipped. For more information on the default behavior of the install command visit the Configure a Build - Install Command section.",
+    "The images property defines the behavior of Vercel's native Image Optimization API, which allows on-demand optimization of images at runtime.",
+    "Type: Object",
+    "sizes - Required - Array of allowed image widths. The Image Optimization API will return an error if the w parameter is not defined in this list.",
+    "localPatterns - Allow-list of local image paths which can be used with the Image Optimization API.",
+    "remotePatterns - Allow-list of external domains which can be used with the Image Optimization API.",
+    "minimumCacheTTL - Cache duration (in seconds) for the optimized images.",
+    "qualities - Array of allowed image qualities. The Image Optimization API will return an error if the q parameter is not defined in this list.",
+    "formats - Supported output image formats. Allowed values are either \"image/avif\" and/or \"image/webp\".",
+    "dangerouslyAllowSVG - Allow SVG input image URLs. This is disabled by default for security purposes.",
+    "contentSecurityPolicy - Specifies the Content Security Policy of the optimized images.",
+    "contentDispositionType - Specifies the value of the \"Content-Disposition\" response header. Allowed values are \"inline\" or \"attachment\".",
+    "This value overrides the Output Directory in Project Settings.",
+    "The outputDirectory property can be used to override the Output Directory in the Project Settings dashboard for a given deployment.",
+    "In the following example, the deployment will look for the build directory rather than the default public or . root directory. For more information on the default behavior of the Output Directory see the Configure a Build - Output Directory section. The following example is a vercel.ts file that overrides the outputDirectory to build:",
+    "This option is deprecated and no longer enables public access to deployment source or build logs. Deployments always keep source view and logs view protected behind authentication.",
+    "Type: Array of redirect Object.",
+    "Valid values: a list of redirect definitions.",
+    "This example redirects requests to the path /me from your site's root to the profile.html file relative to your site's root with a 307 Temporary Redirect:",
+    "This example redirects requests to the path /me from your site's root to the profile.html file relative to your site's root with a 308 Permanent Redirect:",
+    "This example redirects requests to the path /user from your site's root to the api route /api/user relative to your site's root with a 301 Moved Permanently:",
+    "This example redirects requests to the path /view-source from your site's root to the absolute path https://github.com/vercel/vercel of an external site with a redirect status of 308:",
+    "This example redirects requests to all the paths (including all sub-directories and pages) from your site's root to the absolute path https://vercel.com/docs of an external site with a redirect status of 308:",
+    "This example uses wildcard path matching to redirect requests to any path (including subdirectories) under /blog/ from your site's root to a corresponding path under /news/ relative to your site's root with a redirect status of 308:",
+    "This example uses regex path matching to redirect requests to any path under /posts/ that only contain numerical digits from your site's root to a corresponding path under /news/ relative to your site's root with a redirect status of 308:",
+    "This example redirects requests to any path from your site's root that does not start with /uk/ and has x-vercel-ip-country header value of GB to a corresponding path under /uk/ relative to your site's root with a redirect status of 307:",
+    "💡 Note: Using has does not yet work locally while using",
+    "vercel dev, but does work when deployed.",
+    "| Property | Description | | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | A pattern that matches each incoming pathname (excluding querystring). | | destination | A location destination defined as an absolute pathname or external URL. | | permanent | An optional boolean to toggle between permanent and temporary redirect (default true). When true, the status code is 308. When false the status code is 307. | | statusCode | An optional integer to define the status code of the redirect. Used when you need a value other than 307/308 from permanent, and therefore cannot be used with permanent boolean. | | has | An optional array of has objects with the type, key and value properties. Used for conditional redirects based on the presence of specified properties. | | missing | An optional array of missing objects with the type, key and value properties. Used for conditional redirects based on the absence of specified properties. |",
+    "This example uses the expressive value object to define a route that redirects users with a redirect status of 308 to /end only if the X-Custom-Header header's value is prefixed by valid and ends with value.",
+    "Learn more about redirects on Vercel and see limitations.",
+    "Learn more about bulk redirects on Vercel and see limits and pricing.",
+    "Type: string path to a file or folder.",
+    "The bulkRedirectsPath property can be used to import many thousands of redirects per project. These redirects do not support wildcard or header matching.",
+    "CSV, JSON, and JSONL file formats are supported, and the redirect files can be generated at build time as long as they end up in the location specified by bulkRedirectsPath. This can point to either a single file or a folder containing multiple redirect files.",
+    "💡 Note: CSV headers must match the field names below, can be specific in any order, and optional fields can be ommitted.",
+    "💡 Note: Bulk redirects do not work locally while using vercel dev",
+    "| Field | Type | Required | Description | | --------------------- | --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | string | Yes | An absolute path or fully qualified URL that matches each incoming request (excluding query string). Max 2048 characters. | | destination | string | Yes | A location destination defined as an absolute pathname or external URL. Max 2048 characters. | | permanent | boolean | No | Toggle between permanent (308) and temporary (307) redirect. Default: false. | | statusCode | integer | No | Specify the exact status code. Can be 301, 302, 303, 307, or 308. Overrides permanent when set, otherwise defers to permanent value or default. | | caseSensitive | boolean | No | Toggle whether source path matching is case sensitive. Default: false. | | preserveQueryParams | boolean | No | Toggle whether to preserve the query string on the redirect. Default: false. |",
+    "In order to improve space efficiency, all boolean values can be the single characters t (true) or f (false) while using the CSV format.",
+    "This value overrides the Vercel Function Region in Project Settings.",
+    "Type: Array of region identifier String.",
+    "Valid values: List of regions, defaults to iad1.",
+    "You can define the regions where your Vercel functions are executed. Users on Pro and Enterprise can deploy to multiple regions. Hobby plans can select any single region. To learn more, see Configuring Regions.",
+    "Function responses can be cached in the requested regions. Selecting a Vercel Function region does not impact static files, which are deployed to every region by default.",
+    "You can also set regions on individual functions using the functions property to override the project-level default. See per-function region configuration for more details.",
+    "🔒 Permissions Required: Setting failover regions for Vercel functions",
+    "Set this property to specify the region to which a Vercel Function should fallback when the default region(s) are unavailable.",
+    "Valid values: List of regions.",
+    "You can also set functionFailoverRegions on individual functions using the functions property to override the project-level default. See per-function region configuration for more details.",
+    "These regions serve as a fallback to any regions specified in the regions configuration. The region Vercel selects to invoke your function depends on availability and ingress. For instance:",
+    "Vercel always attempts to invoke the function in the primary region. If you specify more than one primary region in the regions property, Vercel selects the region geographically closest to the request",
+    "If all primary regions are unavailable, Vercel automatically fails over to the regions specified in functionFailoverRegions, selecting the region geographically closest to the request",
+    "The order of the regions in functionFailoverRegions does not matter as Vercel automatically selects the region geographically closest to the request",
+    "To learn more about automatic failover for Vercel Functions, see Automatic failover. Vercel Functions using the Edge runtime will automatically failover with no configuration required.",
+    "Region failover is supported with Secure Compute, see Region Failover to learn more.",
+    "Type: Array of rewrite Object.",
+    "Valid values: a list of rewrite definitions.",
+    "If cleanUrls is set to true in your project's vercel.ts, do not include the file extension in the source or destination path. For example, /about-our-company.html would be /about-our-company",
+    "This example rewrites requests to the path /about from your site's root to the /about-our-company.html file relative to your site's root:",
+    "This example rewrites all requests to the root path which is often used for a Single Page Application (SPA).",
+    "This example rewrites requests to the paths under /resize with 2 path levels (defined as variables width and height that can be used in the destination value) to the api route /api/sharp relative to your site's root:",
+    "This example uses wildcard path matching to rewrite requests to any path (including subdirectories) under /proxy/ from your site's root to a corresponding path under the root of an external site https://example.com/:",
+    "This example rewrites requests to any path from your site's root that does not start with /uk/ and has x-vercel-ip-country header value of GB to a corresponding path under /uk/ relative to your site's root:",
+    "This example rewrites requests to the path /dashboard from your site's root that does not have a cookie with key auth_token to the path /login relative to your site's root:",
+    "| Property | Description | | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | A pattern that matches each incoming pathname (excluding querystring). | | destination | A location destination defined as an absolute pathname or external URL. | | permanent | A boolean to toggle between permanent and temporary redirect (default true). When true, the status code is 308. When false the status code is 307. | | has | An optional array of has objects with the type, key and value properties. Used for conditional rewrites based on the presence of specified properties. | | missing | An optional array of missing objects with the type, key and value properties. Used for conditional rewrites based on the absence of specified properties. |",
+    "This example demonstrates using the expressive value object to define a route that rewrites users to /end only if the X-Custom-Header header's value is prefixed by valid and ends with value.",
+    "The source property should NOT be a file because precedence is given to the filesystem prior to rewrites being applied. Instead, you should rename your static file or Vercel Function.",
+    "Learn more about rewrites on Vercel.",
+    "Default Value: undefined.",
+    "When trailingSlash: false, visiting a path that ends with a forward slash will respond with a 308 status code and redirect to the path without the trailing slash.",
+    "For example, the /about/ path will redirect to /about.",
+    "When trailingSlash: true, visiting a path that does not end with a forward slash will respond with a 308 status code and redirect to the path with a trailing slash.",
+    "For example, the /about path will redirect to /about/.",
+    "However, paths with a file extension will not redirect to a trailing slash.",
+    "For example, the /about/styles.css path will not redirect, but the /about/styles path will redirect to /about/styles/.",
+    "When trailingSlash: undefined, visiting a path with or without a trailing slash will not redirect.",
+    "For example, both /about and /about/ will serve the same content without redirecting.",
+    "This is not recommended because it could lead to search engines indexing two different pages with duplicate content.",
+    "For details on legacy properties, see the legacy section of the static configuration reference.",
+    "View full sitemap"
+  ],
+  "code_blocks": [
+    "export const config: VercelConfig = {\n  buildCommand: 'npm run build',\n  cleanUrls: true,\n  trailingSlash: false,\n  // See the sections below for all available options\n};",
+    "    pnpm i @vercel/config",
+    "    yarn i @vercel/config",
+    "    npm i @vercel/config",
+    "    bun i @vercel/config",
+    "import { routes, deploymentEnv, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  buildCommand: 'npm run build',\n  framework: 'nextjs',\n\n  rewrites: [\n    routes.rewrite('/api/(.*)', 'https://backend.api.example.com/$1'),\n    routes.rewrite('/(.*)', 'https://api.example.com/$1', {\n      requestHeaders: {\n        authorization: `Bearer ${deploymentEnv('API_TOKEN')}`,\n      },\n    }),\n    routes.rewrite(\n      '/users/:userId/posts/:postId',\n      'https://api.example.com/users/$1/posts/$2',\n      ({ userId, postId }) => ({\n        requestHeaders: {\n          'x-user-id': userId,\n          'x-post-id': postId,\n          authorization: `Bearer ${deploymentEnv('API_KEY')}`,\n        },\n      }),\n    ),\n  ],\n\n  redirects: [routes.redirect('/old-docs', '/docs', { permanent: true })],\n\n  headers: [\n    routes.cacheControl('/static/(.*)', {\n      public: true,\n      maxAge: '1 week',\n      immutable: true,\n    }),\n  ],\n\n  crons: [{ path: '/api/cleanup', schedule: '0 0 * * *' }],\n};",
+    "export const config = {\n  buildCommand: 'pnpm run generate-config',\n  outputDirectory: \".next\",\n  headers: [\n    {\n      source: \"/(.*)\\\\\\\\.(js|css|jpg|jpeg|gif|png|svg|txt|ttf|woff2|webmanifest)\",\n      headers: [\n        {\n          key: \"Cache-Control\",\n          value: \"public, max-age=2592000, s-maxage=2592000\"\n        }\n      ]\n    }\n  ]\n}",
+    "import { routes, type VercelConfig } from '@vercel/config/v1'\n\nexport const config: VercelConfig = {\n  buildCommand: 'pnpm run generate-config',\n  outputDirectory: `.${process.env.framework}`,\n  headers: [\n    routes.cacheControl(\n      '/(.*)\\\\\\\\.(js|css|jpg|jpeg|gif|png|svg|txt|ttf|woff2|webmanifest)',\n      {\n        public: true,\n        maxAge: '30days',\n        sMaxAge: '30days'\n      }\n    )\n  ]\n}",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  rewrites: [routes.rewrite('/about', '/about-our-company.html')],\n  // add more properties here\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  buildCommand: 'next build',\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  bunVersion: '1.x',\n};",
+    "{\n  \"scripts\": {\n    \"dev\": \"bun run --bun next dev\",\n    \"build\": \"bun run --bun next build\"\n  }\n}",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  cleanUrls: true,\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  crons: [\n    {\n      path: '/api/every-minute',\n      schedule: '* * * * *',\n    },\n    {\n      path: '/api/every-hour',\n      schedule: '0 * * * *',\n    },\n    {\n      path: '/api/every-day',\n      schedule: '0 0 * * *',\n    },\n  ],\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  devCommand: 'next dev',\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  fluid: true,\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  framework: 'nextjs',\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functions: {\n    'api/test.js': {\n      maxDuration: 30,\n    },\n    'api/*.js': {\n      maxDuration: 30,\n    },\n  },\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functions: {\n    'pages/blog/[hello].tsx': {\n      maxDuration: 5,\n    },\n    'src/pages/isr/**/*': {\n      maxDuration: 10,\n    },\n  },\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  regions: ['iad1'],\n  functions: {\n    'api/eu-data.js': {\n      regions: ['cdg1'],\n      functionFailoverRegions: ['lhr1'],\n    },\n    'api/us-data.js': {\n      regions: ['sfo1', 'iad1'],\n      functionFailoverRegions: ['pdx1'],\n    },\n  },\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functions: {\n    'api/test.php': {\n      runtime: 'vercel-php@0.5.2',\n    },\n  },\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  headers: [\n    routes.header('/service-worker.js', [\n      { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },\n    ]),\n    routes.header('/(.*)', [\n      { key: 'X-Content-Type-Options', value: 'nosniff' },\n      { key: 'X-Frame-Options', value: 'DENY' },\n      { key: 'X-XSS-Protection', value: '1; mode=block' },\n    ]),\n    routes.header('/:path*', [{ key: 'x-authorized', value: 'true' }], {\n      has: [{ type: 'query', key: 'authorized' }],\n    }),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  headers: [\n    routes.header('/:path*', [{ key: 'x-authorized', value: 'true' }], {\n      has: [\n        {\n          type: 'header',\n          key: 'X-Custom-Header',\n          value: { pre: 'valid', suf: 'value' },\n        },\n      ],\n    }),\n  ],\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  ignoreCommand: 'git diff --quiet HEAD^ HEAD ./',\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  installCommand: 'npm install',\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  images: {\n    sizes: [256, 640, 1080, 2048, 3840],\n    localPatterns: [\n      {\n        pathname: '^/assets/.*$',\n        search: '',\n      },\n    ],\n    remotePatterns: [\n      {\n        protocol: 'https',\n        hostname: 'example.com',\n        port: '',\n        pathname: '^/account123/.*$',\n        search: '?v=1',\n      },\n    ],\n    minimumCacheTTL: 60,\n    qualities: [25, 50, 75],\n    formats: ['image/webp'],\n    dangerouslyAllowSVG: false,\n    contentSecurityPolicy: \"script-src 'none'; frame-src 'none'; sandbox;\",\n    contentDispositionType: 'inline',\n  },\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  outputDirectory: 'build',\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  public: false,\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/me', '/profile.html', { permanent: false }),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/me', '/profile.html', { permanent: true }),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/user', '/api/user', { statusCode: 301 }),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/view-source', 'https://github.com/vercel/vercel'),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/(.*)', 'https://vercel.com/docs'),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/blog/:path*', '/news/:path*'),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/post/:path(\\\\d{1,})', '/news/:path*'),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/:path((?!uk/).*)', '/uk/:path*', {\n      has: [\n        {\n          type: 'header',\n          key: 'x-vercel-ip-country',\n          value: 'GB',\n        },\n      ],\n      permanent: false,\n    }),\n  ],\n};",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/start', '/end', {\n      has: [\n        {\n          type: 'header',\n          key: 'X-Custom-Header',\n          value: { pre: 'valid', suf: 'value' },\n        },\n      ],\n    }),\n  ],\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  bulkRedirectsPath: 'redirects.csv',\n};",
+    "source,destination,permanent\n/source/path,/destination/path,true\n/source/path-2,https://destination-site.com/destination/path,true\nhttps://old-domain.com/page,/new-page,true",
+    "[\n    {\n        \"source\": \"/source/path\",\n        \"destination\": \"/destination/path\",\n        \"permanent\": true\n    },\n    {\n        \"source\": \"/source/path-2\",\n        \"destination\": \"https://destination-site.com/destination/path\",\n        \"permanent\": true\n    },\n    {\n        \"source\": \"https://old-domain.com/page\",\n        \"destination\": \"/new-page\",\n        \"permanent\": true\n    }\n]",
+    "{\"source\": \"/source/path\", \"destination\": \"/destination/path\", \"permanent\": true}\n{\"source\": \"/source/path-2\", \"destination\": \"https://destination-site.com/destination/path\", \"permanent\": true}\n{\"source\": \"https://old-domain.com/page\", \"destination\": \"/new-page\", \"permanent\": true}",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  regions: ['sfo1'],\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functionFailoverRegions: ['iad1', 'sfo1'],\n};",
+    "  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [routes.rewrite('/about', '/about-our-company.html')],\n  };",
+    "  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [routes.rewrite('/(.*)', '/index.html')],\n  };",
+    "  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [routes.rewrite('/resize/:width/:height', '/api/sharp')],\n  };",
+    "  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [\n      routes.rewrite('/proxy/:match*', 'https://example.com/:match*'),\n    ],\n  };",
+    "  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [\n      routes.rewrite('/:path((?!uk/).*)', '/uk/:path*', {\n        has: [\n          {\n            type: 'header',\n            key: 'x-vercel-ip-country',\n            value: 'GB',\n          },\n        ],\n      }),\n    ],\n  };",
+    "  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [\n      routes.rewrite('/dashboard', '/login', {\n        missing: [\n          {\n            type: 'cookie',\n            key: 'auth_token',\n          },\n        ],\n      }),\n    ],\n  };",
+    "import { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  rewrites: [\n    routes.rewrite('/start', '/end', {\n      has: [\n        {\n          type: 'header',\n          key: 'X-Custom-Header',\n          value: { pre: 'valid', suf: 'value' },\n        },\n      ],\n    }),\n  ],\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  trailingSlash: false,\n};",
+    "import type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  trailingSlash: true,\n};"
+  ],
+  "body_text": "Programmatic Configuration with vercel.ts\nThe vercel.ts file lets you configure and override the default behavior of Vercel from within your project. Unlike vercel.json, which is static, vercel.ts executes at build time, which lets you dynamically generate configuration. For example, you can fetch content from APIs, use environment variables to conditionally set routes, or compute configuration values based on your project structure.\nGetting Started\nRequirements\nUse only one configuration file: vercel.ts or vercel.json.\nYou can have any sort of code in your vercel.ts file, but the final set of rules and configuration properties must be in a config struct export. Use the same property names as vercel.json in your config export. For rewrites, redirects, headers, and transforms, prefer the helper functions from routes:\nexport const config: VercelConfig = {\n  buildCommand: 'npm run build',\n  cleanUrls: true,\n  trailingSlash: false,\n  // See the sections below for all available options\n};\nTo migrate from vercel.json, copy its contents into your config export, then add new capabilities as needed.\nInstall @vercel/config\nInstall the NPM package to get access to types and helpers.\n    pnpm i @vercel/config\n    yarn i @vercel/config\n    npm i @vercel/config\n    bun i @vercel/config\nCreate a vercel.ts in your project root and export a typed config. The example below shows how to configure build commands, framework settings, routing rules (rewrites and redirects), and headers:\n💡 Note: You can also use vercel.js, vercel.mjs, vercel.cjs, or vercel.mts to create this configuration file.\nimport { routes, deploymentEnv, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  buildCommand: 'npm run build',\n  framework: 'nextjs',\n\n  rewrites: [\n    routes.rewrite('/api/(.*)', 'https://backend.api.example.com/$1'),\n    routes.rewrite('/(.*)', 'https://api.example.com/$1', {\n      requestHeaders: {\n        authorization: `Bearer ${deploymentEnv('API_TOKEN')}`,\n      },\n    }),\n    routes.rewrite(\n      '/users/:userId/posts/:postId',\n      'https://api.example.com/users/$1/posts/$2',\n      ({ userId, postId }) => ({\n        requestHeaders: {\n          'x-user-id': userId,\n          'x-post-id': postId,\n          authorization: `Bearer ${deploymentEnv('API_KEY')}`,\n        },\n      }),\n    ),\n  ],\n\n  redirects: [routes.redirect('/old-docs', '/docs', { permanent: true })],\n\n  headers: [\n    routes.cacheControl('/static/(.*)', {\n      public: true,\n      maxAge: '1 week',\n      immutable: true,\n    }),\n  ],\n\n  crons: [{ path: '/api/cleanup', schedule: '0 0 * * *' }],\n};\nMigrating from vercel.json\nTo migrate from an existing vercel.json, paste its contents into a config export in a new vercel.ts file:\nexport const config = {\n  buildCommand: 'pnpm run generate-config',\n  outputDirectory: \".next\",\n  headers: [\n    {\n      source: \"/(.*)\\\\\\\\.(js|css|jpg|jpeg|gif|png|svg|txt|ttf|woff2|webmanifest)\",\n      headers: [\n        {\n          key: \"Cache-Control\",\n          value: \"public, max-age=2592000, s-maxage=2592000\"\n        }\n      ]\n    }\n  ]\n}\nThen install the @vercel/config package and enhance your configuration:\nimport { routes, type VercelConfig } from '@vercel/config/v1'\n\nexport const config: VercelConfig = {\n  buildCommand: 'pnpm run generate-config',\n  outputDirectory: `.${process.env.framework}`,\n  headers: [\n    routes.cacheControl(\n      '/(.*)\\\\\\\\.(js|css|jpg|jpeg|gif|png|svg|txt|ttf|woff2|webmanifest)',\n      {\n        public: true,\n        maxAge: '30days',\n        sMaxAge: '30days'\n      }\n    )\n  ]\n}\nConfig export options\nschema autocomplete\nbuildCommand\nbunVersion\ncleanUrls\ncrons\ndevCommand\nfluid\nframework\nfunctions\nheaders\nignoreCommand\nimages\ninstallCommand\noutputDirectory\npublic\nredirects\nbulkRedirectsPath\nregions\nfunctionFailoverRegions\nrewrites\ntrailingSlash\nlegacy\nschema autocomplete\nVia the types imported from the @vercel/config package, autocomplete for all config properties and helpers are automatically available in vercel.ts.\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  rewrites: [routes.rewrite('/about', '/about-our-company.html')],\n  // add more properties here\n};\nbuildCommand\nType: string | null\nThe buildCommand property can be used to override the Build Command in the Project Settings dashboard, and the build script from the package.json file for a given deployment. For more information on the default behavior of the Build Command, visit the Configure a Build - Build Command section.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  buildCommand: 'next build',\n};\nThis value overrides the Build Command in Project Settings.\nbunVersion\n🔒 Permissions Required: The Bun runtime\nType: string\nValue: \"1.x\"\nThe bunVersion property configures your project to use the Bun runtime instead of Node.js. When set, all Vercel Functions and Routing Middleware not using the Edge runtime will run using the specified Bun version.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  bunVersion: '1.x',\n};\n💡 Note: Vercel manages the Bun minor and patch versions automatically. 1.x is the\nonly valid value currently.\nWhen using Next.js with ISR (Incremental Static Regeneration), you must also update your build and dev commands in package.json:\n{\n  \"scripts\": {\n    \"dev\": \"bun run --bun next dev\",\n    \"build\": \"bun run --bun next build\"\n  }\n}\nTo learn more about using Bun with Vercel Functions, see the Bun runtime documentation.\ncleanUrls\nType: Boolean.\nDefault Value: false.\nWhen set to true, all HTML files and Vercel functions will have their extension removed. When visiting a path that ends with the extension, a 308 response will redirect the client to the extensionless path.\nFor example, a static file named about.html will be served when visiting the /about path. Visiting /about.html will redirect to /about.\nSimilarly, a Vercel Function named api/user.go will be served when visiting /api/user. Visiting /api/user.go will redirect to /api/user.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  cleanUrls: true,\n};\nIf you are using Next.js and running vercel dev, you will get a 404 error when visiting a route configured with cleanUrls locally. It does however work fine when deployed to Vercel. In the example above, visiting /about locally will give you a 404 with vercel dev but /about will render correctly on Vercel.\ncrons\nUsed to configure cron jobs for the production deployment of a project.\nType: Array of cron Object.\nLimits:\nA maximum of string length of 512 for the path value.\nA maximum of string length of 256 for the schedule value.\nCron object definition\npath - Required - The path to invoke when the cron job is triggered. Must start with /.\nschedule - Required - The cron schedule expression to use for the cron job.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  crons: [\n    {\n      path: '/api/every-minute',\n      schedule: '* * * * *',\n    },\n    {\n      path: '/api/every-hour',\n      schedule: '0 * * * *',\n    },\n    {\n      path: '/api/every-day',\n      schedule: '0 0 * * *',\n    },\n  ],\n};\ndevCommand\nThis value overrides the Development Command in Project Settings.\nType: string | null\nThe devCommand property can be used to override the Development Command in the Project Settings dashboard. For more information on the default behavior of the Development Command, visit the Configure a Build - Development Command section.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  devCommand: 'next dev',\n};\nfluid\nThis value allows you to enable Fluid compute programmatically.\nType: boolean | null\nThe fluid property allows you to test Fluid compute on a per-deployment or per custom environment basis when using branch tracking, without needing to enable Fluid in production.\n💡 Note: As of April 23, 2025, Fluid compute is enabled by default for new projects.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  fluid: true,\n};\nframework\nThis value overrides the Framework in Project Settings.\nType: string | null\nAvailable framework slugs:\nThe framework property can be used to override the Framework Preset in the Project Settings dashboard. The value must be a valid framework slug. For more information on the default behavior of the Framework Preset, visit the Configure a Build - Framework Preset section.\n💡 Note: To select \"Other\" as the Framework Preset, use null.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  framework: 'nextjs',\n};\nfunctions\nType: Object of key String and value Object.\nKey definition\nA glob pattern that matches the paths of the Vercel functions you would like to customize:\napi/*.js (matches one level e.g. api/hello.js but not api/hello/world.js)\napi//*.ts (matches all levels api/hello.ts and api/hello/world.ts)\nsrc/pages//* (matches all functions from src/pages)\napi/test.js\nValue definition\nruntime (optional): The npm package name of a Runtime, including its version.\nmemory: Memory cannot be set in vercel.ts with Fluid compute enabled. Instead set it in the Functions section in your project dashboard sidebar. See setting default function memory for more information.\nmaxDuration (optional): How long your Vercel Function can run on each request. Set an integer number of seconds between 1 and your plan's maximum limit. See max duration.\nsupportsCancellation (optional): A boolean defining whether your Vercel Function should support request cancellation. This is only available when you're using the Node.js runtime.\nincludeFiles (optional): A glob pattern to match files that should be included in your Vercel Function. If you're using a Community Runtime, the behavior might vary. Please consult its documentation for more details. (Not supported in Next.js, instead use outputFileTracingIncludes in next.config.js )\nexcludeFiles (optional): A glob pattern to match files that should be excluded from your Vercel Function. If you're using a Community Runtime, the behavior might vary. Please consult its documentation for more details. (Not supported in Next.js, instead use outputFileTracingExcludes in next.config.js )\nregions (optional): An array of region identifiers specifying where this specific function should be deployed. This overrides the project-level regions setting for the matched functions. See per-function region configuration for more details.\nfunctionFailoverRegions (optional): An array of region identifiers specifying passive regions this specific function can fail over to during an outage. This overrides the project-level functionFailoverRegions setting for the matched functions. Enterprise only. See per-function region configuration for more details.\nDescription\nBy default, no configuration is needed to deploy Vercel functions to Vercel.\nFor all officially supported runtimes, the only requirement is to create an api directory at the root of your project directory, placing your Vercel functions inside.\nThe functions property cannot be used in combination with builds. Since the latter is a legacy configuration property, we recommend dropping it in favor of the new one.\nBecause Incremental Static Regeneration (ISR) uses Vercel functions, the same configurations apply. The ISR route can be defined using a glob pattern, and accepts the same properties as when using Vercel functions.\nWhen deployed, each Vercel Function uses your project's default memory and maximum duration. See Vercel Functions limits for plan limits and defaults.\nWith Fluid compute enabled, set memory in the Functions section of your project dashboard, not in vercel.ts. To override the maximum duration for matched functions, add the functions property.\nfunctions property with Vercel functions\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functions: {\n    'api/test.js': {\n      maxDuration: 30,\n    },\n    'api/*.js': {\n      maxDuration: 30,\n    },\n  },\n};\nfunctions property with ISR\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functions: {\n    'pages/blog/[hello].tsx': {\n      maxDuration: 5,\n    },\n    'src/pages/isr/**/*': {\n      maxDuration: 10,\n    },\n  },\n};\nPer-function regions and functionFailoverRegions\nYou can set regions and functionFailoverRegions on individual functions to override the project-level defaults. This is useful when different functions need to run in different regions, for example when they access different data sources.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  regions: ['iad1'],\n  functions: {\n    'api/eu-data.js': {\n      regions: ['cdg1'],\n      functionFailoverRegions: ['lhr1'],\n    },\n    'api/us-data.js': {\n      regions: ['sfo1', 'iad1'],\n      functionFailoverRegions: ['pdx1'],\n    },\n  },\n};\nIn the example above, api/eu-data.js runs in Paris (cdg1) with London (lhr1) as a failover, while api/us-data.js runs in San Francisco (sfo1) and Washington, D.C. (iad1) with Portland (pdx1) as a failover. All other functions use the project-level default of iad1.\nUsing unsupported runtimes\nIn order to use a runtime that is not officially supported, you can add a runtime property to the definition:\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functions: {\n    'api/test.php': {\n      runtime: 'vercel-php@0.5.2',\n    },\n  },\n};\nIn the example above, the api/test.php Vercel Function does not use one of the officially supported runtimes. In turn, a runtime property was added in order to invoke the vercel-php community runtime.\nFor more information on Runtimes, see the Runtimes documentation:\nheaders\nType: Array of header Object.\nValid values: a list of header definitions.\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  headers: [\n    routes.header('/service-worker.js', [\n      { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },\n    ]),\n    routes.header('/(.*)', [\n      { key: 'X-Content-Type-Options', value: 'nosniff' },\n      { key: 'X-Frame-Options', value: 'DENY' },\n      { key: 'X-XSS-Protection', value: '1; mode=block' },\n    ]),\n    routes.header('/:path*', [{ key: 'x-authorized', value: 'true' }], {\n      has: [{ type: 'query', key: 'authorized' }],\n    }),\n  ],\n};\nThis example configures custom response headers for static files, Vercel functions, and a wildcard that matches all routes.\nHeader object definition\n| Property | Description | | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | A pattern that matches each incoming pathname (excluding querystring). | | headers | A non-empty array of key/value pairs representing each response header. | | has | An optional array of has objects with the type, key and value properties. Used for conditional path matching based on the presence of specified properties. | | missing | An optional array of missing objects with the type, key and value properties. Used for conditional path matching based on the absence of specified properties. |\nHeader has or missing object definition\nIf value is an object, it has one or more of the following fields:\nThis example demonstrates using the expressive value object to append the header x-authorized: true if the X-Custom-Header request header's value is prefixed by valid and ends with value.\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  headers: [\n    routes.header('/:path*', [{ key: 'x-authorized', value: 'true' }], {\n      has: [\n        {\n          type: 'header',\n          key: 'X-Custom-Header',\n          value: { pre: 'valid', suf: 'value' },\n        },\n      ],\n    }),\n  ],\n};\nLearn more about headers on Vercel and see limitations.\nignoreCommand\nThis value overrides the Ignored Build Step in Project Settings.\nType: string | null\nThis ignoreCommand property will override the Command for Ignoring the Build Step for a given deployment. When the command exits with code 1, the build will continue. When the command exits with 0, the build is ignored. For more information on the default behavior of the Ignore Command, visit the Ignored Build Step section.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  ignoreCommand: 'git diff --quiet HEAD^ HEAD ./',\n};\ninstallCommand\nThis value overrides the Install Command in Project Settings.\nType: string | null\nThe installCommand property can be used to override the Install Command in the Project Settings dashboard for a given deployment. This setting is useful for trying out a new package manager for the project. An empty string value will cause the Install Command to be skipped. For more information on the default behavior of the install command visit the Configure a Build - Install Command section.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  installCommand: 'npm install',\n};\nimages\nThe images property defines the behavior of Vercel's native Image Optimization API, which allows on-demand optimization of images at runtime.\nType: Object\nValue definition\nsizes - Required - Array of allowed image widths. The Image Optimization API will return an error if the w parameter is not defined in this list.\nlocalPatterns - Allow-list of local image paths which can be used with the Image Optimization API.\nremotePatterns - Allow-list of external domains which can be used with the Image Optimization API.\nminimumCacheTTL - Cache duration (in seconds) for the optimized images.\nqualities - Array of allowed image qualities. The Image Optimization API will return an error if the q parameter is not defined in this list.\nformats - Supported output image formats. Allowed values are either \"image/avif\" and/or \"image/webp\".\ndangerouslyAllowSVG - Allow SVG input image URLs. This is disabled by default for security purposes.\ncontentSecurityPolicy - Specifies the Content Security Policy of the optimized images.\ncontentDispositionType - Specifies the value of the \"Content-Disposition\" response header. Allowed values are \"inline\" or \"attachment\".\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  images: {\n    sizes: [256, 640, 1080, 2048, 3840],\n    localPatterns: [\n      {\n        pathname: '^/assets/.*$',\n        search: '',\n      },\n    ],\n    remotePatterns: [\n      {\n        protocol: 'https',\n        hostname: 'example.com',\n        port: '',\n        pathname: '^/account123/.*$',\n        search: '?v=1',\n      },\n    ],\n    minimumCacheTTL: 60,\n    qualities: [25, 50, 75],\n    formats: ['image/webp'],\n    dangerouslyAllowSVG: false,\n    contentSecurityPolicy: \"script-src 'none'; frame-src 'none'; sandbox;\",\n    contentDispositionType: 'inline',\n  },\n};\noutputDirectory\nThis value overrides the Output Directory in Project Settings.\nType: string | null\nThe outputDirectory property can be used to override the Output Directory in the Project Settings dashboard for a given deployment.\nIn the following example, the deployment will look for the build directory rather than the default public or . root directory. For more information on the default behavior of the Output Directory see the Configure a Build - Output Directory section. The following example is a vercel.ts file that overrides the outputDirectory to build:\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  outputDirectory: 'build',\n};\npublic\nType: Boolean.\nDefault Value: false.\nThis option is deprecated and no longer enables public access to deployment source or build logs. Deployments always keep source view and logs view protected behind authentication.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  public: false,\n};\nredirects\nType: Array of redirect Object.\nValid values: a list of redirect definitions.\nRedirects examples\nThis example redirects requests to the path /me from your site's root to the profile.html file relative to your site's root with a 307 Temporary Redirect:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/me', '/profile.html', { permanent: false }),\n  ],\n};\nThis example redirects requests to the path /me from your site's root to the profile.html file relative to your site's root with a 308 Permanent Redirect:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/me', '/profile.html', { permanent: true }),\n  ],\n};\nThis example redirects requests to the path /user from your site's root to the api route /api/user relative to your site's root with a 301 Moved Permanently:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/user', '/api/user', { statusCode: 301 }),\n  ],\n};\nThis example redirects requests to the path /view-source from your site's root to the absolute path https://github.com/vercel/vercel of an external site with a redirect status of 308:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/view-source', 'https://github.com/vercel/vercel'),\n  ],\n};\nThis example redirects requests to all the paths (including all sub-directories and pages) from your site's root to the absolute path https://vercel.com/docs of an external site with a redirect status of 308:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/(.*)', 'https://vercel.com/docs'),\n  ],\n};\nThis example uses wildcard path matching to redirect requests to any path (including subdirectories) under /blog/ from your site's root to a corresponding path under /news/ relative to your site's root with a redirect status of 308:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/blog/:path*', '/news/:path*'),\n  ],\n};\nThis example uses regex path matching to redirect requests to any path under /posts/ that only contain numerical digits from your site's root to a corresponding path under /news/ relative to your site's root with a redirect status of 308:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/post/:path(\\\\d{1,})', '/news/:path*'),\n  ],\n};\nThis example redirects requests to any path from your site's root that does not start with /uk/ and has x-vercel-ip-country header value of GB to a corresponding path under /uk/ relative to your site's root with a redirect status of 307:\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/:path((?!uk/).*)', '/uk/:path*', {\n      has: [\n        {\n          type: 'header',\n          key: 'x-vercel-ip-country',\n          value: 'GB',\n        },\n      ],\n      permanent: false,\n    }),\n  ],\n};\n💡 Note: Using has does not yet work locally while using\nvercel dev, but does work when deployed.\nRedirect object definition\n| Property | Description | | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | A pattern that matches each incoming pathname (excluding querystring). | | destination | A location destination defined as an absolute pathname or external URL. | | permanent | An optional boolean to toggle between permanent and temporary redirect (default true). When true, the status code is 308. When false the status code is 307. | | statusCode | An optional integer to define the status code of the redirect. Used when you need a value other than 307/308 from permanent, and therefore cannot be used with permanent boolean. | | has | An optional array of has objects with the type, key and value properties. Used for conditional redirects based on the presence of specified properties. | | missing | An optional array of missing objects with the type, key and value properties. Used for conditional redirects based on the absence of specified properties. |\nRedirect has or missing object definition\nIf value is an object, it has one or more of the following fields:\nThis example uses the expressive value object to define a route that redirects users with a redirect status of 308 to /end only if the X-Custom-Header header's value is prefixed by valid and ends with value.\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  redirects: [\n    routes.redirect('/start', '/end', {\n      has: [\n        {\n          type: 'header',\n          key: 'X-Custom-Header',\n          value: { pre: 'valid', suf: 'value' },\n        },\n      ],\n    }),\n  ],\n};\nLearn more about redirects on Vercel and see limitations.\nbulkRedirectsPath\nLearn more about bulk redirects on Vercel and see limits and pricing.\nType: string path to a file or folder.\nThe bulkRedirectsPath property can be used to import many thousands of redirects per project. These redirects do not support wildcard or header matching.\nCSV, JSON, and JSONL file formats are supported, and the redirect files can be generated at build time as long as they end up in the location specified by bulkRedirectsPath. This can point to either a single file or a folder containing multiple redirect files.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  bulkRedirectsPath: 'redirects.csv',\n};\nCSV\n💡 Note: CSV headers must match the field names below, can be specific in any order, and optional fields can be ommitted.\nsource,destination,permanent\n/source/path,/destination/path,true\n/source/path-2,https://destination-site.com/destination/path,true\nhttps://old-domain.com/page,/new-page,true\nJSON\n[\n    {\n        \"source\": \"/source/path\",\n        \"destination\": \"/destination/path\",\n        \"permanent\": true\n    },\n    {\n        \"source\": \"/source/path-2\",\n        \"destination\": \"https://destination-site.com/destination/path\",\n        \"permanent\": true\n    },\n    {\n        \"source\": \"https://old-domain.com/page\",\n        \"destination\": \"/new-page\",\n        \"permanent\": true\n    }\n]\nJSONL\n{\"source\": \"/source/path\", \"destination\": \"/destination/path\", \"permanent\": true}\n{\"source\": \"/source/path-2\", \"destination\": \"https://destination-site.com/destination/path\", \"permanent\": true}\n{\"source\": \"https://old-domain.com/page\", \"destination\": \"/new-page\", \"permanent\": true}\n💡 Note: Bulk redirects do not work locally while using vercel dev\nBulk redirect field definition\n| Field | Type | Required | Description | | --------------------- | --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | string | Yes | An absolute path or fully qualified URL that matches each incoming request (excluding query string). Max 2048 characters. | | destination | string | Yes | A location destination defined as an absolute pathname or external URL. Max 2048 characters. | | permanent | boolean | No | Toggle between permanent (308) and temporary (307) redirect. Default: false. | | statusCode | integer | No | Specify the exact status code. Can be 301, 302, 303, 307, or 308. Overrides permanent when set, otherwise defers to permanent value or default. | | caseSensitive | boolean | No | Toggle whether source path matching is case sensitive. Default: false. | | preserveQueryParams | boolean | No | Toggle whether to preserve the query string on the redirect. Default: false. |\nIn order to improve space efficiency, all boolean values can be the single characters t (true) or f (false) while using the CSV format.\nregions\nThis value overrides the Vercel Function Region in Project Settings.\nType: Array of region identifier String.\nValid values: List of regions, defaults to iad1.\nYou can define the regions where your Vercel functions are executed. Users on Pro and Enterprise can deploy to multiple regions. Hobby plans can select any single region. To learn more, see Configuring Regions.\nFunction responses can be cached in the requested regions. Selecting a Vercel Function region does not impact static files, which are deployed to every region by default.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  regions: ['sfo1'],\n};\nYou can also set regions on individual functions using the functions property to override the project-level default. See per-function region configuration for more details.\nfunctionFailoverRegions\n🔒 Permissions Required: Setting failover regions for Vercel functions\nSet this property to specify the region to which a Vercel Function should fallback when the default region(s) are unavailable.\nType: Array of region identifier String.\nValid values: List of regions.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  functionFailoverRegions: ['iad1', 'sfo1'],\n};\nYou can also set functionFailoverRegions on individual functions using the functions property to override the project-level default. See per-function region configuration for more details.\nThese regions serve as a fallback to any regions specified in the regions configuration. The region Vercel selects to invoke your function depends on availability and ingress. For instance:\nVercel always attempts to invoke the function in the primary region. If you specify more than one primary region in the regions property, Vercel selects the region geographically closest to the request\nIf all primary regions are unavailable, Vercel automatically fails over to the regions specified in functionFailoverRegions, selecting the region geographically closest to the request\nThe order of the regions in functionFailoverRegions does not matter as Vercel automatically selects the region geographically closest to the request\nTo learn more about automatic failover for Vercel Functions, see Automatic failover. Vercel Functions using the Edge runtime will automatically failover with no configuration required.\nRegion failover is supported with Secure Compute, see Region Failover to learn more.\nrewrites\nType: Array of rewrite Object.\nValid values: a list of rewrite definitions.\nIf cleanUrls is set to true in your project's vercel.ts, do not include the file extension in the source or destination path. For example, /about-our-company.html would be /about-our-company\nRewrites examples\nThis example rewrites requests to the path /about from your site's root to the /about-our-company.html file relative to your site's root:\n  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [routes.rewrite('/about', '/about-our-company.html')],\n  };\nThis example rewrites all requests to the root path which is often used for a Single Page Application (SPA).\n  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [routes.rewrite('/(.*)', '/index.html')],\n  };\nThis example rewrites requests to the paths under /resize with 2 path levels (defined as variables width and height that can be used in the destination value) to the api route /api/sharp relative to your site's root:\n  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [routes.rewrite('/resize/:width/:height', '/api/sharp')],\n  };\nThis example uses wildcard path matching to rewrite requests to any path (including subdirectories) under /proxy/ from your site's root to a corresponding path under the root of an external site https://example.com/:\n  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [\n      routes.rewrite('/proxy/:match*', 'https://example.com/:match*'),\n    ],\n  };\nThis example rewrites requests to any path from your site's root that does not start with /uk/ and has x-vercel-ip-country header value of GB to a corresponding path under /uk/ relative to your site's root:\n  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [\n      routes.rewrite('/:path((?!uk/).*)', '/uk/:path*', {\n        has: [\n          {\n            type: 'header',\n            key: 'x-vercel-ip-country',\n            value: 'GB',\n          },\n        ],\n      }),\n    ],\n  };\nThis example rewrites requests to the path /dashboard from your site's root that does not have a cookie with key auth_token to the path /login relative to your site's root:\n  import { routes, type VercelConfig } from '@vercel/config/v1';\n\n  export const config: VercelConfig = {\n    rewrites: [\n      routes.rewrite('/dashboard', '/login', {\n        missing: [\n          {\n            type: 'cookie',\n            key: 'auth_token',\n          },\n        ],\n      }),\n    ],\n  };\nRewrite object definition\n| Property | Description | | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | source | A pattern that matches each incoming pathname (excluding querystring). | | destination | A location destination defined as an absolute pathname or external URL. | | permanent | A boolean to toggle between permanent and temporary redirect (default true). When true, the status code is 308. When false the status code is 307. | | has | An optional array of has objects with the type, key and value properties. Used for conditional rewrites based on the presence of specified properties. | | missing | An optional array of missing objects with the type, key and value properties. Used for conditional rewrites based on the absence of specified properties. |\nRewrite has or missing object definition\nIf value is an object, it has one or more of the following fields:\nThis example demonstrates using the expressive value object to define a route that rewrites users to /end only if the X-Custom-Header header's value is prefixed by valid and ends with value.\nimport { routes, type VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  rewrites: [\n    routes.rewrite('/start', '/end', {\n      has: [\n        {\n          type: 'header',\n          key: 'X-Custom-Header',\n          value: { pre: 'valid', suf: 'value' },\n        },\n      ],\n    }),\n  ],\n};\nThe source property should NOT be a file because precedence is given to the filesystem prior to rewrites being applied. Instead, you should rename your static file or Vercel Function.\n💡 Note: Using has does not yet work locally while using\nvercel dev, but does work when deployed.\nLearn more about rewrites on Vercel.\ntrailingSlash\nType: Boolean.\nDefault Value: undefined.\nfalse\nWhen trailingSlash: false, visiting a path that ends with a forward slash will respond with a 308 status code and redirect to the path without the trailing slash.\nFor example, the /about/ path will redirect to /about.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  trailingSlash: false,\n};\ntrue\nWhen trailingSlash: true, visiting a path that does not end with a forward slash will respond with a 308 status code and redirect to the path with a trailing slash.\nFor example, the /about path will redirect to /about/.\nHowever, paths with a file extension will not redirect to a trailing slash.\nFor example, the /about/styles.css path will not redirect, but the /about/styles path will redirect to /about/styles/.\nimport type { VercelConfig } from '@vercel/config/v1';\n\nexport const config: VercelConfig = {\n  trailingSlash: true,\n};\nundefined\nWhen trailingSlash: undefined, visiting a path with or without a trailing slash will not redirect.\nFor example, both /about and /about/ will serve the same content without redirecting.\nThis is not recommended because it could lead to search engines indexing two different pages with duplicate content.\nLegacy properties\nFor details on legacy properties, see the legacy section of the static configuration reference.\nView full sitemap"
+}

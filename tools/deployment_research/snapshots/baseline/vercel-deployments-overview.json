@@ -1,0 +1,152 @@
+{
+  "schema_version": 2,
+  "source_id": "vercel-deployments-overview",
+  "platform": "vercel",
+  "configured_title": "Deploying to Vercel",
+  "page_title": "Deploying to Vercel",
+  "url": "https://vercel.com/docs/deployments/overview",
+  "fetched_at": "2026-08-02T18:09:32.374627+00:00",
+  "http_status": 200,
+  "content_type": "text/markdown; charset=utf-8",
+  "document_format": "markdown",
+  "etag": null,
+  "last_modified": null,
+  "content_hash": "1c26e1463b55a8a4d8f5e7fd660be66986341d75b6f3f7995962670c28755d0d",
+  "headings": [
+    {
+      "level": 1,
+      "text": "Deploying to Vercel"
+    },
+    {
+      "level": 2,
+      "text": "Deployment Methods"
+    },
+    {
+      "level": 3,
+      "text": "Git"
+    },
+    {
+      "level": 3,
+      "text": "Vercel Drop"
+    },
+    {
+      "level": 3,
+      "text": "Vercel CLI"
+    },
+    {
+      "level": 3,
+      "text": "Deploy Hooks"
+    },
+    {
+      "level": 3,
+      "text": "Vercel REST API"
+    },
+    {
+      "level": 2,
+      "text": "Accessing Deployments"
+    },
+    {
+      "level": 2,
+      "text": "Using the Dashboard"
+    },
+    {
+      "level": 3,
+      "text": "Resources Tab and Deployment Summary"
+    },
+    {
+      "level": 3,
+      "text": "Project Overview"
+    },
+    {
+      "level": 3,
+      "text": "Managing Deployments"
+    },
+    {
+      "level": 2,
+      "text": "CLI workflows"
+    },
+    {
+      "level": 2,
+      "text": "Explore deployments"
+    }
+  ],
+  "instructions": [
+    "A deployment on Vercel is the result of a successful build of your project. Each time you deploy, Vercel generates a unique URL so you and your team can preview changes in a live environment.",
+    "Vercel supports multiple ways to create a deployment:",
+    "Git",
+    "Vercel Drop",
+    "Vercel CLI",
+    "Deploy Hooks",
+    "Vercel REST API",
+    "The most common way to create a deployment is by pushing code to a connected Git repository. When you import a Git repository to Vercel, each commit or pull request (on supported Git providers) automatically triggers a new deployment.",
+    "Vercel supports the following providers:",
+    "GitHub",
+    "GitLab",
+    "Bitbucket",
+    "Azure DevOps",
+    "You can also create deployments from a Git reference using the Vercel Dashboard if you need to deploy specific commits or branches manually.",
+    "Vercel Drop lets you deploy a file or folder by dragging it into your browser. You don't need Git, the CLI, or any local setup.",
+    "Go to vercel.com/drop.",
+    "Drag a project folder onto the page.",
+    "Choose a team and project name, then select Deploy.",
+    "Vercel detects your framework and builds it, or deploys your files as-is when there's no framework. Vercel Drop is useful for static sites, build output, and prototypes. For the full walkthrough, see Deploying with Vercel Drop.",
+    "You can deploy your Projects directly from the command line using Vercel CLI. This method works whether your project is connected to Git or not.",
+    "Install Vercel CLI:",
+    "Initial Deployment:",
+    "In your project's root directory, run:",
+    "This links your local directory to your Vercel Project and creates a Production Deployment. A .vercel directory is added to store Project and Organization IDs.",
+    "Vercel CLI can also integrate with custom CI/CD workflows or third-party pipelines. Learn more about the different environments on Vercel.",
+    "Deploy Hooks let you trigger deployments with a unique URL. You must have a connected Git repository to use this feature, but the deployment doesn't require a new commit.",
+    "From your Project settings, create a Deploy Hook",
+    "Vercel generates a unique URL for each Project",
+    "Make an HTTP GET or POST request to this URL to trigger the deployment",
+    "Refer to the Deploy Hooks documentation for more information.",
+    "The Vercel REST API lets you create deployments by making an HTTP POST request to the deployment endpoint. In this workflow:",
+    "Generate a SHA for each file you want to deploy",
+    "Upload those files to Vercel",
+    "Send a request to create a new deployment with those file references",
+    "This method is especially useful for custom workflows, multi-tenant applications, or integrating with third-party services not officially supported by Vercel. For more details, see the API reference and How do I generate an SHA for uploading a file.",
+    "Vercel provides three default environments: Local, Preview, and Production.",
+    "Local Development: developing and testing code changes on your local machine",
+    "Preview: deploying for further testing, QA, or collaboration without impacting your live site",
+    "Production: deploying the final changes to your user-facing site with the production domain",
+    "Learn more about environments.",
+    "Vercel’s dashboard provides a centralized way to view, manage, and gain insights into your deployments.",
+    "When you select a deployment from your Project → Deployments page, you can Open Resources in the sidebar to view and search:",
+    "Middleware: Any configured matchers.",
+    "Static Assets: Files (HTML, CSS, JS) and their sizes.",
+    "Functions: The type, runtime, size, and regions.",
+    "You can use the three dot (…) menu for a given function to jump to that function in Logs, Analytics, Speed Insights, or the Observability section in the sidebar.",
+    "Image",
+    "You can also see a summary of these resources by expanding the Deployment Summary section on a Deployment Details page. To visit the Deployment Details page for a deployment, select it from your Project → Deployments page.",
+    "You’ll also see your build time, detected framework, and any relevant logs or errors.",
+    "On your Project Overview page, you can see the latest production deployment, including the generated URL and commit details, and deployment logs for debugging.",
+    "From the Deployments section in the sidebar, you can:",
+    "Redeploy: Re-run the build for a specific commit or configuration.",
+    "Inspect: View logs and build outputs.",
+    "Assign a Custom Domain: Point custom domains to any deployment.",
+    "Promote to Production: Convert a preview deployment to production (if needed).",
+    "For more information on interacting with your deployments, see Managing Deployments.",
+    "For step-by-step workflows using the Vercel CLI to manage deployments, see:",
+    "Rolling back a production deployment",
+    "Deploying a project from the CLI",
+    "Vercel Drop: Deploy a folder by dragging it into your browser. No Git or CLI required. Learn more →",
+    "Deploy from Git: Connect GitHub, GitLab, Bitbucket, or Azure DevOps for automatic deployments. Learn more →",
+    "Deploy with the CLI: Deploy from your terminal or CI/CD pipeline. Learn more →",
+    "Deploy Hooks: Trigger deployments with a unique URL. Learn more →",
+    "Vercel REST API: Create deployments programmatically via HTTP. Learn more →",
+    "Environments: Understand local, preview, and production environments. Learn more →",
+    "Managing deployments: Redeploy, inspect, assign domains, and promote to production. Learn more →",
+    "Rolling back a production deployment: Revert to a previous production deployment safely. Learn more →",
+    "Deploy from the CLI: Deploy a project end-to-end using Vercel CLI. Learn more →",
+    "View full sitemap"
+  ],
+  "code_blocks": [
+    "npm i -g vercel",
+    "bun i -g vercel",
+    "yarn global add vercel",
+    "pnpm i -g vercel",
+    "vercel --prod"
+  ],
+  "body_text": "Deploying to Vercel\nA deployment on Vercel is the result of a successful build of your project. Each time you deploy, Vercel generates a unique URL so you and your team can preview changes in a live environment.\nVercel supports multiple ways to create a deployment:\nGit\nVercel Drop\nVercel CLI\nDeploy Hooks\nVercel REST API\nDeployment Methods\nGit\nThe most common way to create a deployment is by pushing code to a connected Git repository. When you import a Git repository to Vercel, each commit or pull request (on supported Git providers) automatically triggers a new deployment.\nVercel supports the following providers:\nGitHub\nGitLab\nBitbucket\nAzure DevOps\nYou can also create deployments from a Git reference using the Vercel Dashboard if you need to deploy specific commits or branches manually.\nVercel Drop\nVercel Drop lets you deploy a file or folder by dragging it into your browser. You don't need Git, the CLI, or any local setup.\nGo to vercel.com/drop.\nDrag a project folder onto the page.\nChoose a team and project name, then select Deploy.\nVercel detects your framework and builds it, or deploys your files as-is when there's no framework. Vercel Drop is useful for static sites, build output, and prototypes. For the full walkthrough, see Deploying with Vercel Drop.\nVercel CLI\nYou can deploy your Projects directly from the command line using Vercel CLI. This method works whether your project is connected to Git or not.\nInstall Vercel CLI:\nnpm i -g vercel\nbun i -g vercel\nyarn global add vercel\npnpm i -g vercel\nInitial Deployment:\nIn your project's root directory, run:\nvercel --prod\nThis links your local directory to your Vercel Project and creates a Production Deployment. A .vercel directory is added to store Project and Organization IDs.\nVercel CLI can also integrate with custom CI/CD workflows or third-party pipelines. Learn more about the different environments on Vercel.\nDeploy Hooks\nDeploy Hooks let you trigger deployments with a unique URL. You must have a connected Git repository to use this feature, but the deployment doesn't require a new commit.\nFrom your Project settings, create a Deploy Hook\nVercel generates a unique URL for each Project\nMake an HTTP GET or POST request to this URL to trigger the deployment\nRefer to the Deploy Hooks documentation for more information.\nVercel REST API\nThe Vercel REST API lets you create deployments by making an HTTP POST request to the deployment endpoint. In this workflow:\nGenerate a SHA for each file you want to deploy\nUpload those files to Vercel\nSend a request to create a new deployment with those file references\nThis method is especially useful for custom workflows, multi-tenant applications, or integrating with third-party services not officially supported by Vercel. For more details, see the API reference and How do I generate an SHA for uploading a file.\nAccessing Deployments\nVercel provides three default environments: Local, Preview, and Production.\nLocal Development: developing and testing code changes on your local machine\nPreview: deploying for further testing, QA, or collaboration without impacting your live site\nProduction: deploying the final changes to your user-facing site with the production domain\nLearn more about environments.\nUsing the Dashboard\nVercel’s dashboard provides a centralized way to view, manage, and gain insights into your deployments.\nResources Tab and Deployment Summary\nWhen you select a deployment from your Project → Deployments page, you can Open Resources in the sidebar to view and search:\nMiddleware: Any configured matchers.\nStatic Assets: Files (HTML, CSS, JS) and their sizes.\nFunctions: The type, runtime, size, and regions.\nYou can use the three dot (…) menu for a given function to jump to that function in Logs, Analytics, Speed Insights, or the Observability section in the sidebar.\nImage\nYou can also see a summary of these resources by expanding the Deployment Summary section on a Deployment Details page. To visit the Deployment Details page for a deployment, select it from your Project → Deployments page.\nImage\nYou’ll also see your build time, detected framework, and any relevant logs or errors.\nProject Overview\nOn your Project Overview page, you can see the latest production deployment, including the generated URL and commit details, and deployment logs for debugging.\nManaging Deployments\nFrom the Deployments section in the sidebar, you can:\nRedeploy: Re-run the build for a specific commit or configuration.\nInspect: View logs and build outputs.\nAssign a Custom Domain: Point custom domains to any deployment.\nPromote to Production: Convert a preview deployment to production (if needed).\nFor more information on interacting with your deployments, see Managing Deployments.\nCLI workflows\nFor step-by-step workflows using the Vercel CLI to manage deployments, see:\nRolling back a production deployment\nDeploying a project from the CLI\nExplore deployments\nVercel Drop: Deploy a folder by dragging it into your browser. No Git or CLI required. Learn more →\nDeploy from Git: Connect GitHub, GitLab, Bitbucket, or Azure DevOps for automatic deployments. Learn more →\nDeploy with the CLI: Deploy from your terminal or CI/CD pipeline. Learn more →\nDeploy Hooks: Trigger deployments with a unique URL. Learn more →\nVercel REST API: Create deployments programmatically via HTTP. Learn more →\nEnvironments: Understand local, preview, and production environments. Learn more →\nManaging deployments: Redeploy, inspect, assign domains, and promote to production. Learn more →\nRolling back a production deployment: Revert to a previous production deployment safely. Learn more →\nDeploy from the CLI: Deploy a project end-to-end using Vercel CLI. Learn more →\nView full sitemap"
+}

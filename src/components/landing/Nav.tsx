@@ -27,7 +27,12 @@ export function Nav() {
             </button>
           </div>
         ) : (
-          <PrimaryLink href="/register">Start learning</PrimaryLink>
+          <div className={styles.accountLinks}>
+            <Link to="/login" className={styles.secondaryLink}>
+              Log in
+            </Link>
+            <PrimaryLink href="/register">Start learning</PrimaryLink>
+          </div>
         )}
       </div>
     </header>

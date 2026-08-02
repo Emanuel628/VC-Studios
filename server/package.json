@@ -10,10 +10,12 @@
     "dev": "tsx watch src/index.ts",
     "dev:test-db": "cross-env DATABASE_URL=postgresql://postgres@localhost:5432/platinum_vc_studios_test tsx src/index.ts",
     "build": "tsc --noEmit && tsc -p tsconfig.build.json",
-    "start": "node dist/index.js",
+    "start": "prisma migrate deploy && node dist/index.js",
     "test": "vitest run",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:status": "prisma migrate status",
     "auth:generate": "npx auth@latest generate --config src/auth.ts --output prisma/schema.prisma -y"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "prisma": "^7.9.1",
     "resend": "^6.18.1"
   },
   "devDependencies": {
@@ -30,7 +33,6 @@
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
     "cross-env": "^10.1.0",
-    "prisma": "^7.9.1",
     "tsx": "^4.20.7",
     "typescript": "^5.9.3",
     "vitest": "^4.1.10"

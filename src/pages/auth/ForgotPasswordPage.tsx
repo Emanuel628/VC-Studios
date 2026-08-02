@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { AuthPageShell } from '../../components/auth/AuthPageShell';
 import { FormField } from '../../components/auth/FormField';
 import styles from '../../styles/Auth.module.css';

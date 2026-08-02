@@ -47,15 +47,13 @@
   white-space: nowrap;
 }
 
-.navLinks,
-.footerLinks {
+.navLinks {
   display: flex;
   align-items: center;
   gap: 28px;
 }
 
 .navLinks a,
-.footerLinks a,
 .secondaryLink {
   color: var(--text-secondary);
   font-size: 16px;
@@ -65,7 +63,6 @@
 }
 
 .navLinks a:hover,
-.footerLinks a:hover,
 .secondaryLink:hover {
   color: var(--text);
   text-decoration: underline;
@@ -93,7 +90,6 @@
 
 .primaryButton:focus-visible,
 .navLinks a:focus-visible,
-.footerLinks a:focus-visible,
 .secondaryLink:focus-visible,
 .brand:focus-visible {
   outline: 2px solid var(--accent);
@@ -470,40 +466,18 @@
 }
 
 .footerInner {
-  min-height: 176px;
-  display: grid;
-  grid-template-columns: 1fr auto minmax(220px, 0.8fr);
-  align-items: start;
-  gap: 48px;
-  padding-top: 48px;
-  padding-bottom: 48px;
-}
-
-.footerInner > div p,
-.privacyNote {
-  margin: 5px 0 0;
-  color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.footerLinks {
-  gap: 22px;
-}
-
-.footerLinks a {
-  font-size: 14px;
-}
-
-.privacyNote {
-  max-width: 300px;
-  justify-self: end;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 
 .legalLinks {
   display: flex;
   gap: 16px;
-  margin-top: 10px;
 }
 
 .legalLinks a {
@@ -553,15 +527,6 @@
 
   .whoWhatDivider {
     padding-left: 40px;
-  }
-
-  .footerInner {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .privacyNote {
-    grid-column: 1 / -1;
-    justify-self: start;
   }
 }
 
@@ -651,8 +616,7 @@
 
   .whoWhat,
   .stepsGrid,
-  .pathsGrid,
-  .footerInner {
+  .pathsGrid {
     grid-template-columns: 1fr;
   }
 
@@ -684,19 +648,6 @@
     width: 100%;
   }
 
-  .footerInner {
-    gap: 32px;
-  }
-
-  .footerLinks {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .privacyNote {
-    grid-column: auto;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

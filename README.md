@@ -9,14 +9,14 @@
 
 ## Purpose of This README
 
-This README is the source of truth for the Platinum VC Studios course philosophy, teaching method, writing standards, assessment rules, project-review model, lesson-delivery format, and website design direction.
+This README is the source of truth for the Platinum VC Studios course philosophy, teaching method, writing standards, assessment rules, guided build-along model, project-review model, lesson-delivery format, and website design direction.
 
-The complete course has **not** been divided into modules and chapters yet. That work begins only after this foundation is accurate and approved.
+The complete course has **not** yet been divided into its final modules and chapters. That work begins only after this foundation is accurate and approved.
 
-To avoid turning suggestions into accidental requirements, this document separates:
+To prevent suggestions from becoming accidental requirements, this document separates:
 
 - **Locked rules:** Decisions already established for the course
-- **Planned methods:** Strong directions that will be finalized during curriculum planning
+- **Planned methods:** Strong directions to be finalized during curriculum planning
 - **Open decisions:** Details that have not been approved yet
 
 ---
@@ -38,8 +38,9 @@ Students are not being trained to become software engineers, memorize syntax, st
 - Work through errors and unexpected problems
 - Create practical tests and verify that features work
 - Use GitHub to save, protect, and manage a project
-- Connect databases, APIs, authentication, and other services when needed
-- Take a project from an idea to a working launch
+- Connect databases, APIs, authentication, email, and other services when needed
+- Deploy a working product
+- Take an idea through a complete, repeatable build process
 
 The course must be honest about what it teaches. It will not promise instant expertise, guaranteed income, or professional software-engineering credentials.
 
@@ -61,6 +62,7 @@ Platinum VC Studios is for people who:
 - Start projects but struggle to finish them
 - Want to understand what they are building without attending coding school
 - Need a clear process that moves in small, manageable steps
+- May want to build alongside the course but do not want building to be mandatory merely to read and understand the material
 
 Students must never be treated as unintelligent or lazy. The course should assume that many learners have limited confidence, time, attention, or technical experience—not limited ability.
 
@@ -70,23 +72,23 @@ The product must make it easy to begin, stop, return, remember what was complete
 
 # Intended Student Outcome
 
-A serious student who completes the full learning path should leave with:
+A serious student who completes the full learning path should understand:
 
-- A clearly defined application idea
-- A living Build Plan
-- An approved first-version scope
-- A planned page structure and user flow
-- A reasoned choice of tools and services
-- A GitHub account and properly maintained repository
-- A working application
-- Experience prompting and correcting AI
-- Experience diagnosing and fixing problems
-- A testing plan and recorded test results
-- A deployed project
-- A record of feedback, corrections, and major decisions
-- Greater independence when starting the next application
+- How to define an application idea
+- How to create and maintain a living Build Plan
+- How to control the first-version scope
+- How to plan pages and user flows
+- How to choose tools and services for a project
+- How to create and use a GitHub account and repository
+- How to prompt and correct AI
+- How to diagnose and fix common problems
+- How to test work instead of assuming it works
+- How deployment, domains, databases, APIs, authentication, and email services fit into an application
+- How to begin the next project with greater independence
 
-Completion must represent real work, not merely reaching the last page.
+A student who chooses the guided build-along path should also leave with a working project, a maintained repository, testing evidence, deployment experience, and a record of corrections and major decisions.
+
+Completion must represent real learning, not merely reaching the final page.
 
 ---
 
@@ -98,22 +100,22 @@ This is the number-one instructional rule.
 
 > Nothing is taught once and forgotten. Every chapter must reuse, strengthen, and expand what the student has already learned.
 
-The course must feel like one continuous build, not a collection of disconnected tutorials.
+The course must feel like one continuous learning experience, not a collection of disconnected tutorials.
 
 Every chapter must:
 
 1. Briefly remind the student what was completed previously.
 2. Explain why that earlier work matters now.
 3. Introduce one manageable new idea.
-4. Apply that idea to the continuing project.
+4. Apply that idea through a practical activity or guided project step.
 5. Require the student to reuse relevant earlier knowledge.
 6. Reinforce important habits already introduced.
-7. Leave the project or Build Plan stronger than it was before.
+7. Leave the student’s understanding, Build Plan, or project stronger than before.
 8. Clearly prepare the student for the next chapter.
 
-A chapter cannot introduce GitHub and then ignore it. Once GitHub is introduced, students must keep using it. The same applies to planning, prompting, testing, debugging, security, documentation, scope control, and every other major skill.
+A chapter cannot introduce GitHub and then ignore it. Once GitHub is introduced, students on the build-along path must keep using it. The same applies to planning, prompting, testing, debugging, security, documentation, scope control, and every other major skill.
 
-Earlier knowledge should also return in later understanding checks. Students should not only recall the current lesson; they should periodically retrieve and apply important ideas from previous chapters.
+Earlier knowledge should return in later understanding checks. Students should periodically retrieve and apply ideas from previous chapters instead of answering questions only about the newest lesson.
 
 ## 2. Teach One Primary New Idea at a Time
 
@@ -121,7 +123,7 @@ Lessons must move in small, clear steps.
 
 A chapter should have one primary purpose. Supporting details may be included only when they help the student complete that purpose.
 
-Do not bury a beginner under several unfamiliar systems at once. For example, do not introduce a framework, database, authentication service, API, deployment platform, and testing system in the same lesson.
+Do not introduce a framework, database, authentication service, API, deployment platform, and testing system in one lesson.
 
 ## 3. Explain Why the Lesson Matters Now
 
@@ -130,9 +132,10 @@ Students should always understand why they are learning something.
 Every chapter must connect the new idea to:
 
 - The previous chapter
-- The student’s continuing application
+- The student’s selected path
+- The guided project when the student is building along
 - A real decision, task, or problem they will face
-- The next stage of the build
+- The next stage of the course
 
 The course must not teach technical facts merely because they appear in traditional coding courses.
 
@@ -140,7 +143,7 @@ The course must not teach technical facts merely because they appear in traditio
 
 Students should apply each important idea before moving on.
 
-They should not merely read definitions of an API, database, framework, repository, test, or environment variable. They should make a decision, complete a task, inspect an example, or improve their project with that knowledge.
+They should not merely read definitions of an API, database, framework, repository, test, or environment variable. They should make a decision, inspect an example, improve a prompt, answer a scenario, update the Build Plan, or complete a guided project step.
 
 ## 5. Keep All Course Writing Simple and Human
 
@@ -152,6 +155,7 @@ This rule applies to:
 - Examples
 - Quizzes
 - Project instructions
+- Setup instructions
 - Rubrics
 - Review feedback
 - Buttons
@@ -193,7 +197,7 @@ Correct technical terms should still be used. They must simply be explained clea
 
 > Create a GitHub repository and connect it to your project.
 
-Raw AI-generated lesson copy must never be published without human review and rewriting. The course itself cannot sound like AI slop.
+Raw AI-generated course copy must never be published without human review and rewriting. The course itself cannot sound AI-generated.
 
 ## 6. Plan Before Prompting
 
@@ -211,7 +215,7 @@ The course must repeatedly enforce this order:
 8. Build one page or feature at a time.
 9. Test completed work.
 10. Save stable versions.
-11. Launch only after reviewing the full experience.
+11. Launch only after reviewing the complete experience.
 
 ## 7. Build Before Adding Complexity
 
@@ -224,7 +228,7 @@ The course must repeatedly enforce these habits:
 - Save a working version before major changes
 - Avoid redundant pages, questions, and features
 - Do not ask AI to build an entire complicated application in one response
-- Do not add a framework, database, API, authentication, payments, or another service unless the project needs it
+- Do not add a framework, database, API, authentication, payments, email service, or another dependency unless the project needs it
 - Delay nice-to-have features until the foundation works
 
 Speed without control usually creates more work.
@@ -243,7 +247,7 @@ Students must learn how to:
 - Provide screenshots, errors, and current files when useful
 - Ask the AI to inspect before editing
 - Ask for targeted edits instead of unnecessary rewrites
-- Judge whether the output matches the actual request
+- Judge whether the output matches the request
 - Reject bloated or generic design
 - Stop unnecessary features from being added
 - Recover when the AI changes unrelated work
@@ -254,7 +258,7 @@ The student’s judgment is more important than the AI’s first answer.
 
 ## 9. Testing Is Part of Building
 
-Students must not be allowed to treat “the page loaded” as proof that an application works.
+Students must not treat “the page loaded” as proof that an application works.
 
 Testing should become a repeated habit. Students will gradually learn to check:
 
@@ -270,16 +274,16 @@ Testing should become a repeated habit. Students will gradually learn to check:
 - Authentication flows
 - Account deletion when applicable
 - Database behavior
-- API failures
+- API and email-service failures
 - Local and deployed versions
 
-The course should introduce automated testing only to the depth that it is useful. The larger goal is to build a disciplined testing mindset.
+The course should introduce automated testing only to the depth that it is useful. The larger goal is a disciplined testing mindset.
 
 ## 10. Save Stable Work and Make Recovery Normal
 
 Students must learn to protect progress before making risky changes.
 
-Once GitHub is introduced, later chapters should continue to require meaningful commits and stable restore points.
+Once GitHub is introduced, later build-along chapters should continue to require meaningful commits and stable restore points.
 
 The course should normalize:
 
@@ -290,7 +294,7 @@ The course should normalize:
 - Comparing what changed
 - Reverting instead of endlessly patching broken work
 
-Recovery is part of the build process, not evidence that the student failed.
+Recovery is part of the build process, not proof that the student failed.
 
 ## 11. Security Must Be Explained Before It Becomes Dangerous
 
@@ -306,8 +310,9 @@ Students must learn, before they need them:
 - Why database access rules matter
 - Why real customer data requires care
 - Why account deletion and privacy promises must actually work
+- Why they must never submit passwords, private keys, or secret credentials to Platinum VC Studios for project review
 
-Dangerous misunderstandings may require stronger checks before a dependent project stage is marked ready.
+Dangerous misunderstandings may require stronger checks before a dependent build stage is marked ready.
 
 ## 12. Progress Must Be Meaningful Without Becoming Punishment
 
@@ -328,42 +333,367 @@ The experience must:
 
 The course cannot force every buyer to finish. It can remove unnecessary friction and make genuine progress easier.
 
+## 13. The Course Will Not Connect to AI APIs
+
+Platinum VC Studios will **not** connect the course platform to OpenAI, Anthropic, Google, or another AI provider through an API for the student’s build work.
+
+The course will not:
+
+- Run student prompts through an embedded AI assistant
+- Ask students to provide an AI API key
+- Store AI-provider credentials
+- Proxy AI usage through the Platinum VC Studios account
+- Hide the real workflow behind a one-click course feature
+- Make continued course access depend on a specific AI-provider integration
+
+Students who build along will create and use their own AI account outside Platinum VC Studios. That account may be free or paid, depending on the tool and the student’s preference.
+
+The course teaches the student how to work with AI directly. It does not perform that relationship for them.
+
+## 14. Building Along Is Optional
+
+At the beginning of the course, the student must be offered two valid paths:
+
+### Guided Build-Along
+
+The student selects one of several simple website or software projects and builds it step by step while progressing through the course.
+
+### Coursework-Only
+
+The student completes the lessons, examples, practical thinking exercises, and understanding checks without building the guided project at that time.
+
+Neither path should be presented as the lazy or inferior choice.
+
+Students may have different schedules, equipment, confidence levels, or reasons for enrolling. The course should clearly explain what each path includes and what the student will or will not produce.
+
+A student who chooses coursework-only should still be able to understand the complete process and return later to build. The platform should preserve that choice and make it possible to begin a guided project later without restarting the entire course.
+
+The exact completion labels or credentials for each path remain an open decision.
+
+---
+
+# Registration and Personalization
+
+The registration page must collect the student’s first name.
+
+Suggested helper text:
+
+> We’ll use your first name to personalize your course experience.
+
+The first name must be stored in the student’s profile and remain editable in account settings.
+
+The platform should use the student’s name naturally in places such as:
+
+- The first welcome
+- Return greetings
+- Chapter introductions
+- Progress summaries
+- Important corrections
+- Project milestones
+- Review feedback
+- Completion moments
+
+The name must not be forced into every paragraph or button. Personalization should sound human, not automated.
+
+**Natural:**
+
+> Welcome back, Emanuel. You’re ready to continue Chapter 3.
+
+**Unnatural:**
+
+> Emanuel, click continue, Emanuel, to begin your next lesson, Emanuel.
+
+The student’s first name is personal profile data. It must be handled according to the platform’s privacy and account-deletion requirements.
+
+---
+
+# Course Entry and Chapter 1
+
+## Chapter 1: Introduction to Platinum VC Studios
+
+Chapter 1 is the formal introduction to the coursework and must establish the full learning model before technical instruction begins.
+
+By the end of Chapter 1, the student should understand:
+
+- What Platinum VC Studios teaches
+- What it does not teach
+- How chapters build upon earlier chapters
+- How understanding checks work
+- How practical work and module projects work
+- Why planning, testing, correction, and saving are recurring habits
+- How the guided build-along path differs from coursework-only
+- Which outside tools and accounts are needed to build along
+- That Platinum VC Studios itself was vibe coded
+- What the student personally wants to learn or build
+
+## The Course Itself Is a Case Study
+
+Chapter 1 must clearly state:
+
+> Platinum VC Studios was vibe coded.
+
+The course platform began as an idea. Its purpose, course rules, information architecture, pages, design standards, and product behavior were planned and refined with the help of AI.
+
+The lesson must not imply that the complete product appeared instantly from one prompt. It should explain that AI assisted the build, while human judgment was still required to:
+
+- Define the product
+- Reject bad ideas
+- Simplify overcomplicated work
+- Establish design rules
+- Organize the curriculum
+- Review language
+- Test features
+- Correct errors
+- Protect data
+- Maintain consistency
+- Decide when work was not good enough
+
+Platinum VC Studios should be used as a recurring real-world case study throughout the course whenever it helps explain planning, design, GitHub, authentication, progress tracking, databases, email, testing, deployment, and correction.
+
+Private credentials, security-sensitive details, and student data must never be exposed through the case study.
+
+## Choose a Course Path
+
+Near the beginning of Chapter 1, the student must choose:
+
+- **Build a guided project with the course**
+- **Continue with coursework only**
+
+The choice must be explained in simple language.
+
+Suggested direction:
+
+### Build with the course
+
+> Choose a simple project and build it one step at a time as each chapter introduces a new part of the process.
+
+### Coursework only
+
+> Learn the complete process through lessons, examples, exercises, and quizzes without building the project right now.
+
+The choice must be saved to the student’s profile. The student should be able to review or change it later under rules that will be finalized during product planning.
+
+## Personal Starting Point
+
+Chapter 1 should also ask the student:
+
+- Why they enrolled
+- What they may want to build
+- What completing the course would help them accomplish
+- Their current experience level
+- What currently feels confusing or difficult
+
+These answers create the first section of the student’s Build Plan or Learning Plan and should be revisited later to show progress.
+
+---
+
+# Guided Build-Along Model
+
+## A Small Project Catalog
+
+Students who choose to build along will select from a small set of simple, carefully scoped projects.
+
+The catalog should include options such as:
+
+- A straightforward website
+- A small software or web-application project
+
+The exact project list has not yet been approved.
+
+Every guided option must be:
+
+- Small enough for a beginner to complete
+- Large enough to demonstrate the full workflow
+- Designed to grow chapter by chapter
+- Compatible with the concepts taught in the course
+- Free from unnecessary features
+- Capable of showing planning, design, GitHub, testing, deployment, and problem-solving
+- Structured so earlier work is reused later
+
+The project should not be fully generated at the beginning. It must grow as the student learns.
+
+## Shared Foundation, Different Outputs
+
+The guided projects may look different, but they must follow the same learning foundation.
+
+For example, all students should still learn how to:
+
+- Define the problem and intended user
+- Control first-version scope
+- Plan pages and user flow
+- Select appropriate tools
+- Prompt AI in focused steps
+- Save work to GitHub
+- Test completed work
+- Protect secrets
+- Deploy and review the result
+
+The project options should reinforce the course—not create separate courses that are impossible to maintain.
+
+## Coursework-Only Reinforcement
+
+Students who do not build along still need reinforcement.
+
+Their chapters should include:
+
+- Worked examples
+- Short decision exercises
+- Prompt critiques
+- Error scenarios
+- Tool-selection scenarios
+- Test-planning exercises
+- Cumulative understanding checks
+- Optional downloadable or saved planning work
+
+The coursework-only path must not become passive reading with no application.
+
+## Starting a Guided Project Later
+
+A coursework-only student should be able to begin a guided project later.
+
+The platform should show which earlier setup steps and project decisions must be completed before the student can join the current build stage.
+
+The exact catch-up workflow remains an open product decision, but the student should not be required to erase their course progress.
+
+---
+
+# Build-Along Tool and Account Setup
+
+The course platform will not provide these outside tools. Students who choose to build along must create and control their own accounts.
+
+The planned toolkit includes:
+
+## Visual Studio Code
+
+Students will use Visual Studio Code as the primary code editor unless a later approved project requires a different environment.
+
+The course must explain:
+
+- What an editor is
+- How to download and install Visual Studio Code
+- How to open a project folder
+- How to recognize the file explorer, editor, terminal, and extensions area
+- Which extensions are genuinely needed
+- How to avoid installing unnecessary tools merely because AI suggested them
+
+## A Preferred AI Tool
+
+Students must create their own account with the AI tool selected for the course or choose an approved alternative.
+
+The account may be free or paid.
+
+The course must clearly explain:
+
+- Which AI tool is preferred for the current course instructions
+- Which alternatives can still follow the course
+- What limitations may exist on free plans
+- That subscriptions and AI usage are separate from the Platinum VC Studios purchase
+- That the student should never send passwords, payment information, private keys, or sensitive personal data to the AI
+
+Platinum VC Studios will not request or store the student’s AI login or API key.
+
+## GitHub Account
+
+Students must create and control their own GitHub account.
+
+The course will teach them how to:
+
+- Create the account
+- Create a repository
+- Understand public versus private repositories
+- Connect a project
+- Make commits
+- Save stable versions
+- Keep secrets out of the repository
+- Share the correct repository link for review when applicable
+
+## Resend Account
+
+Students on a guided project that includes transactional email will create and control their own Resend account.
+
+The course must explain:
+
+- Why the project needs email
+- What Resend does
+- Which key is private
+- Where the key should be stored
+- How to test email safely
+- How free-plan or account limits may affect the project
+
+The student must never submit the Resend API key to Platinum VC Studios.
+
+## Vercel or Railway Account
+
+Students will create and control their own deployment account.
+
+Depending on the selected project and approved technical stack, the course may use:
+
+- Vercel
+- Railway
+- Both, when each serves a clear and necessary purpose
+
+The course must explain why a service is being used rather than treating deployment as a series of unexplained clicks.
+
+Students should learn:
+
+- What is being deployed
+- Which repository is connected
+- Where environment variables belong
+- How to read deployment errors
+- How the live environment differs from the local project
+- How to redeploy after a change
+
+The course must not add both services merely to appear advanced.
+
+## Setup Timing
+
+Students should be told early what accounts and tools the guided path will require, but they should not be forced through every setup process before the relevant lesson.
+
+The experience should distinguish:
+
+- **Prepare now**
+- **Needed later**
+- **Only needed for certain guided projects**
+
+This prevents surprise without overwhelming the student on the first day.
+
+## External Account Responsibility
+
+Platinum VC Studios must make clear that:
+
+- Outside services have their own terms, pricing, limits, privacy policies, and availability
+- The student owns and controls those accounts
+- Platinum VC Studios does not receive the student’s passwords
+- The student is responsible for charges they choose to approve with an outside provider
+- Free plans may change or have limits
+- The course should provide alternatives or updated guidance when a recommended service materially changes
+
 ---
 
 # The Learning Model
 
-## One Continuing Application
+## Two Valid Learning Paths
 
-Early in the course, each student will choose or develop an application idea. That application will grow throughout the program.
+The course has one curriculum with two participation paths.
 
-The student will gradually:
+### Guided Build-Along Path
 
-1. Define the idea and the problem it solves.
-2. Identify the intended user.
-3. Decide what the first version must accomplish.
-4. Choose what will be included and intentionally excluded.
-5. Plan the pages and user flow.
-6. Understand the technical pieces the project may require.
-7. Choose tools, languages, frameworks, and services.
-8. Create and maintain a GitHub repository.
-9. Prompt AI to build the first controlled version.
-10. Improve the design and responsiveness.
-11. Plan and connect data where needed.
-12. Add APIs or authentication where appropriate.
-13. Diagnose and correct problems.
-14. Create and complete a testing plan.
-15. Deploy and review the finished application.
+The student applies each chapter to a selected project that grows throughout the course.
 
-The student should always be able to see how earlier decisions affect the current stage.
+### Coursework-Only Path
 
-## The Living Build Plan
+The student learns the same concepts through examples, exercises, scenarios, quizzes, and planning work without maintaining the guided project at that time.
 
-Every student should maintain one central Build Plan throughout the course.
+The lessons should not become two entirely separate curricula. The same core teaching must serve both paths, with a clearly marked build step for students who are building along.
 
-It may include:
+## The Living Build Plan or Learning Plan
 
-- Application name
-- Application purpose
+Every student should maintain one central record throughout the course.
+
+For guided students, it becomes the project Build Plan. It may include:
+
+- Project name
+- Purpose
 - Problem being solved
 - Intended user
 - First-version outcome
@@ -382,15 +712,14 @@ It may include:
 - Problems encountered
 - Corrections made
 - Decisions and reasons
-- Testing checklist
-- Testing results
+- Testing checklist and results
 - GitHub repository
 - Milestone commits
 - Deployment link
 - Review feedback
 - Resubmission history
 
-Each chapter or module should update, reuse, or strengthen the relevant part of this document. It becomes the source of truth for the student’s application.
+For coursework-only students, it becomes a Learning Plan containing their goals, notes, decisions, sample plans, and understanding-check history. It can later be converted into a project Build Plan.
 
 ## Chapter Practice
 
@@ -398,38 +727,36 @@ Every chapter must include a practical action.
 
 That action may be:
 
-- Updating the Build Plan
+- Updating the Build Plan or Learning Plan
 - Making a product decision
 - Improving a prompt
 - Inspecting or correcting an example
-- Completing a small part of the continuing application
+- Completing a small guided-project step
 - Testing an existing feature
 - Saving a stable version
 - Explaining why a choice is appropriate
 
-A chapter does **not** need a large human-reviewed project submission every time. Requiring full submissions after every small lesson would create unnecessary friction and an unsustainable review queue.
+Not every chapter requires a large submitted project or human review.
 
 ## Module Projects
 
-Every module must end with a meaningful cumulative build checkpoint or project.
-
-The student must submit the required work for review when that module’s outcome depends on a stable, correct foundation.
+Guided modules should end with a meaningful cumulative build checkpoint or project.
 
 A module project must:
 
 - Use the new skills from the module
 - Reuse relevant skills from earlier modules
-- Improve the same continuing application
+- Improve the same selected project
 - Include clear submission requirements
 - Include a review rubric
 - Leave the project in a stable, saved state
 - Require corrections when an important requirement is not met
 
+Coursework-only students should receive an equivalent cumulative scenario or planning checkpoint, but it should not pretend they built a live project when they did not.
+
 ## Transfer Challenges
 
-A single continuing project provides continuity, but it can also make students overly dependent on one familiar example.
-
-Selected modules should include small transfer challenges using a different situation, such as:
+Selected modules should include short challenges using a different situation, such as:
 
 - Choosing tools for a different type of application
 - Diagnosing a broken login flow
@@ -438,20 +765,17 @@ Selected modules should include small transfer challenges using a different situ
 - Correcting a vague or destructive AI prompt
 - Identifying which part of an unfamiliar project should be tested
 
-These challenges should be short. They exist to confirm that students understand the method, not only the exact steps used in their own project.
+These challenges confirm that students understand the process, not only one familiar example.
 
 ## Final Capstone
 
-The final capstone must show that the student can combine the complete process with less step-by-step support.
+The exact capstone format remains an open decision.
 
-The exact capstone format is still an open decision. It may require the student to:
+A guided student’s capstone may require the student to complete and launch the selected project with less step-by-step support or add a carefully scoped feature independently.
 
-- Complete and launch the continuing application with greater independence
-- Add a carefully scoped feature without being walked through every step
-- Plan and build a second smaller application
-- Diagnose and improve an unfamiliar existing project
+A coursework-only student may complete a comprehensive planning and problem-solving capstone without claiming to have completed a deployed build.
 
-Whatever format is chosen, the capstone must test planning, tool choice, AI direction, problem-solving, testing, GitHub use, and launch readiness together.
+The exact recognition attached to each capstone remains an open decision.
 
 ---
 
@@ -459,45 +783,16 @@ Whatever format is chosen, the capstone must test planning, tool choice, AI dire
 
 Every chapter should follow a consistent, recognizable rhythm.
 
-## 1. Look Back
-
-Briefly remind the student what was completed in the previous chapter.
-
-## 2. Make the Connection
-
-Explain how that earlier work leads into the current lesson.
-
-## 3. State the Outcome
-
-Tell the student exactly what they will understand or complete by the end of the chapter.
-
-## 4. Learn One New Concept
-
-Introduce the chapter’s primary idea in simple language.
-
-## 5. See It in Practice
-
-Use a clear worked example before asking the student to apply the idea independently.
-
-## 6. Apply It to the Continuing Project
-
-The student uses the concept to improve the application or Build Plan.
-
-## 7. Reinforce Earlier Learning
-
-The task must require relevant decisions, habits, or knowledge from earlier chapters.
-
-## 8. Check Understanding
-
-The student completes a short knowledge check that includes the current lesson and, when useful, an earlier concept.
-
-## 9. Save the Work
-
-The student updates the Build Plan, checklist, project, or GitHub repository where appropriate.
-
-## 10. Show What Comes Next
-
-End with a clear explanation of how the completed work prepares the student for the next chapter.
+1. **Look Back** — Briefly remind the student what was completed previously.
+2. **Make the Connection** — Explain how the earlier work leads into the current lesson.
+3. **State the Outcome** — Tell the student exactly what they will understand or complete.
+4. **Learn One New Concept** — Introduce one primary idea in simple language.
+5. **See It in Practice** — Show a clear worked example.
+6. **Apply It** — Give coursework-only students a practical exercise and guided students a clearly marked build step.
+7. **Reinforce Earlier Learning** — Require relevant earlier habits or knowledge.
+8. **Check Understanding** — Complete a short cumulative knowledge check.
+9. **Save the Work** — Update the plan, checklist, project, or repository where appropriate.
+10. **Show What Comes Next** — Explain how the completed work prepares the student for the next chapter.
 
 ---
 
@@ -510,9 +805,11 @@ A **module** contains several connected chapters and ends with a meaningful cumu
 The course will use this distinction:
 
 - Every chapter includes practical application and a Check Your Understanding activity.
-- Not every chapter requires a large submitted project or human review.
-- Every module ends with a meaningful project or checkpoint.
-- Dependent build stages may require an approved module outcome before being marked ready.
+- Every chapter clearly distinguishes the shared coursework from the optional guided build step.
+- Not every chapter requires a submitted project or human review.
+- Guided modules end with a meaningful project or checkpoint.
+- Coursework-only modules end with a meaningful cumulative exercise or scenario.
+- Dependent build stages may require an approved guided-project outcome before being marked ready.
 - The complete module and chapter sequence has not yet been approved.
 
 ---
@@ -523,15 +820,13 @@ The course will use this distinction:
 
 Every chapter must end with a short **Check Your Understanding** activity.
 
-This preserves the original requirement that students demonstrate understanding while avoiding a school-like testing experience.
-
 A student must pass the check before that chapter is marked **mastered** or counted toward verified completion.
 
 However:
 
 - Missing a question should not permanently block access to paid lesson content.
 - Students may continue reading and exploring.
-- A later project checkpoint may require earlier dependent chapters to be mastered.
+- A later guided-project checkpoint may require earlier dependent chapters to be mastered.
 - Unlimited retries should be allowed.
 - Wrong answers must lead to useful explanations and review.
 - There should be no artificial waiting period before trying again.
@@ -540,7 +835,7 @@ The exact passing score has not been decided.
 
 ## Checks Must Teach as Well as Measure
 
-Most chapter checks should contain about three to five focused items, depending on the lesson.
+Most chapter checks should contain approximately three to five focused items, depending on the lesson.
 
 Useful formats include:
 
@@ -554,13 +849,9 @@ Useful formats include:
 - Diagnosing a short error scenario
 - Completing a small practical action
 
-Questions should use plain language and immediate explanations.
-
-Later checks should periodically bring back important earlier concepts. This creates cumulative recall instead of one-time memorization.
+Later checks should bring back important earlier concepts.
 
 ## Test Judgment, Not Trivia
-
-Questions should focus on decisions the student will actually face.
 
 **Weak question:**
 
@@ -576,9 +867,9 @@ Questions should focus on decisions the student will actually face.
 
 ## Projects Are Stronger Proof Than Multiple Choice
 
-A student who can create a repository, protect a private key, test a feature, explain a decision, and correct a problem has shown more understanding than someone who memorized definitions.
+Quizzes support learning. Actual work is stronger proof when the student chooses to build.
 
-Quizzes support the learning process. The work is the stronger proof.
+A student who creates a repository, protects a private key, tests a feature, explains a decision, and corrects a problem has shown more than someone who memorized definitions.
 
 ## Failure Must Include Direction
 
@@ -586,49 +877,28 @@ Never show only:
 
 > Incorrect. Try again.
 
-Instead, explain:
+Explain:
 
 - What the student misunderstood
 - Why the correct answer matters
 - What part of the lesson to review
 - What to try next
-- How the same idea appears in the continuing project
+- How the same idea appears in a guided project
 
 The goal is mastery, not embarrassment.
 
-## Module Checkpoints
-
-Module checkpoints confirm that the student has a stable foundation before a dependent build stage is marked ready.
-
-Possible checkpoints include:
-
-- Application purpose and intended user approved
-- First-version scope approved
-- Build Plan reviewed
-- Page structure and user flow approved
-- Tool choice explained
-- GitHub account and repository checked
-- Database plan reviewed
-- Authentication flow tested
-- API keys stored safely
-- Testing evidence submitted
-- Pre-launch review completed
-
-Not every checkpoint needs the same review method. The exact review system will be finalized later.
-
 ## Verified Completion
 
-Students may explore the course content without being trapped behind every incorrect answer.
+The exact completion system remains open.
 
-However, any certificate, completion badge, portfolio approval, final review, or other official recognition offered by Platinum VC Studios must require the student to:
+The platform may eventually distinguish between:
 
-- Pass required chapter checks
-- Complete required practical work
-- Submit required module projects
-- Correct material problems
-- Complete the final capstone
+- Coursework completion
+- Guided-project completion
+- Verified builder completion
+- Capstone approval
 
-Whether the first release will include certificates or badges remains an open product decision.
+No label should claim that a student built or launched a project unless the required evidence was actually reviewed.
 
 ---
 
@@ -636,7 +906,7 @@ Whether the first release will include certificates or badges remains an open pr
 
 ## Projects Must Be Cumulative
 
-Later assignments must include relevant requirements from earlier work.
+Later guided assignments must include relevant requirements from earlier work.
 
 A database assignment should not merely say:
 
@@ -646,11 +916,11 @@ It should require the student to confirm that the database supports the previous
 
 ## Protect the Foundation
 
-An early mistake should not follow the student through the entire course.
+An early mistake should not follow the student through the entire build.
 
-Important stages should be reviewed before the student builds dependent work on top of them.
+Important stages should be reviewed before dependent work is added.
 
-After approval, the student should create or record a stable version. Once GitHub has been introduced, that should usually include a clear milestone commit.
+After approval, guided students should create or record a stable version. Once GitHub is introduced, that should usually include a clear milestone commit.
 
 ## Submission Requirements Must Be Clear
 
@@ -668,6 +938,8 @@ A project submission page should show:
 - Required corrections
 - Resubmission history
 
+The submission form must warn students not to include passwords, API keys, private `.env` contents, recovery codes, or secret credentials.
+
 ## Review Feedback Must Be Actionable
 
 Useful feedback must explain:
@@ -682,24 +954,21 @@ Generic feedback such as “good job” or “needs work” is not enough.
 
 ## Human Review Must Be Sustainable
 
-Human review is valuable but can become the course’s largest operational bottleneck.
-
 Human attention should be reserved for meaningful milestones, difficult cases, and final work.
 
-The final review process may combine:
+Possible review methods include:
 
 - Submission checklists
 - Student self-assessment
 - Clear scoring rubrics
 - Automated technical checks
-- AI-assisted preliminary review
 - Human review
 - Defined resubmission limits or rules
 - Scheduled review windows
 
-These are possible methods, not all approved requirements.
+Platinum VC Studios will not connect the student’s work to an AI API for automatic course-side project generation. Whether AI is used internally to help organize review work remains an open operational decision and must never expose student secrets or substitute for promised human review.
 
-The course must never promise unlimited personal review unless that service can be delivered consistently.
+The course must never promise unlimited personal review unless it can be delivered consistently.
 
 ---
 
@@ -707,8 +976,8 @@ The course must never promise unlimited personal review unless that service can 
 
 The course is expected to explain and apply topics such as:
 
-- Having an idea and working it into a buildable product
-- Websites, web applications, and mobile applications
+- Having an idea and turning it into a buildable product
+- Websites, web applications, software, and mobile applications
 - Frontend and backend
 - Programming languages
 - Frameworks and libraries
@@ -722,6 +991,7 @@ The course is expected to explain and apply topics such as:
 - HTML and CSS at a practical level
 - Responsive design
 - File and folder structure
+- Visual Studio Code
 - GitHub account setup
 - Repositories
 - Commits, branches, and safe restore points
@@ -732,11 +1002,12 @@ The course is expected to explain and apply topics such as:
 - Tables, rows, columns, IDs, and relationships
 - Authentication
 - Roles and permissions
+- Transactional email and Resend
 - Debugging
 - Reading and reporting errors
 - Manual testing
 - Practical automated tests
-- Deployment
+- Vercel and Railway deployment concepts
 - Domains
 - Privacy, support, account deletion, and basic launch readiness
 
@@ -747,9 +1018,9 @@ These subjects must be taught only to the depth needed for students to:
 - Understand what is happening
 - Recognize common problems
 - Protect important information
-- Complete and launch an application
+- Complete and launch an application when following the guided path
 
-This is not a computer-science curriculum. HTML, CSS, languages, frameworks, databases, and testing are tools within the build process—not separate academic subjects that students must master before they are allowed to create.
+This is not a computer-science curriculum. HTML, CSS, languages, frameworks, databases, testing, and deployment are tools within the build process—not separate academic subjects students must master before creating.
 
 ---
 
@@ -769,6 +1040,7 @@ The intended experience is a self-paced, page-by-page lesson system that may com
 - Worked examples
 - Short practice tasks
 - Understanding checks
+- Optional guided build steps
 - Project work
 - A clear next-page action
 
@@ -789,7 +1061,7 @@ Animation should explain, not decorate.
 
 Good uses include:
 
-- Showing how a frontend, backend, and database connect
+- Showing how frontend, backend, and database connect
 - Demonstrating information moving through an API
 - Showing what happens when work is committed and pushed to GitHub
 - Comparing a vague prompt with a controlled prompt
@@ -807,7 +1079,7 @@ Avoid:
 - Long animations the student cannot control
 - Animations that exist only to make the course appear expensive
 
-The platform must not become an animated slideshow with quizzes attached. Every visual element must support understanding or action.
+The platform must not become an animated slideshow with quizzes attached.
 
 ---
 
@@ -817,7 +1089,7 @@ The platform must not become an animated slideshow with quizzes attached. Every 
 
 Platinum VC Studios must be designed, engineered, tested, and maintained like a real production product from a professional technology company.
 
-It is not a temporary prototype, a landing-page concept, a collection of attractive mockups, or a lightly connected set of course screens. The full public website, account experience, learning platform, quizzes, progress system, project submissions, review tools, settings, support flows, and administrative functions must feel like parts of one complete product.
+It is not a temporary prototype, a landing-page concept, a collection of attractive mockups, or a lightly connected set of course screens. The public website, registration, accounts, learning platform, path selection, quizzes, progress system, guided-project setup, submissions, review tools, settings, support flows, and administrative functions must feel like parts of one complete product.
 
 The professional standard requires:
 
@@ -830,18 +1102,16 @@ The professional standard requires:
 - Real loading, empty, success, error, disabled, and permission states
 - Helpful form validation and recovery messages
 - Secure authentication, session, data, and secret handling
-- Reliable progress saving and restoration
+- Reliable progress and path saving
 - Functional buttons and controls with no fake production interactions
 - Tested critical user flows
 - Reasonable performance and page-loading behavior
 - Clear privacy, support, account, and deletion experiences
 - Maintainable code and a deliberate release process
 
-A page is not finished merely because it looks good in one screenshot. It must work, respond correctly, handle expected problems, and remain consistent with the rest of the platform.
+A page is not finished merely because it looks good in one screenshot.
 
 ## Locked Design Principles
-
-Platinum VC Studios is a website and must feel like a premium, carefully designed educational studio.
 
 The direction is inspired by the clarity and restraint established in the M.R.S. Medical Services project.
 
@@ -863,15 +1133,13 @@ The locked principles are:
 
 The product should feel calm, credible, organized, approachable, mature, and human.
 
-It should look like a real company invested in its product—not like someone asked an AI tool to generate a fashionable course website in one prompt.
+It should look like a real company invested in its product—not like an AI generated a fashionable course website in one prompt.
 
 ## No Generic AI-Coded Style
 
-The website must not look like a generic AI-generated SaaS product or online-course template.
-
 Avoid:
 
-- Dramatic, overly saturated, neon, or attention-seeking color schemes
+- Dramatic, overly saturated, neon, or attention-seeking colors
 - Purple-and-blue AI gradients
 - Glowing backgrounds
 - Glassmorphism
@@ -880,10 +1148,10 @@ Avoid:
 - Nested cards
 - Turning every section, paragraph, statistic, or action into a card
 - Oversized rounded containers everywhere
-- Large corner radiuses used as the default visual language
+- Large corner radiuses as the default visual language
 - Heavy shadows
-- Giant headlines that overpower the actual content
-- Exaggerated display text used only to appear bold or premium
+- Giant headlines that overpower the content
+- Exaggerated display text used merely to appear premium
 - Random dashboard charts
 - Unnecessary icons
 - Gimmicky motion
@@ -898,7 +1166,7 @@ Avoid:
 
 Cards are a tool, not the default layout.
 
-Use a card only when content is truly a separate object, action, status, or grouped unit that benefits from a visible boundary. Do not place every piece of content inside a rounded rectangle.
+Use a card only when content is truly a separate object, action, status, or grouped unit that benefits from a visible boundary.
 
 Prefer:
 
@@ -912,13 +1180,13 @@ Prefer:
 - Clear page regions
 - Simple bordered groups when a boundary is actually needed
 
-When cards are appropriate, their radius, border, padding, and shadow must be restrained and consistent. The interface must never become a wall of soft, rounded boxes.
+When cards are appropriate, their radius, border, padding, and shadow must be restrained and consistent.
 
 ## Provisional Visual Direction
 
 The exact brand palette and component system have not yet been approved.
 
-A possible direction, based on the established conversation, is:
+A possible direction is:
 
 - Mostly light interface
 - Warm white or very light neutral backgrounds
@@ -944,22 +1212,25 @@ A lesson page may include:
 - Written lesson content
 - Optional audio controls
 - Focused animation or interactive example
-- Practical task
+- Coursework activity
+- Optional guided-build step
 - Check Your Understanding
 - Save or mark-complete action
 - Clear next-page action
 
-Navigation, progress, account controls, and secondary tools should remain visible but visually quiet.
-
-Quiz screens should show one focused question at a time whenever practical.
+Navigation, progress, path status, account controls, and secondary tools should remain visible but visually quiet.
 
 The platform should remember:
 
-- The student’s exact location
+- The student’s first name
+- Selected learning path
+- Selected guided project, when applicable
+- Exact lesson location
 - Completed lessons
 - Mastered chapters
 - Current project checkpoint
 - Pending corrections
+- Tool-setup status
 - The next recommended action
 
 ## Brand Clarity
@@ -967,16 +1238,6 @@ The platform should remember:
 Because “VC” commonly means venture capital, the website must quickly explain that VC means **Vibe Code**.
 
 The exact tagline has not been approved.
-
-Possible supporting directions include:
-
-> Vibe coding education for real application builders.
-
-or:
-
-> Take your idea from concept to working application.
-
-The brand must not rely on visitors already understanding the initials.
 
 ---
 
@@ -995,7 +1256,7 @@ The Platinum VC Studios voice must be:
 - Respectful
 - Never condescending
 
-Copy should use complete, natural sentences unless a short label genuinely improves clarity. It should sound like one thoughtful person explaining something to another person.
+Copy should use complete, natural sentences unless a short label genuinely improves clarity.
 
 Avoid:
 
@@ -1019,14 +1280,6 @@ Avoid:
 
 > Learn how to plan an application, guide AI through the build, test your work, and launch it.
 
-**Avoid:**
-
-> Intelligent. Scalable. Future-ready.
-
-**Use:**
-
-> Build a strong foundation that you can maintain and expand as your application grows.
-
 Do not use claims such as:
 
 - Build a million-dollar application overnight
@@ -1035,47 +1288,23 @@ Do not use claims such as:
 - No effort required
 - Anyone can build anything in minutes
 
-The course should promise a clear process, practical skills, useful feedback, and a real opportunity to build—not guaranteed wealth or instant expertise.
-
 ---
 
 # Research-Aligned Instructional Foundation
 
-The teaching method is intentionally aligned with established learning principles.
+The teaching method is aligned with established learning principles:
 
-## Scaffolding
+- **Scaffolding:** New work rests on an understood foundation.
+- **Mastery learning:** Students attempt work, receive useful correction, and try again.
+- **Retrieval practice:** Earlier ideas return in later checks.
+- **Worked examples:** Students see a clear example before independent work.
+- **Project-based learning:** Guided students apply lessons to a real growing project.
+- **Varied practice:** Unfamiliar scenarios test whether the method transfers.
+- **Multimedia coherence:** Text, audio, and animation support learning without clutter.
+- **Actionable feedback:** Feedback explains the problem, correction, and proof required.
+- **Learner choice:** Students can choose guided building or coursework-only without losing access to the teaching.
 
-New work should rest on an understood foundation. Support is strongest early and should gradually reduce as the student becomes more capable.
-
-## Mastery Learning
-
-Students should receive instruction, attempt the work, receive useful correction, and try again. Mastery should be demonstrated before dependent project stages are treated as ready.
-
-## Retrieval Practice
-
-Understanding checks should make students recall and use important ideas. Earlier concepts should return over time instead of disappearing after one chapter.
-
-## Worked Examples and Guided Practice
-
-Students should see a clear example before being asked to complete a similar task independently.
-
-## Project-Based Learning
-
-The continuing application gives each lesson a real purpose and produces evidence of actual ability.
-
-## Varied and Transfer Practice
-
-Small unfamiliar scenarios help confirm that the student understands the process rather than memorizing one project.
-
-## Multimedia Coherence
-
-Text, audio, and animation should work together. Decorative sound, motion, and visual clutter should be removed when they do not help learning.
-
-## Actionable Feedback
-
-Feedback should explain the problem, the reason it matters, the correction, and how the student can verify the result.
-
-The course should use these principles in plain language. It does not need to sound academic to be educationally sound.
+The course should apply these principles without sounding academic.
 
 ---
 
@@ -1084,20 +1313,23 @@ The course should use these principles in plain language. It does not need to so
 - A library of disconnected lessons
 - A traditional coding bootcamp disguised as a vibe-coding course
 - A collection of copied prompts
+- An embedded AI chat product that performs the student’s work
+- A course that asks students for AI API keys
 - A long series of talking-head or screen-recorded videos
 - An animated slideshow with no meaningful practice
-- A platform that rewards memorization without execution
+- A passive reading course with no reinforcement
+- A platform that rewards memorization without judgment
 - A maze of locked lessons and frustrating tests
 - A generic AI SaaS dashboard
 - A sea of rounded cards
 - A dramatic, neon, gradient-heavy technology theme
 - A website built around giant headlines and empty slogans
-- A concept mockup that looks polished but lacks real states and working flows
+- A polished concept mockup without real states and working flows
 - A hype-driven “get rich with AI” product
 - A course that teaches tools without judgment
-- A course that abandons concepts immediately after introducing them
-- A review service that promises more personal attention than it can deliver
-- A project that adds complexity simply to appear advanced
+- A course that abandons concepts after introducing them
+- A review service that promises more attention than it can deliver
+- A project that adds complexity merely to appear advanced
 
 ---
 
@@ -1113,14 +1345,14 @@ Before approving any chapter, confirm that it:
 - Uses simple, human language
 - Defines necessary technical terms
 - Includes a useful worked example
-- Applies the idea to the continuing project
-- Reuses relevant earlier skills
+- Includes a practical coursework activity
+- Includes a clearly marked guided-build step when relevant
+- Reuses earlier skills
 - Avoids unnecessary theory
-- Includes a practical action
 - Ends with a Check Your Understanding activity
 - Includes corrective explanations
 - Revisits earlier knowledge when useful
-- Updates the Build Plan or project where appropriate
+- Updates the Build Plan, Learning Plan, or project where appropriate
 - Makes the next step clear
 - Prepares the student for the next chapter
 
@@ -1135,13 +1367,14 @@ Before approving any module, confirm that it:
 - Builds on earlier modules
 - Reuses earlier habits and knowledge
 - Does not introduce complexity before it is needed
-- Ends with a meaningful cumulative project or checkpoint
-- Includes clear submission requirements
+- Provides a meaningful guided-project checkpoint
+- Provides a meaningful coursework-only cumulative exercise
+- Includes clear submission requirements when work is reviewed
 - Uses a clear review rubric
-- Protects the student from building on a broken foundation
-- Leaves the continuing application in a stable, saved state
+- Protects guided students from building on a broken foundation
+- Leaves the guided project in a stable, saved state
 - Includes a transfer challenge when appropriate
-- Moves the student closer to independent building
+- Moves the student closer to independence
 
 ---
 
@@ -1160,10 +1393,11 @@ Before approving a page or feature for production, confirm that it:
 - Uses readable contrast and typography
 - Avoids dramatic color, oversized text, robotic copy, and unnecessary cards
 - Uses real functionality rather than decorative or dead controls
-- Preserves the student’s work and progress correctly
-- Protects private data and secrets
+- Preserves the student’s name, path, work, and progress correctly
+- Never asks for outside-service passwords or secret keys
+- Protects private data
 - Has been tested through the complete user flow
-- Feels finished as part of one professional product, not only as an isolated screen
+- Feels finished as part of one professional product
 
 ---
 
@@ -1171,23 +1405,31 @@ Before approving a page or feature for production, confirm that it:
 
 The following details have not been approved and must not be treated as final:
 
-- The complete course outcome statement
+- The exact final student outcome statement
 - The exact number of modules and chapters
 - The full chapter-by-chapter sequence
+- The exact guided project catalog
+- Which project is the default recommendation
+- Whether students may change guided projects after building begins
+- The catch-up flow for coursework-only students who begin building later
 - The course website’s technical stack
+- The preferred AI tool and approved alternatives
+- The exact timing of each outside-account setup
+- Which projects require Resend
+- Whether Vercel, Railway, or both are used for each project
 - The final brand palette
 - The logo and visual identity
 - The final tagline
 - The exact chapter passing score
-- Whether module checkpoints hard-gate dependent project work
+- Whether project checkpoints hard-gate later guided build work
 - Review turnaround times
 - Resubmission limits
-- Which checks can be automated
-- How AI-assisted preliminary review would work
+- Which non-AI checks can be automated
+- Whether AI is used internally to assist review operations without connecting to the student’s build workflow
 - Whether certificates or badges will be offered
-- The exact final-capstone format
+- The exact capstone formats for each path
+- The exact distinction between coursework completion and verified builder completion
 - Pricing and access tiers
-- Whether students choose any application idea or begin with a guided starter project
 
 ---
 
@@ -1197,25 +1439,31 @@ The next task is to determine the entire course in order.
 
 The sequence should be:
 
-1. Define the exact final student outcome.
-2. Decide the level of application the student should be capable of launching.
-3. Determine the major modules.
-4. Define the cumulative outcome of each module.
-5. Divide each module into focused chapters.
-6. Confirm exactly how each chapter builds on the one before it.
-7. Define the practical action for every chapter.
-8. Define the Check Your Understanding activity for every chapter.
-9. Define the cumulative project and review rubric for every module.
-10. Decide where transfer challenges belong.
-11. Define the final capstone.
-12. Review the full sequence for gaps, repetition, hidden prerequisites, and unnecessary complexity.
-13. Confirm that every earlier skill continues to appear after it is introduced.
-14. Only then begin building the course website and lesson content.
+1. Define the exact final outcome for coursework-only students.
+2. Define the exact final outcome for guided build-along students.
+3. Select the small guided project catalog.
+4. Decide the level of website or software each guided student should be capable of launching.
+5. Confirm the preferred AI tool and acceptable alternatives.
+6. Map when Visual Studio Code, GitHub, Resend, Vercel, and Railway are introduced.
+7. Determine the major modules.
+8. Define the cumulative outcome of each module for both paths.
+9. Divide each module into focused chapters.
+10. Confirm how each chapter builds on the one before it.
+11. Define the shared practical action for every chapter.
+12. Define the optional guided-build step for every relevant chapter.
+13. Define the Check Your Understanding activity for every chapter.
+14. Define the cumulative guided project and review rubric for every module.
+15. Define the coursework-only cumulative exercise for every module.
+16. Decide where transfer challenges belong.
+17. Define the final capstones and honest completion labels.
+18. Review the full sequence for gaps, repetition, hidden prerequisites, and unnecessary complexity.
+19. Confirm that every earlier skill continues to appear after it is introduced.
+20. Only then begin building the course website and lesson content.
 
-No page, chapter, animation, quiz, or project should exist merely to fill space. Every part must have a clear purpose in the student’s journey from idea to independently building and launching an application.
+No page, chapter, animation, quiz, setup task, or project should exist merely to fill space.
 
 ---
 
 # Core Standard
 
-> Every chapter introduces one manageable new idea, connects it to prior learning, applies it to the student’s continuing application, reinforces earlier skills, checks understanding without punishing curiosity, and leaves the student better prepared to build independently.
+> Every chapter introduces one manageable new idea, connects it to prior learning, gives every student a practical way to use it, offers a guided build step when relevant, reinforces earlier skills, checks understanding without punishing curiosity, and leaves the student better prepared to build independently.

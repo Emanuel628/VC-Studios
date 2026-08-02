@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "user_agent": "PlatinumVCStudiosDeploymentResearch/1.0 (+https://platinumvcstudios.com)",
+  "request_delay_seconds": 1.5,
+  "sources": [
+    {"id":"vercel-git-deployments","platform":"vercel","title":"Deploying Git Repositories with Vercel","url":"https://vercel.com/docs/git","topics":["github","deployment","preview","production"]},
+    {"id":"vercel-deployments-overview","platform":"vercel","title":"Deploying to Vercel","url":"https://vercel.com/docs/deployments/overview","topics":["deployment","generated-url","logs"]},
+    {"id":"vercel-projects-overview","platform":"vercel","title":"Projects overview","url":"https://vercel.com/docs/projects","topics":["project","repository","settings"]},
+    {"id":"vercel-domains","platform":"vercel","title":"Adding and configuring a custom domain","url":"https://vercel.com/docs/domains/working-with-domains/add-a-domain","topics":["domain","dns","ssl"]},
+    {"id":"vercel-spa-rewrite","platform":"vercel","title":"Programmatic configuration and SPA rewrites","url":"https://vercel.com/docs/project-configuration/vercel-ts","topics":["spa","rewrite","react-router","configuration"]},
+    {"id":"railway-react","platform":"railway","title":"Deploy a React App","url":"https://docs.railway.com/guides/react","topics":["github","deployment","react","vite"]},
+    {"id":"railway-public-networking","platform":"railway","title":"Public Networking","url":"https://docs.railway.com/networking/public-networking","topics":["generated-url","networking","ssl"]},
+    {"id":"railway-domains","platform":"railway","title":"Working with Domains","url":"https://docs.railway.com/networking/domains/working-with-domains","topics":["domain","dns","verification","ssl"]},
+    {"id":"railway-basics","platform":"railway","title":"The Basics","url":"https://docs.railway.com/overview/the-basics","topics":["service","settings","build","start-command"]}
+  ]
+}

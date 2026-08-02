@@ -27,6 +27,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Test HTML and Markdown parsers
+        run: python -m unittest discover -s . -p "test_*.py"
+
       - name: Crawl approved official documentation
         run: python crawl.py crawl
 

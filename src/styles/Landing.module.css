@@ -96,6 +96,35 @@
   outline-offset: 2px;
 }
 
+.accountLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.accountLinks a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.accountLinks a:hover {
+  text-decoration: underline;
+}
+
+button.secondaryLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);

@@ -1,9 +1,10 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthPageShell } from '../../components/auth/AuthPageShell';
 import { FormField } from '../../components/auth/FormField';
 import { PasswordField } from '../../components/auth/PasswordField';
 import { PasswordStrength } from '../../components/auth/PasswordStrength';
+import { authClient } from '../../lib/authClient';
 import { isPasswordValid } from '../../utils/password';
 import styles from '../../styles/Auth.module.css';
 
@@ -45,9 +46,11 @@ function validate(values: RegisterValues): RegisterErrors {
 }
 
 export function RegisterPage() {
+  const navigate = useNavigate();
   const [values, setValues] = useState<RegisterValues>(initialValues);
   const [errors, setErrors] = useState<RegisterErrors>({});
   const [status, setStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function updateField(field: keyof RegisterValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -55,7 +58,7 @@ export function RegisterPage() {
     setStatus('');
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors = validate(values);
     setErrors(nextErrors);
@@ -65,7 +68,22 @@ export function RegisterPage() {
       return;
     }
 
-    setStatus('Your information passed the page checks. Account creation will be connected when authentication is added.');
+    setIsSubmitting(true);
+    const { error } = await authClient.signUp.email({
+      email: values.email,
+      password: values.password,
+      name: `${values.firstName} ${values.lastName}`.trim(),
+      firstName: values.firstName,
+      lastName: values.lastName,
+    });
+    setIsSubmitting(false);
+
+    if (error) {
+      setStatus(error.message ?? 'That account could not be created. Try again.');
+      return;
+    }
+
+    navigate('/');
   }
 
   return (

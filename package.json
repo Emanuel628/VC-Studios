@@ -8,6 +8,8 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:all": "concurrently -n frontend,backend -c blue,green \"npm run dev\" \"npm --prefix server run dev\"",
+    "dev:e2e-server": "concurrently -k -s first -n frontend,backend -c blue,green \"npm run dev\" \"npm --prefix server run dev:test-db\"",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "start": "serve --single --listen $PORT dist",
@@ -16,6 +18,7 @@
     "test:all": "npm run test && npm run test:e2e"
   },
   "dependencies": {
+    "better-auth": "^1.6.25",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-router": "^8.3.0",
@@ -29,6 +32,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "6.0.4",
+    "concurrently": "^10.0.4",
     "jsdom": "^29.1.1",
     "typescript": "7.0.2",
     "vite": "8.1.5",

@@ -1,0 +1,117 @@
+.page {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.main {
+  padding-top: 64px;
+  padding-bottom: 96px;
+  max-width: 560px;
+}
+
+.main h1 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  margin: 0 0 40px;
+  color: var(--text-secondary);
+}
+
+.card {
+  padding: 28px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-surface);
+  background: var(--white);
+}
+
+.card h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.card > p:first-of-type {
+  margin: 0 0 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.row dt {
+  color: var(--text-secondary);
+}
+
+.row dd {
+  margin: 0;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badgeVerified {
+  background: rgba(47, 93, 94, 0.12);
+  color: var(--accent);
+}
+
+.badgeUnverified {
+  background: rgba(154, 79, 79, 0.1);
+  color: #9a4f4f;
+}
+
+.dangerCard {
+  border-color: rgba(154, 79, 79, 0.3);
+}
+
+.dangerButton {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(154, 79, 79, 0.4);
+  border-radius: var(--radius-button);
+  background: transparent;
+  color: #9a4f4f;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background-color 170ms ease;
+}
+
+.dangerButton:hover {
+  background: rgba(154, 79, 79, 0.08);
+}
+
+.dangerButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.verifySection {
+  margin-top: 20px;
+}
+
+.verifyStatus {
+  margin-top: 12px;
+}

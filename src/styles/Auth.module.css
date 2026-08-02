@@ -377,10 +377,19 @@
   font-size: 14px;
 }
 
-.formFooter a {
+.formFooter a,
+.linkButton {
   color: var(--accent);
   font-weight: 600;
   text-underline-offset: 3px;
+}
+
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 @media (max-width: 960px) {

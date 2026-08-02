@@ -1,7 +1,11 @@
+import { Link } from 'react-router';
+import { authClient, useSession } from '../../lib/authClient';
 import { PrimaryLink } from './PrimaryLink';
 import styles from '../../styles/Landing.module.css';
 
 export function Nav() {
+  const { data: session } = useSession();
+
   return (
     <header className={styles.siteHeader}>
       <div className={`${styles.page} ${styles.navInner}`}>
@@ -15,7 +19,16 @@ export function Nav() {
           <a href="#about-course">About the course</a>
         </nav>
 
-        <PrimaryLink href="/register">Start learning</PrimaryLink>
+        {session ? (
+          <div className={styles.accountLinks}>
+            <Link to="/account">Welcome, {session.user.firstName}</Link>
+            <button type="button" className={styles.secondaryLink} onClick={() => authClient.signOut()}>
+              Log out
+            </button>
+          </div>
+        ) : (
+          <PrimaryLink href="/register">Start learning</PrimaryLink>
+        )}
       </div>
     </header>
   );

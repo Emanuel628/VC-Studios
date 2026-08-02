@@ -1,2 +1,1 @@
-beautifulsoup4==4.12.3
-requests==2.32.3
+# No third-party packages required. Python 3.11+ standard library only.

@@ -63,7 +63,9 @@ The student must produce a working website that:
 - Has a shared visual foundation
 - Works on desktop, tablet, and mobile
 - Uses accessible labels, headings, focus states, and readable contrast
-- Contains no database, authentication, backend, or API dependency unless the Website Foundations curriculum is formally expanded later
+- Contains no database, authentication, backend, or application API dependency
+
+If a later program teaches those capabilities, it must remain a separately gated program rather than expanding Website Foundations beyond this boundary.
 
 ### Minimum page floor
 

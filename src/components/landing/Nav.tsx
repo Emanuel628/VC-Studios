@@ -21,7 +21,7 @@ export function Nav() {
 
         {session?.user ? (
           <div className={styles.accountLinks}>
-            <Link to="/account">Welcome, {session.user.firstName}</Link>
+            <Link to="/dashboard">Welcome, {session.user.firstName}</Link>
             <button type="button" className={styles.secondaryLink} onClick={() => authClient.signOut()}>
               Log out
             </button>

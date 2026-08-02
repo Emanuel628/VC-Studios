@@ -5,6 +5,7 @@ import { AccountPage } from '../pages/account/AccountPage';
 import { ForgotPasswordPage } from '../pages/auth/ForgotPasswordPage';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
+import { DashboardPage } from '../pages/dashboard/DashboardPage';
 import { PrivacyPage } from '../pages/legal/PrivacyPage';
 import { TermsPage } from '../pages/legal/TermsPage';
 
@@ -17,6 +18,14 @@ export function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/account"
         element={

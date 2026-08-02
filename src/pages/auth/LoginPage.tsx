@@ -1,9 +1,9 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthPageShell } from '../../components/auth/AuthPageShell';
 import { FormField } from '../../components/auth/FormField';
 import { PasswordField } from '../../components/auth/PasswordField';
-import { authClient } from '../../lib/authClient';
+import { authClient, useSession } from '../../lib/authClient';
 import styles from '../../styles/Auth.module.css';
 
 type LoginValues = {
@@ -28,10 +28,20 @@ function validate(values: LoginValues): LoginErrors {
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const { data: session } = useSession();
   const [values, setValues] = useState<LoginValues>({ email: '', password: '' });
   const [errors, setErrors] = useState<LoginErrors>({});
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Navigate once the shared session store actually reflects the new session, rather than
+  // right after the API call resolves - the store can update a beat later, and ProtectedRoute
+  // would otherwise see a stale "no session" and bounce straight back to /login.
+  useEffect(() => {
+    if (session?.user) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [session, navigate]);
 
   function updateField(field: keyof LoginValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -61,7 +71,7 @@ export function LoginPage() {
       return;
     }
 
-    navigate('/');
+    // Navigation happens reactively in the effect above once the session store updates.
   }
 
   return (

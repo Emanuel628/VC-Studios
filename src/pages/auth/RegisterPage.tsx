@@ -1,10 +1,10 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthPageShell } from '../../components/auth/AuthPageShell';
 import { FormField } from '../../components/auth/FormField';
 import { PasswordField } from '../../components/auth/PasswordField';
 import { PasswordStrength } from '../../components/auth/PasswordStrength';
-import { authClient } from '../../lib/authClient';
+import { authClient, useSession } from '../../lib/authClient';
 import { isPasswordValid } from '../../utils/password';
 import styles from '../../styles/Auth.module.css';
 
@@ -47,10 +47,24 @@ function validate(values: RegisterValues): RegisterErrors {
 
 export function RegisterPage() {
   const navigate = useNavigate();
+  const { data: session } = useSession();
   const [values, setValues] = useState<RegisterValues>(initialValues);
   const [errors, setErrors] = useState<RegisterErrors>({});
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const passwordsDoNotMatch = Boolean(
+    values.password && values.confirmPassword && values.password !== values.confirmPassword,
+  );
+
+  // Navigate once the shared session store actually reflects the new session, rather than
+  // right after the API call resolves - the store can update a beat later, and ProtectedRoute
+  // would otherwise see a stale "no session" and bounce straight back to /login.
+  useEffect(() => {
+    if (session?.user) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [session, navigate]);
 
   function updateField(field: keyof RegisterValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -83,7 +97,7 @@ export function RegisterPage() {
       return;
     }
 
-    navigate('/');
+    // Navigation happens reactively in the effect above once the session store updates.
   }
 
   return (
@@ -165,6 +179,12 @@ export function RegisterPage() {
           error={errors.confirmPassword}
           required
         />
+
+        {passwordsDoNotMatch && !errors.confirmPassword ? (
+          <p className={styles.fieldError} role="alert">
+            Passwords do not match.
+          </p>
+        ) : null}
 
         <button className={styles.submitButton} type="submit">
           Create account

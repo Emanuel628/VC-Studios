@@ -7,7 +7,7 @@ export function LearningPaths() {
         <p className={styles.sectionEyebrow}>Choose how you want to participate</p>
         <h2 id="paths-title">Two valid learning paths</h2>
         <p>
-          Both paths teach the same process. Building alongside the course is available, but it is not required to learn the material.
+          Both paths teach the Website Foundations process. Building alongside the program is available, but it is not required to learn the material.
         </p>
       </div>
 
@@ -16,12 +16,12 @@ export function LearningPaths() {
           <span className={styles.pathNumber}>01</span>
           <h3>Guided Build-Along</h3>
           <p>
-            Choose a simple website or software project and build it one manageable step at a time while completing the course.
+            Choose an approved basic website project and build it one manageable step at a time while completing the program.
           </p>
           <ul>
-            <li>Apply each chapter to a growing project</li>
+            <li>Apply each chapter to a growing website</li>
             <li>Use your own development and AI accounts</li>
-            <li>Finish with practical build and deployment experience</li>
+            <li>Finish with practical testing, recovery, and deployment experience</li>
           </ul>
         </article>
 
@@ -29,12 +29,12 @@ export function LearningPaths() {
           <span className={styles.pathNumber}>02</span>
           <h3>Coursework-Only</h3>
           <p>
-            Learn through written lessons, examples, exercises, and understanding checks without building the guided project right now.
+            Learn through written lessons, examples, exercises, corrections, and understanding checks without publishing the guided website.
           </p>
           <ul>
-            <li>Complete the same core lessons</li>
-            <li>Practice with real decisions and scenarios</li>
-            <li>Begin a guided project later without restarting</li>
+            <li>Complete the same core Website Foundations lessons</li>
+            <li>Practice with realistic plans, file maps, and defect scenarios</li>
+            <li>Prove your judgment through cumulative coursework evidence</li>
           </ul>
         </article>
       </div>

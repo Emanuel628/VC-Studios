@@ -40,7 +40,7 @@ npm run build
 ```
 
 <Callout type=\"warning\">
-This MDX wrapper should not become an instruction.
+Useful warning text inside the wrapper.
 </Callout>
 """
         parsed = crawl.parse_markdown_document(markdown, "Fallback")
@@ -50,8 +50,9 @@ This MDX wrapper should not become an instruction.
         self.assertIn("Connect your GitHub repository.", parsed.instructions)
         self.assertIn("Select Add New.", parsed.instructions)
         self.assertIn("Select Project.", parsed.instructions)
+        self.assertIn("Useful warning text inside the wrapper.", parsed.instructions)
         self.assertEqual(parsed.code_blocks, ["npm run build"])
-        self.assertNotIn("This MDX wrapper should not become an instruction.", parsed.instructions)
+        self.assertFalse(any("Callout" in item for item in parsed.instructions))
 
     def test_uses_first_h1_when_front_matter_has_no_title(self) -> None:
         parsed = crawl.parse_markdown_document("# Public Networking\n\nGenerate a domain.", "Fallback")

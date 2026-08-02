@@ -35,11 +35,6 @@ export function ForgotPasswordPage() {
       eyebrow="Password recovery"
       title="Get a code to reset your password."
       description="Enter the email connected to your Platinum VC Studios account. The recovery code will be sent there once authentication is connected."
-      supportingContent={
-        <p>
-          For security, the finished experience will show the same confirmation whether or not an account exists for the email entered.
-        </p>
-      }
       compact
     >
       <div className={styles.formHeading}>

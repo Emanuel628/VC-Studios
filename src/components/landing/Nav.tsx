@@ -19,7 +19,7 @@ export function Nav() {
           <a href="#about-course">About the course</a>
         </nav>
 
-        {session ? (
+        {session?.user ? (
           <div className={styles.accountLinks}>
             <Link to="/account">Welcome, {session.user.firstName}</Link>
             <button type="button" className={styles.secondaryLink} onClick={() => authClient.signOut()}>

@@ -19,7 +19,7 @@ export function AccountPage() {
   const [deleteError, setDeleteError] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
-  if (!session) {
+  if (!session?.user) {
     return null;
   }
 

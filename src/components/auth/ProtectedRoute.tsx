@@ -16,7 +16,7 @@ export function ProtectedRoute({ children }: PropsWithChildren) {
     );
   }
 
-  if (!session) {
+  if (!session?.user) {
     return <Navigate to="/login" replace />;
   }
 

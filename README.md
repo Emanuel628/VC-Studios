@@ -813,6 +813,32 @@ The platform must not become an animated slideshow with quizzes attached. Every 
 
 # Website and Product Design Direction
 
+## Professional Product Standard
+
+Platinum VC Studios must be designed, engineered, tested, and maintained like a real production product from a professional technology company.
+
+It is not a temporary prototype, a landing-page concept, a collection of attractive mockups, or a lightly connected set of course screens. The full public website, account experience, learning platform, quizzes, progress system, project submissions, review tools, settings, support flows, and administrative functions must feel like parts of one complete product.
+
+The professional standard requires:
+
+- A coherent information architecture
+- Predictable navigation
+- A consistent design system
+- Reusable, maintainable components
+- Intentional desktop, tablet, and mobile behavior
+- Accessible contrast, focus states, keyboard use, labels, and readable type
+- Real loading, empty, success, error, disabled, and permission states
+- Helpful form validation and recovery messages
+- Secure authentication, session, data, and secret handling
+- Reliable progress saving and restoration
+- Functional buttons and controls with no fake production interactions
+- Tested critical user flows
+- Reasonable performance and page-loading behavior
+- Clear privacy, support, account, and deletion experiences
+- Maintainable code and a deliberate release process
+
+A page is not finished merely because it looks good in one screenshot. It must work, respond correctly, handle expected problems, and remain consistent with the rest of the platform.
+
 ## Locked Design Principles
 
 Platinum VC Studios is a website and must feel like a premium, carefully designed educational studio.
@@ -827,7 +853,7 @@ The locked principles are:
 - Strong visual hierarchy
 - Simplicity
 - Clear alignment
-- Large, confident typography
+- Clear, confident typography sized for hierarchy—not oversized for drama
 - Restrained use of color
 - Controlled content widths
 - One obvious primary action at a time
@@ -835,7 +861,9 @@ The locked principles are:
 - Intentional mobile and desktop layouts
 - Lesson content that remains the visual priority
 
-The product should feel calm, credible, organized, approachable, and human.
+The product should feel calm, credible, organized, approachable, mature, and human.
+
+It should look like a real company invested in its product—not like someone asked an AI tool to generate a fashionable course website in one prompt.
 
 ## No Generic AI-Coded Style
 
@@ -843,22 +871,48 @@ The website must not look like a generic AI-generated SaaS product or online-cou
 
 Avoid:
 
+- Dramatic, overly saturated, neon, or attention-seeking color schemes
 - Purple-and-blue AI gradients
 - Glowing backgrounds
 - Glassmorphism
 - Floating decorative blobs
 - Excessive cards
 - Nested cards
+- Turning every section, paragraph, statistic, or action into a card
 - Oversized rounded containers everywhere
+- Large corner radiuses used as the default visual language
 - Heavy shadows
+- Giant headlines that overpower the actual content
+- Exaggerated display text used only to appear bold or premium
 - Random dashboard charts
 - Unnecessary icons
 - Gimmicky motion
 - Bloated navigation
 - Overcomplicated layouts
 - Generic startup slogans
+- Robotic strings of buzzwords or sentence fragments
 - Fake metrics
 - Decorative complexity used to hide weak hierarchy
+
+## Card Restraint
+
+Cards are a tool, not the default layout.
+
+Use a card only when content is truly a separate object, action, status, or grouped unit that benefits from a visible boundary. Do not place every piece of content inside a rounded rectangle.
+
+Prefer:
+
+- Whitespace
+- Typography
+- Alignment
+- Section spacing
+- Thin dividers
+- Lists
+- Tables
+- Clear page regions
+- Simple bordered groups when a boundary is actually needed
+
+When cards are appropriate, their radius, border, padding, and shadow must be restrained and consistent. The interface must never become a wall of soft, rounded boxes.
 
 ## Provisional Visual Direction
 
@@ -875,7 +929,7 @@ A possible direction, based on the established conversation, is:
 - Generous section spacing
 - Subtle movement only when it improves understanding
 
-These colors are **not locked**. The whitespace, hierarchy, restraint, and simplicity are locked.
+These colors are **not locked**. The whitespace, hierarchy, restraint, simplicity, professional quality, and avoidance of dramatic color are locked.
 
 ## Learning Interface
 
@@ -931,6 +985,7 @@ The brand must not rely on visitors already understanding the initials.
 The Platinum VC Studios voice must be:
 
 - Human
+- Natural
 - Calm
 - Direct
 - Encouraging
@@ -940,6 +995,8 @@ The Platinum VC Studios voice must be:
 - Respectful
 - Never condescending
 
+Copy should use complete, natural sentences unless a short label genuinely improves clarity. It should sound like one thoughtful person explaining something to another person.
+
 Avoid:
 
 - Fake urgency
@@ -948,7 +1005,27 @@ Avoid:
 - Academic posturing
 - Overly technical explanations
 - Repetitive AI-style phrasing
+- Robotic chains of adjectives, nouns, or buzzwords
+- Words strung together only to sound modern, premium, or dramatic
+- Repeated three-part slogans and sentence fragments
+- Exaggerated headlines that make ordinary features sound revolutionary
 - Promises of effortless success
+
+**Avoid:**
+
+> Plan. Prompt. Build. Launch.
+
+**Use:**
+
+> Learn how to plan an application, guide AI through the build, test your work, and launch it.
+
+**Avoid:**
+
+> Intelligent. Scalable. Future-ready.
+
+**Use:**
+
+> Build a strong foundation that you can maintain and expand as your application grows.
 
 Do not use claims such as:
 
@@ -1012,6 +1089,10 @@ The course should use these principles in plain language. It does not need to so
 - A platform that rewards memorization without execution
 - A maze of locked lessons and frustrating tests
 - A generic AI SaaS dashboard
+- A sea of rounded cards
+- A dramatic, neon, gradient-heavy technology theme
+- A website built around giant headlines and empty slogans
+- A concept mockup that looks polished but lacks real states and working flows
 - A hype-driven “get rich with AI” product
 - A course that teaches tools without judgment
 - A course that abandons concepts immediately after introducing them
@@ -1061,6 +1142,28 @@ Before approving any module, confirm that it:
 - Leaves the continuing application in a stable, saved state
 - Includes a transfer challenge when appropriate
 - Moves the student closer to independent building
+
+---
+
+# Product Quality Checklist
+
+Before approving a page or feature for production, confirm that it:
+
+- Supports a real user goal
+- Fits the product’s information architecture
+- Uses the shared design system
+- Is consistent with related pages and controls
+- Works on intended desktop and mobile sizes
+- Handles loading, empty, success, error, and disabled states where relevant
+- Uses clear validation and recovery messages
+- Is accessible by keyboard and uses visible focus states
+- Uses readable contrast and typography
+- Avoids dramatic color, oversized text, robotic copy, and unnecessary cards
+- Uses real functionality rather than decorative or dead controls
+- Preserves the student’s work and progress correctly
+- Protects private data and secrets
+- Has been tested through the complete user flow
+- Feels finished as part of one professional product, not only as an isolated screen
 
 ---
 

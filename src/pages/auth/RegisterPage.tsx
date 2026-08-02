@@ -70,21 +70,21 @@ export function RegisterPage() {
 
   return (
     <AuthPageShell
-      eyebrow="Create your account"
-      title="Start with an experience that knows your name."
-      description="We use your first name naturally throughout the course to welcome you back, guide your progress, and recognize important milestones."
+      eyebrow="Ready to begin?"
+      title="Build something real."
+      description="Create your account to save your progress, choose your learning path, and start turning your idea into a working product."
       supportingContent={
         <ul>
-          <li>Your name stays editable in account settings.</li>
-          <li>Your password is checked before submission.</li>
-          <li>We will never ask for your outside account passwords or private keys.</li>
+          <li>Choose the guided build-along or coursework-only path.</li>
+          <li>Return anytime and continue from where you left off.</li>
+          <li>Keep your lessons, progress, and project milestones together.</li>
         </ul>
       }
     >
       <div className={styles.formHeading}>
         <p className={styles.eyebrow}>Account details</p>
-        <h2>Create your Platinum VC Studios account</h2>
-        <p>Enter the information you will use to access the course.</p>
+        <h2>Create your account</h2>
+        <p>Enter your details to get started.</p>
       </div>
 
       <form className={styles.authForm} onSubmit={handleSubmit} noValidate>

@@ -6,7 +6,7 @@ type AuthPageShellProps = PropsWithChildren<{
   eyebrow: string;
   title: string;
   description: string;
-  supportingContent: ReactNode;
+  supportingContent?: ReactNode;
   compact?: boolean;
 }>;
 
@@ -34,7 +34,7 @@ export function AuthPageShell({
           <p className={styles.eyebrow}>{eyebrow}</p>
           <h1 id="auth-page-title">{title}</h1>
           <p className={styles.introText}>{description}</p>
-          <div className={styles.supportingContent}>{supportingContent}</div>
+          {supportingContent ? <div className={styles.supportingContent}>{supportingContent}</div> : null}
         </section>
 
         <section className={styles.formPanel}>{children}</section>

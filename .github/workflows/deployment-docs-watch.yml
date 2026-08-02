@@ -1,0 +1,59 @@
+name: Deployment docs watch
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 13 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  check-official-docs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/deployment_research
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Crawl approved official documentation
+        run: python crawl.py crawl
+
+      - name: Check whether an accepted baseline exists
+        id: baseline
+        run: |
+          if compgen -G "snapshots/baseline/*.json" > /dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compare with accepted baseline
+        if: steps.baseline.outputs.exists == 'true'
+        id: compare
+        continue-on-error: true
+        run: python crawl.py check
+
+      - name: Upload snapshots and change report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-documentation-review
+          path: |
+            tools/deployment_research/snapshots/current
+            tools/deployment_research/reports/changes.md
+          if-no-files-found: warn
+
+      - name: Require review when docs changed
+        if: steps.baseline.outputs.exists == 'true' && steps.compare.outcome == 'failure'
+        run: |
+          echo "Official deployment documentation changed or the check could not complete."
+          echo "Download the artifact and perform manual dashboard verification."
+          exit 1

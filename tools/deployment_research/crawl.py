@@ -28,6 +28,22 @@ REPORT = ROOT / "reports" / "changes.md"
 ALLOWED_HOSTS = {"vercel.com", "www.vercel.com", "docs.railway.com"}
 BLOCKED_TAGS = {"script", "style", "noscript", "svg", "nav", "footer", "header", "aside", "form", "button"}
 TEXT_TAGS = {"h1", "h2", "h3", "h4", "p", "li", "pre", "code"}
+DOCUMENT_FORMATS = {
+    "text/html": "html",
+    "application/xhtml+xml": "html",
+    "text/markdown": "markdown",
+    "text/x-markdown": "markdown",
+    "application/markdown": "markdown",
+}
+ACCEPT_HEADER = ",".join(
+    (
+        "text/html",
+        "application/xhtml+xml",
+        "text/markdown",
+        "text/x-markdown",
+        "application/markdown;q=0.9",
+    )
+)
 
 
 @dataclass(frozen=True)
@@ -40,6 +56,15 @@ class Source:
 
 
 @dataclass
+class ParsedDocument:
+    page_title: str
+    headings: list[dict[str, Any]]
+    instructions: list[str]
+    code_blocks: list[str]
+    ordered_text: list[str]
+
+
+@dataclass
 class Snapshot:
     schema_version: int
     source_id: str
@@ -49,6 +74,8 @@ class Snapshot:
     url: str
     fetched_at: str
     http_status: int
+    content_type: str
+    document_format: str
     etag: str | None
     last_modified: str | None
     content_hash: str
@@ -123,17 +150,31 @@ def validate_source(source: Source) -> None:
         raise ValueError(f"{source.id}: host is not approved: {parsed.hostname}")
 
 
-def fetch_text(url: str, user_agent: str, timeout: float) -> tuple[int, dict[str, str], str]:
-    request = Request(url, headers={"User-Agent": user_agent, "Accept": "text/html,application/xhtml+xml"})
+def normalized_media_type(content_type: str) -> str:
+    return content_type.split(";", 1)[0].strip().lower()
+
+
+def document_format_for(content_type: str) -> str:
+    media_type = normalized_media_type(content_type)
+    document_format = DOCUMENT_FORMATS.get(media_type)
+    if document_format is None:
+        raise RuntimeError(f"Expected HTML or Markdown, received {content_type!r}")
+    return document_format
+
+
+def fetch_document(
+    url: str, user_agent: str, timeout: float
+) -> tuple[int, dict[str, str], str, str, str]:
+    request = Request(url, headers={"User-Agent": user_agent, "Accept": ACCEPT_HEADER})
     try:
         with urlopen(request, timeout=timeout) as response:
             status = getattr(response, "status", 200)
             headers = {key.lower(): value for key, value in response.headers.items()}
             content_type = headers.get("content-type", "")
-            if "text/html" not in content_type:
-                raise RuntimeError(f"Expected HTML, received {content_type!r}")
+            document_format = document_format_for(content_type)
             charset = response.headers.get_content_charset() or "utf-8"
-            return status, headers, response.read().decode(charset, errors="replace")
+            body = response.read().decode(charset, errors="replace")
+            return status, headers, content_type, document_format, body
     except (HTTPError, URLError, TimeoutError) as exc:
         raise RuntimeError(f"Request failed for {url}: {exc}") from exc
 
@@ -153,29 +194,182 @@ def robots_allows(url: str, user_agent: str, timeout: float) -> bool:
     return parser.can_fetch(user_agent, url)
 
 
+def parse_html_document(html: str, fallback_title: str) -> ParsedDocument:
+    parser = InstructionParser()
+    parser.feed(html)
+    return ParsedDocument(
+        page_title=InstructionParser.clean(parser.title) or fallback_title,
+        headings=parser.headings,
+        instructions=parser.instructions,
+        code_blocks=parser.code_blocks,
+        ordered_text=parser.ordered_text,
+    )
+
+
+def clean_markdown_inline(value: str) -> str:
+    value = re.sub(r"!\[([^\]]*)\]\([^)]*\)", r"\1", value)
+    value = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", value)
+    value = re.sub(r"\[([^\]]+)\]\[[^\]]*\]", r"\1", value)
+    value = re.sub(r"<((?:https?://|mailto:)[^>]+)>", r"\1", value)
+    value = re.sub(r"</?[A-Za-z][^>]*>", " ", value)
+    value = value.replace("`", "")
+    value = value.replace("**", "").replace("__", "").replace("~~", "")
+    value = re.sub(r"\\([\\`*{}\[\]()#+\-.!_>])", r"\1", value)
+    return InstructionParser.clean(value)
+
+
+def parse_front_matter(lines: list[str]) -> tuple[str, list[str]]:
+    if not lines or lines[0].strip() != "---":
+        return "", lines
+    title = ""
+    for index in range(1, len(lines)):
+        line = lines[index]
+        if line.strip() == "---":
+            return title, lines[index + 1 :]
+        match = re.match(r"^title\s*:\s*(.+)$", line, flags=re.IGNORECASE)
+        if match:
+            title = clean_markdown_inline(match.group(1).strip().strip('"\''))
+    return "", lines
+
+
+def parse_markdown_document(markdown: str, fallback_title: str) -> ParsedDocument:
+    front_matter_title, lines = parse_front_matter(markdown.replace("\r\n", "\n").split("\n"))
+    headings: list[dict[str, Any]] = []
+    instructions: list[str] = []
+    code_blocks: list[str] = []
+    ordered_text: list[str] = []
+    paragraph_parts: list[str] = []
+    code_parts: list[str] = []
+    in_code = False
+    fence_marker = ""
+
+    def add_instruction(text: str) -> None:
+        cleaned = clean_markdown_inline(text)
+        if cleaned and cleaned not in instructions:
+            instructions.append(cleaned)
+        if cleaned:
+            ordered_text.append(cleaned)
+
+    def flush_paragraph() -> None:
+        if paragraph_parts:
+            add_instruction(" ".join(paragraph_parts))
+            paragraph_parts.clear()
+
+    def flush_code() -> None:
+        code = "\n".join(code_parts).strip("\n")
+        if code and code not in code_blocks:
+            code_blocks.append(code)
+        if code:
+            ordered_text.append(code)
+        code_parts.clear()
+
+    for raw_line in lines:
+        stripped = raw_line.strip()
+        fence_match = re.match(r"^(`{3,}|~{3,})", stripped)
+        if fence_match:
+            marker = fence_match.group(1)
+            if not in_code:
+                flush_paragraph()
+                in_code = True
+                fence_marker = marker[0]
+            elif marker[0] == fence_marker:
+                in_code = False
+                flush_code()
+                fence_marker = ""
+            continue
+
+        if in_code:
+            code_parts.append(raw_line.rstrip())
+            continue
+
+        if not stripped:
+            flush_paragraph()
+            continue
+
+        if re.match(r"^(?:import|export)\s", stripped) or re.match(r"^</?[A-Z][A-Za-z0-9_.:-]*(?:\s|>|/)", stripped):
+            flush_paragraph()
+            continue
+
+        heading_match = re.match(r"^(#{1,6})\s+(.+?)\s*#*\s*$", stripped)
+        if heading_match:
+            flush_paragraph()
+            heading_text = clean_markdown_inline(heading_match.group(2))
+            if heading_text:
+                headings.append({"level": len(heading_match.group(1)), "text": heading_text})
+                ordered_text.append(heading_text)
+            continue
+
+        if re.match(r"^(?:-{3,}|\*{3,}|_{3,})$", stripped):
+            flush_paragraph()
+            continue
+
+        list_match = re.match(r"^\s*(?:[-+*]|\d+[.)])\s+(.+)$", raw_line)
+        if list_match:
+            flush_paragraph()
+            add_instruction(list_match.group(1))
+            continue
+
+        quote_match = re.match(r"^>\s?(.*)$", stripped)
+        if quote_match:
+            flush_paragraph()
+            add_instruction(quote_match.group(1))
+            continue
+
+        reference_definition = re.match(r"^\[[^\]]+\]:\s+\S+", stripped)
+        if reference_definition:
+            flush_paragraph()
+            continue
+
+        paragraph_parts.append(stripped)
+
+    flush_paragraph()
+    if in_code:
+        flush_code()
+
+    first_h1 = next((item["text"] for item in headings if item["level"] == 1), "")
+    return ParsedDocument(
+        page_title=front_matter_title or first_h1 or fallback_title,
+        headings=headings,
+        instructions=instructions,
+        code_blocks=code_blocks,
+        ordered_text=ordered_text,
+    )
+
+
+def parse_document(body: str, document_format: str, fallback_title: str) -> ParsedDocument:
+    if document_format == "html":
+        return parse_html_document(body, fallback_title)
+    if document_format == "markdown":
+        return parse_markdown_document(body, fallback_title)
+    raise ValueError(f"Unsupported document format: {document_format}")
+
+
 def make_snapshot(source: Source, user_agent: str, timeout: float) -> Snapshot:
     validate_source(source)
     if not robots_allows(source.url, user_agent, timeout):
         raise PermissionError(f"robots.txt does not allow {source.url}")
-    status, headers, html = fetch_text(source.url, user_agent, timeout)
-    parser = InstructionParser()
-    parser.feed(html)
-    body_text = "\n".join(parser.ordered_text)
+    status, headers, content_type, document_format, body = fetch_document(source.url, user_agent, timeout)
+    parsed = parse_document(body, document_format, source.title)
+    body_text = "\n".join(parsed.ordered_text)
+    if not body_text.strip():
+        raise RuntimeError(f"No instructional content extracted from {source.url}")
     return Snapshot(
-        schema_version=1,
+        schema_version=2,
         source_id=source.id,
         platform=source.platform,
         configured_title=source.title,
-        page_title=InstructionParser.clean(parser.title) or source.title,
+        page_title=parsed.page_title,
         url=source.url,
         fetched_at=datetime.now(timezone.utc).isoformat(),
         http_status=status,
+        content_type=content_type,
+        document_format=document_format,
         etag=headers.get("etag"),
         last_modified=headers.get("last-modified"),
         content_hash=hashlib.sha256(body_text.encode("utf-8")).hexdigest(),
-        headings=parser.headings,
-        instructions=parser.instructions,
-        code_blocks=parser.code_blocks,
+        headings=parsed.headings,
+        instructions=parsed.instructions,
+        code_blocks=parsed.code_blocks,
         body_text=body_text,
     )
 
@@ -205,7 +399,7 @@ def crawl(args: argparse.Namespace) -> int:
         try:
             snapshot = make_snapshot(source, config["user_agent"], args.timeout)
             write_snapshot(args.current, snapshot)
-            print(f"OK  {source.id}  {snapshot.content_hash[:12]}")
+            print(f"OK  {source.id}  {snapshot.document_format}  {snapshot.content_hash[:12]}")
         except Exception as exc:
             failures += 1
             print(f"ERR {source.id}: {exc}", file=sys.stderr)
@@ -241,20 +435,37 @@ def compare(baseline: Path, current: Path) -> list[dict[str, Any]]:
         old, new = read_json(old_path), read_json(new_path)
         if old.get("content_hash") == new.get("content_hash"):
             continue
-        diff = "\n".join(difflib.unified_diff(
-            old.get("body_text", "").splitlines(), new.get("body_text", "").splitlines(),
-            fromfile=f"baseline/{source_id}", tofile=f"current/{source_id}", lineterm="", n=3
-        ))
-        changes.append({
-            "source_id": source_id, "kind": "changed", "url": new.get("url") or old.get("url"),
-            "old_hash": old.get("content_hash"), "new_hash": new.get("content_hash"), "diff": diff
-        })
+        diff = "\n".join(
+            difflib.unified_diff(
+                old.get("body_text", "").splitlines(),
+                new.get("body_text", "").splitlines(),
+                fromfile=f"baseline/{source_id}",
+                tofile=f"current/{source_id}",
+                lineterm="",
+                n=3,
+            )
+        )
+        changes.append(
+            {
+                "source_id": source_id,
+                "kind": "changed",
+                "url": new.get("url") or old.get("url"),
+                "old_hash": old.get("content_hash"),
+                "new_hash": new.get("content_hash"),
+                "diff": diff,
+            }
+        )
     return changes
 
 
 def write_report(changes: list[dict[str, Any]], output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
-    lines = ["# Deployment Documentation Change Report", "", f"Generated: {datetime.now(timezone.utc).isoformat()}", ""]
+    lines = [
+        "# Deployment Documentation Change Report",
+        "",
+        f"Generated: {datetime.now(timezone.utc).isoformat()}",
+        "",
+    ]
     if not changes:
         lines.append("No normalized content changes detected.")
     else:

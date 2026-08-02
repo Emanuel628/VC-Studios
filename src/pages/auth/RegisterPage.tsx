@@ -157,6 +157,11 @@ export function RegisterPage() {
             {status}
           </p>
         ) : null}
+
+        <p className={styles.formFooter}>
+          By creating an account, you agree to our <Link to="/terms">Terms &amp; Conditions</Link> and{' '}
+          <Link to="/privacy">Privacy Policy</Link>.
+        </p>
       </form>
 
       <p className={styles.formFooter}>

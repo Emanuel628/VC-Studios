@@ -500,6 +500,29 @@
   justify-self: end;
 }
 
+.legalLinks {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.legalLinks a {
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.legalLinks a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.legalLinks a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 @media (max-width: 1023px) {
   :root {
     --section-gap: 80px;

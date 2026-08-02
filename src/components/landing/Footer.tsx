@@ -15,9 +15,13 @@ export function Footer() {
           <a href="#about-course">About the course</a>
         </nav>
 
-        <p className={styles.privacyNote}>
-          We will never ask for your external account passwords, private API keys, or recovery codes.
-        </p>
+        <div className={styles.privacyNote}>
+          <p>We will never ask for your external account passwords, private API keys, or recovery codes.</p>
+          <nav className={styles.legalLinks} aria-label="Legal">
+            <a href="/terms">Terms &amp; Conditions</a>
+            <a href="/privacy">Privacy Policy</a>
+          </nav>
+        </div>
       </div>
     </footer>
   );

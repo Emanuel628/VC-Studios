@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-08-02",
+  "scope": "Website Foundations React and Vite deployment",
+  "platforms": {
+    "vercel": {
+      "role": "primary",
+      "generated_url": "*.vercel.app",
+      "source_flow": ["Sign in", "Add New", "Project", "Select Git provider", "Import repository", "Review framework and build settings", "Deploy"],
+      "expected_vite_settings": {"framework": "Vite", "build_command": "npm run build", "output_directory": "dist"},
+      "git_behavior": {
+        "production": "Pushes or merges to the configured production branch create production deployments.",
+        "preview": "Other branch pushes and pull requests create preview deployments by default."
+      },
+      "custom_domain_flow": ["Project", "Settings", "Domains", "Add Domain", "Follow dashboard DNS instructions", "Verify ready status and HTTPS"],
+      "spa_route_gate": "Directly open and refresh a valid nested route. Use an SPA rewrite when the provider returns a 404 for valid client-side routes.",
+      "official_sources": [
+        "https://vercel.com/docs/git",
+        "https://vercel.com/docs/deployments/overview",
+        "https://vercel.com/docs/projects",
+        "https://vercel.com/docs/domains/working-with-domains/add-a-domain",
+        "https://vercel.com/docs/project-configuration/vercel-ts"
+      ]
+    },
+    "railway": {
+      "role": "approved-alternative",
+      "generated_url": "*.up.railway.app",
+      "source_flow": ["Create new project", "Deploy from GitHub repo", "Choose repository", "Deploy", "Inspect logs", "Open Settings", "Open Networking and Public Networking", "Generate Domain"],
+      "expected_vite_settings": {
+        "build_command": "npm run build",
+        "start_command": "npm run start",
+        "port_requirement": "Listen on the Railway-provided PORT and a publicly reachable interface."
+      },
+      "public_access_note": "A deployed service is not necessarily public until a Railway-provided or custom domain is added.",
+      "custom_domain_flow": ["Service", "Settings", "Public Networking", "+ Custom Domain", "Add displayed CNAME record", "Add displayed TXT verification record", "Wait for verified status and HTTPS"],
+      "custom_domain_gate": "Both CNAME and TXT records are required in the current official dashboard flow.",
+      "official_sources": [
+        "https://docs.railway.com/guides/react",
+        "https://docs.railway.com/networking/public-networking",
+        "https://docs.railway.com/networking/domains/working-with-domains",
+        "https://docs.railway.com/overview/the-basics"
+      ]
+    }
+  }
+}

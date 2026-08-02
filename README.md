@@ -9,7 +9,7 @@
 
 ## Purpose of This README
 
-This README is the source of truth for the Platinum VC Studios course philosophy, teaching method, writing standards, assessment rules, guided build-along model, project-review model, lesson-delivery format, and website design direction.
+This README is the source of truth for the Platinum VC Studios course philosophy, teaching method, writing standards, assessment rules, guided build-along model, project-review model, lesson-delivery format, product architecture, and website design direction.
 
 The complete course has **not** yet been divided into its final modules and chapters. That work begins only after this foundation is accurate and approved.
 
@@ -35,6 +35,7 @@ Students are not being trained to become software engineers, memorize syntax, st
 - Prompt AI clearly enough to build the intended product
 - Control scope and prevent AI from overcomplicating the work
 - Build one manageable part at a time
+- Organize applications into clear, maintainable files and folders
 - Work through errors and unexpected problems
 - Create practical tests and verify that features work
 - Use GitHub to save, protect, and manage a project
@@ -79,6 +80,7 @@ A serious student who completes the full learning path should understand:
 - How to control the first-version scope
 - How to plan pages and user flows
 - How to choose tools and services for a project
+- How to organize pages, routes, components, services, and application logic into focused files
 - How to create and use a GitHub account and repository
 - How to prompt and correct AI
 - How to diagnose and fix common problems
@@ -113,7 +115,7 @@ Every chapter must:
 7. Leave the student’s understanding, Build Plan, or project stronger than before.
 8. Clearly prepare the student for the next chapter.
 
-A chapter cannot introduce GitHub and then ignore it. Once GitHub is introduced, students on the build-along path must keep using it. The same applies to planning, prompting, testing, debugging, security, documentation, scope control, and every other major skill.
+A chapter cannot introduce GitHub and then ignore it. Once GitHub is introduced, students on the build-along path must keep using it. The same applies to planning, prompting, file organization, testing, debugging, security, documentation, scope control, and every other major skill.
 
 Earlier knowledge should return in later understanding checks. Students should periodically retrieve and apply ideas from previous chapters instead of answering questions only about the newest lesson.
 
@@ -143,7 +145,7 @@ The course must not teach technical facts merely because they appear in traditio
 
 Students should apply each important idea before moving on.
 
-They should not merely read definitions of an API, database, framework, repository, test, or environment variable. They should make a decision, inspect an example, improve a prompt, answer a scenario, update the Build Plan, or complete a guided project step.
+They should not merely read definitions of an API, database, framework, repository, test, environment variable, route, or component. They should make a decision, inspect an example, improve a prompt, answer a scenario, update the Build Plan, organize a file structure, or complete a guided project step.
 
 ## 5. Keep All Course Writing Simple and Human
 
@@ -212,10 +214,11 @@ The course must repeatedly enforce this order:
 5. Plan the pages and user flow.
 6. Identify what information the application needs.
 7. Choose appropriate tools.
-8. Build one page or feature at a time.
-9. Test completed work.
-10. Save stable versions.
-11. Launch only after reviewing the complete experience.
+8. Define the initial file and folder structure.
+9. Build one page or feature at a time.
+10. Test completed work.
+11. Save stable versions.
+12. Launch only after reviewing the complete experience.
 
 ## 7. Build Before Adding Complexity
 
@@ -223,10 +226,10 @@ The course must repeatedly enforce these habits:
 
 - Start with the smallest useful version
 - Build one page or feature at a time
-- Establish shared design rules before multiplying screens
+- Establish shared design and architecture rules before multiplying screens
 - Test completed work before continuing
 - Save a working version before major changes
-- Avoid redundant pages, questions, and features
+- Avoid redundant pages, questions, features, and duplicated code
 - Do not ask AI to build an entire complicated application in one response
 - Do not add a framework, database, API, authentication, payments, email service, or another dependency unless the project needs it
 - Delay nice-to-have features until the foundation works
@@ -243,12 +246,15 @@ Students must learn how to:
 - State the goal and intended user
 - Name the exact page, file, feature, or problem
 - Describe what must remain unchanged
+- Ask for a proposed file map before a multi-file feature is built
+- Require the AI to name every file it will create or modify
 - Request one focused change at a time
 - Provide screenshots, errors, and current files when useful
 - Ask the AI to inspect before editing
 - Ask for targeted edits instead of unnecessary rewrites
 - Judge whether the output matches the request
 - Reject bloated or generic design
+- Reject monolithic files and mixed responsibilities
 - Stop unnecessary features from being added
 - Recover when the AI changes unrelated work
 - Revert to a stable version when repeated patches make the project worse
@@ -370,6 +376,113 @@ A student who chooses coursework-only should still be able to understand the com
 
 The exact completion labels or credentials for each path remain an open decision.
 
+## 15. Every Application Must Use a Modular File Architecture
+
+This is a major, non-negotiable engineering rule for both Platinum VC Studios and every guided project.
+
+> We will not build an application inside one massive file.
+
+The codebase must be organized into focused files and folders from the beginning. File organization is part of building the application correctly; it is not cleanup work that gets postponed until the project becomes difficult to maintain.
+
+The course and guided projects must not place HTML or JSX, styling, route definitions, authentication, database access, API calls, validation, state management, and business logic together inside one enormous `.tsx`, `.ts`, `.js`, or other source file.
+
+### Unacceptable architecture
+
+Examples of work that must be rejected include:
+
+- The entire application living in `App.tsx`
+- A route file containing the full interface, authentication logic, database queries, API calls, validation, and styling
+- Sign-in, registration, password reset, email verification, and account recovery combined into one giant auth component
+- Every page and route defined in one source file
+- Backend or database logic buried directly inside a visual component
+- One enormous stylesheet controlling unrelated parts of the product without a clear system
+- The same interface copied into several pages instead of using a shared component
+- Keeping a giant file simply because the AI generated it that way
+- Continuing to add code to a file that already has several unrelated responsibilities
+
+### Required separation
+
+The exact folder names may vary by the approved framework, but responsibilities must remain clear.
+
+Applications should use dedicated files or focused modules for areas such as:
+
+- Individual pages and screens
+- Route entry points and layouts
+- Sign-in, registration, forgot-password, reset-password, verification, and other authentication pages
+- Shared interface components
+- Feature-specific components
+- Navigation
+- Forms and validation schemas
+- Hooks and state management
+- API clients and external-service integrations
+- Server actions, controllers, handlers, or backend routes
+- Database access, queries, models, or repositories
+- Business rules and services
+- Types and interfaces
+- Configuration
+- Reusable utilities
+- Design tokens and shared styles
+- Tests
+
+A page file may assemble the components needed for that page, but it must not become a dumping ground for the entire feature or application.
+
+### One clear responsibility per file
+
+Every file should have a clear reason to exist and a name that explains its responsibility.
+
+A small helper may remain in the same file when it belongs only to that file and keeping it there improves clarity. This rule does **not** mean creating hundreds of meaningless one-line files.
+
+The goal is not fragmentation. The goal is separation of concerns, clear ownership, reuse, testability, and maintainability.
+
+File size is a warning sign, not the only measurement. A file should be split when it:
+
+- Handles more than one major responsibility
+- Becomes difficult to navigate or explain
+- Mixes client and server concerns
+- Contains reusable logic buried inside one page
+- Makes testing difficult
+- Causes unrelated changes to happen in the same place
+- Encourages duplicated code
+- Requires the AI to rewrite a large unrelated section for a small change
+
+### AI prompting rules for architecture
+
+Before asking AI to build a multi-page application or substantial feature, students must learn to request:
+
+1. A proposed folder and file map
+2. A brief explanation of each file’s responsibility
+3. The exact files that will be created or changed
+4. A step-by-step build order
+
+Students must instruct the AI to:
+
+- Preserve the agreed file structure
+- Create dedicated page, route, component, service, and test files where appropriate
+- Avoid placing the entire feature into one file
+- Avoid mixing client and server logic
+- Reuse existing components and services instead of copying code
+- Report every file it created or modified
+- Refactor an oversized file before piling more features into it
+
+If the AI responds with one giant file for work that clearly requires several responsibilities, the student should reject the result and correct the architecture before continuing.
+
+### Architecture review
+
+Guided project reviews must inspect more than whether the interface works.
+
+Reviewers should also check:
+
+- Folder and file organization
+- Separation of pages, routes, components, services, and data access
+- Clear file names
+- Reuse of shared components
+- Avoidance of duplicated logic
+- Separation of client and server responsibilities
+- Whether individual files are understandable and testable
+- Whether secrets and environment-specific logic are stored correctly
+
+A serious monolithic-file problem may prevent a guided project milestone from being approved until the student separates the responsibilities properly.
+
 ---
 
 # Registration and Personalization
@@ -420,7 +533,7 @@ By the end of Chapter 1, the student should understand:
 - How chapters build upon earlier chapters
 - How understanding checks work
 - How practical work and module projects work
-- Why planning, testing, correction, and saving are recurring habits
+- Why planning, testing, correction, saving, and file organization are recurring habits
 - How the guided build-along path differs from coursework-only
 - Which outside tools and accounts are needed to build along
 - That Platinum VC Studios itself was vibe coded
@@ -432,14 +545,14 @@ Chapter 1 must clearly state:
 
 > Platinum VC Studios was vibe coded.
 
-The course platform began as an idea. Its purpose, course rules, information architecture, pages, design standards, and product behavior were planned and refined with the help of AI.
+The course platform began as an idea. Its purpose, course rules, information architecture, pages, design standards, product architecture, and product behavior were planned and refined with the help of AI.
 
 The lesson must not imply that the complete product appeared instantly from one prompt. It should explain that AI assisted the build, while human judgment was still required to:
 
 - Define the product
 - Reject bad ideas
 - Simplify overcomplicated work
-- Establish design rules
+- Establish design and file-organization rules
 - Organize the curriculum
 - Review language
 - Test features
@@ -448,7 +561,7 @@ The lesson must not imply that the complete product appeared instantly from one 
 - Maintain consistency
 - Decide when work was not good enough
 
-Platinum VC Studios should be used as a recurring real-world case study throughout the course whenever it helps explain planning, design, GitHub, authentication, progress tracking, databases, email, testing, deployment, and correction.
+Platinum VC Studios should be used as a recurring real-world case study throughout the course whenever it helps explain planning, design, file architecture, GitHub, authentication, progress tracking, databases, email, testing, deployment, and correction.
 
 Private credentials, security-sensitive details, and student data must never be exposed through the case study.
 
@@ -507,7 +620,7 @@ Every guided option must be:
 - Designed to grow chapter by chapter
 - Compatible with the concepts taught in the course
 - Free from unnecessary features
-- Capable of showing planning, design, GitHub, testing, deployment, and problem-solving
+- Capable of showing planning, design, modular file architecture, GitHub, testing, deployment, and problem-solving
 - Structured so earlier work is reused later
 
 The project should not be fully generated at the beginning. It must grow as the student learns.
@@ -522,6 +635,7 @@ For example, all students should still learn how to:
 - Control first-version scope
 - Plan pages and user flow
 - Select appropriate tools
+- Establish a sensible folder and file structure
 - Prompt AI in focused steps
 - Save work to GitHub
 - Test completed work
@@ -539,6 +653,7 @@ Their chapters should include:
 - Worked examples
 - Short decision exercises
 - Prompt critiques
+- File-organization exercises
 - Error scenarios
 - Tool-selection scenarios
 - Test-planning exercises
@@ -573,6 +688,8 @@ The course must explain:
 - How to download and install Visual Studio Code
 - How to open a project folder
 - How to recognize the file explorer, editor, terminal, and extensions area
+- How to navigate a multi-file project without becoming overwhelmed
+- How to create, rename, move, and delete files safely
 - Which extensions are genuinely needed
 - How to avoid installing unnecessary tools merely because AI suggested them
 
@@ -589,6 +706,7 @@ The course must clearly explain:
 - What limitations may exist on free plans
 - That subscriptions and AI usage are separate from the Platinum VC Studios purchase
 - That the student should never send passwords, payment information, private keys, or sensitive personal data to the AI
+- That AI-generated architecture must still follow the course’s modular file rules
 
 Platinum VC Studios will not request or store the student’s AI login or API key.
 
@@ -602,6 +720,7 @@ The course will teach them how to:
 - Create a repository
 - Understand public versus private repositories
 - Connect a project
+- Read the repository’s file and folder structure
 - Make commits
 - Save stable versions
 - Keep secrets out of the repository
@@ -617,6 +736,7 @@ The course must explain:
 - What Resend does
 - Which key is private
 - Where the key should be stored
+- How email logic should remain separate from page presentation
 - How to test email safely
 - How free-plan or account limits may affect the project
 
@@ -703,6 +823,8 @@ For guided students, it becomes the project Build Plan. It may include:
 - User flow
 - Tool choices
 - Language and framework choices
+- Folder and file map
+- Page, route, component, service, data, and test responsibilities
 - Data requirements
 - Database structure
 - APIs and outside services
@@ -731,6 +853,7 @@ That action may be:
 - Making a product decision
 - Improving a prompt
 - Inspecting or correcting an example
+- Organizing a feature into appropriate files
 - Completing a small guided-project step
 - Testing an existing feature
 - Saving a stable version
@@ -747,6 +870,7 @@ A module project must:
 - Use the new skills from the module
 - Reuse relevant skills from earlier modules
 - Improve the same selected project
+- Preserve or improve the approved file architecture
 - Include clear submission requirements
 - Include a review rubric
 - Leave the project in a stable, saved state
@@ -759,6 +883,7 @@ Coursework-only students should receive an equivalent cumulative scenario or pla
 Selected modules should include short challenges using a different situation, such as:
 
 - Choosing tools for a different type of application
+- Breaking a monolithic file into pages, components, services, and tests
 - Diagnosing a broken login flow
 - Simplifying an overbuilt product plan
 - Deciding whether a project actually needs a database
@@ -791,7 +916,7 @@ Every chapter should follow a consistent, recognizable rhythm.
 6. **Apply It** — Give coursework-only students a practical exercise and guided students a clearly marked build step.
 7. **Reinforce Earlier Learning** — Require relevant earlier habits or knowledge.
 8. **Check Understanding** — Complete a short cumulative knowledge check.
-9. **Save the Work** — Update the plan, checklist, project, or repository where appropriate.
+9. **Save the Work** — Update the plan, file map, checklist, project, or repository where appropriate.
 10. **Show What Comes Next** — Explain how the completed work prepares the student for the next chapter.
 
 ---
@@ -843,6 +968,7 @@ Useful formats include:
 - Choosing the best next step
 - Finding the problem in a prompt
 - Identifying which file or service should be inspected
+- Choosing where a piece of logic belongs
 - Putting build steps in the correct order
 - Matching a problem to the correct tool
 - Rewriting a vague instruction
@@ -865,11 +991,15 @@ Later checks should bring back important earlier concepts.
 
 > The AI changed four unrelated pages while fixing one button. What should your next instruction include?
 
+**Better question:**
+
+> A registration page contains its interface, email service, database query, password validation, and route configuration in one file. What should be separated before more features are added?
+
 ## Projects Are Stronger Proof Than Multiple Choice
 
 Quizzes support learning. Actual work is stronger proof when the student chooses to build.
 
-A student who creates a repository, protects a private key, tests a feature, explains a decision, and corrects a problem has shown more than someone who memorized definitions.
+A student who creates a repository, protects a private key, organizes code clearly, tests a feature, explains a decision, and corrects a problem has shown more than someone who memorized definitions.
 
 ## Failure Must Include Direction
 
@@ -912,7 +1042,7 @@ A database assignment should not merely say:
 
 > Connect your database.
 
-It should require the student to confirm that the database supports the previously approved users, pages, features, data needs, and user flow.
+It should require the student to confirm that the database supports the previously approved users, pages, features, data needs, user flow, and file architecture.
 
 ## Protect the Foundation
 
@@ -990,7 +1120,10 @@ The course is expected to explain and apply topics such as:
 - Prompting AI to make targeted corrections
 - HTML and CSS at a practical level
 - Responsive design
+- Separation of concerns
 - File and folder structure
+- Pages, layouts, routes, components, hooks, services, utilities, types, data access, and tests
+- Recognizing and correcting monolithic files
 - Visual Studio Code
 - GitHub account setup
 - Repositories
@@ -1018,9 +1151,10 @@ These subjects must be taught only to the depth needed for students to:
 - Understand what is happening
 - Recognize common problems
 - Protect important information
+- Maintain a clear codebase
 - Complete and launch an application when following the guided path
 
-This is not a computer-science curriculum. HTML, CSS, languages, frameworks, databases, testing, and deployment are tools within the build process—not separate academic subjects students must master before creating.
+This is not a computer-science curriculum. HTML, CSS, languages, frameworks, architecture, databases, testing, and deployment are tools within the build process—not separate academic subjects students must master before creating.
 
 ---
 
@@ -1063,6 +1197,7 @@ Good uses include:
 
 - Showing how frontend, backend, and database connect
 - Demonstrating information moving through an API
+- Showing how pages, routes, components, services, and data layers connect without living in one file
 - Showing what happens when work is committed and pushed to GitHub
 - Comparing a vague prompt with a controlled prompt
 - Walking through a user flow
@@ -1096,6 +1231,8 @@ The professional standard requires:
 - A coherent information architecture
 - Predictable navigation
 - A consistent design system
+- A clear folder and file architecture
+- Separation of pages, routes, layouts, components, services, data access, and tests
 - Reusable, maintainable components
 - Intentional desktop, tablet, and mobile behavior
 - Accessible contrast, focus states, keyboard use, labels, and readable type
@@ -1109,7 +1246,7 @@ The professional standard requires:
 - Clear privacy, support, account, and deletion experiences
 - Maintainable code and a deliberate release process
 
-A page is not finished merely because it looks good in one screenshot.
+A page is not finished merely because it looks good in one screenshot. A feature is not professionally built when its entire implementation has been dumped into one massive file.
 
 ## Locked Design Principles
 
@@ -1325,6 +1462,8 @@ The course should apply these principles without sounding academic.
 - A dramatic, neon, gradient-heavy technology theme
 - A website built around giant headlines and empty slogans
 - A polished concept mockup without real states and working flows
+- A monolithic codebase built inside one or two massive files
+- A project where pages, routes, authentication, data access, API calls, and styling are mixed together
 - A hype-driven “get rich with AI” product
 - A course that teaches tools without judgment
 - A course that abandons concepts after introducing them
@@ -1349,10 +1488,11 @@ Before approving any chapter, confirm that it:
 - Includes a clearly marked guided-build step when relevant
 - Reuses earlier skills
 - Avoids unnecessary theory
+- Reinforces modular file organization after it is introduced
 - Ends with a Check Your Understanding activity
 - Includes corrective explanations
 - Revisits earlier knowledge when useful
-- Updates the Build Plan, Learning Plan, or project where appropriate
+- Updates the Build Plan, Learning Plan, file map, or project where appropriate
 - Makes the next step clear
 - Prepares the student for the next chapter
 
@@ -1372,7 +1512,8 @@ Before approving any module, confirm that it:
 - Includes clear submission requirements when work is reviewed
 - Uses a clear review rubric
 - Protects guided students from building on a broken foundation
-- Leaves the guided project in a stable, saved state
+- Leaves the guided project in a stable, saved, modular state
+- Does not create or preserve a monolithic file problem
 - Includes a transfer challenge when appropriate
 - Moves the student closer to independence
 
@@ -1386,6 +1527,10 @@ Before approving a page or feature for production, confirm that it:
 - Fits the product’s information architecture
 - Uses the shared design system
 - Is consistent with related pages and controls
+- Lives in an appropriate dedicated page, route, component, service, or data file
+- Separates interface, routing, authentication, data access, integrations, and business logic appropriately
+- Reuses existing components and utilities instead of duplicating them
+- Does not turn a page or route file into a monolithic dumping ground
 - Works on intended desktop and mobile sizes
 - Handles loading, empty, success, error, and disabled states where relevant
 - Uses clear validation and recovery messages
@@ -1413,6 +1558,7 @@ The following details have not been approved and must not be treated as final:
 - Whether students may change guided projects after building begins
 - The catch-up flow for coursework-only students who begin building later
 - The course website’s technical stack
+- The exact folder conventions for each approved framework or stack
 - The preferred AI tool and approved alternatives
 - The exact timing of each outside-account setup
 - Which projects require Resend
@@ -1455,10 +1601,11 @@ The sequence should be:
 14. Define the cumulative guided project and review rubric for every module.
 15. Define the coursework-only cumulative exercise for every module.
 16. Decide where transfer challenges belong.
-17. Define the final capstones and honest completion labels.
-18. Review the full sequence for gaps, repetition, hidden prerequisites, and unnecessary complexity.
-19. Confirm that every earlier skill continues to appear after it is introduced.
-20. Only then begin building the course website and lesson content.
+17. Define the baseline modular architecture and file-map expectations for every guided project.
+18. Define the final capstones and honest completion labels.
+19. Review the full sequence for gaps, repetition, hidden prerequisites, and unnecessary complexity.
+20. Confirm that every earlier skill continues to appear after it is introduced.
+21. Only then begin building the course website and lesson content.
 
 No page, chapter, animation, quiz, setup task, or project should exist merely to fill space.
 

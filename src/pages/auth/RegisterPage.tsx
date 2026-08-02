@@ -72,12 +72,12 @@ export function RegisterPage() {
     <AuthPageShell
       eyebrow="Ready to begin?"
       title="Build something real."
-      description="Create your account to save your progress, choose your learning path, and start turning your idea into a working product."
+      description="Create your account to save your progress, choose your learning path, and start turning your website idea into a professional, published website."
       supportingContent={
         <ul>
-          <li>Choose the guided build-along or coursework-only path.</li>
+          <li>Choose the Guided Build-Along or Coursework-Only path.</li>
           <li>Return anytime and continue from where you left off.</li>
-          <li>Keep your lessons, progress, and project milestones together.</li>
+          <li>Keep your Website Foundations lessons, progress, and milestones together.</li>
         </ul>
       }
     >

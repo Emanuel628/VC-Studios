@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "17 13 * * 1"
+  push:
+    paths:
+      - ".github/workflows/deployment-docs-watch.yml"
+      - "tools/deployment_research/**"
 
 permissions:
   contents: read

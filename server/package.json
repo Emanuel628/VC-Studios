@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "dev:test-db": "cross-env DATABASE_URL=postgresql://postgres@localhost:5432/platinum_vc_studios_test tsx src/index.ts",
+    "postinstall": "prisma generate",
     "build": "tsc --noEmit && tsc -p tsconfig.build.json",
     "start": "prisma migrate deploy && node dist/index.js",
     "test": "vitest run",

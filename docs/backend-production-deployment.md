@@ -101,3 +101,13 @@ not take effect on the existing build.
   (see step 3).
 - **Frontend requests 404 or hit the HTML shell:** `VITE_API_URL` wasn't set before the
   last Vercel build, or was set but the frontend wasn't redeployed afterward.
+- **Build fails with `Module "@prisma/client" has no exported member 'PrismaClient'`:**
+  `prisma generate` never ran before `tsc`. `server/package.json` has a `postinstall`
+  script (`prisma generate`) that Railway's `npm install` step triggers automatically -
+  if this error comes back, check that `postinstall` is still present and that
+  `DATABASE_URL` is available at build time (`prisma generate` reads it via
+  `prisma.config.ts` and fails without it).
+- **Deploy logs show `serve --single --listen $PORT dist` instead of Prisma/Express
+  output:** this service is running the repo root's `package.json` (the frontend), not
+  `server/package.json`. Re-check Root Directory is set to `server` on this specific
+  service and redeploy.

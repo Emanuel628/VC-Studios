@@ -2,6 +2,7 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthPageShell } from '../../components/auth/AuthPageShell';
 import { FormField } from '../../components/auth/FormField';
+import { FormStatus } from '../../components/auth/FormStatus';
 import { PasswordField } from '../../components/auth/PasswordField';
 import { PasswordStrength } from '../../components/auth/PasswordStrength';
 import { authClient } from '../../lib/authClient';
@@ -138,11 +139,7 @@ export function ForgotPasswordPage() {
             {isSubmitting ? 'Resetting…' : 'Reset password'}
           </button>
 
-          {status ? (
-            <p className={styles.formStatus} role="status">
-              {status}
-            </p>
-          ) : null}
+          <FormStatus message={status} />
         </form>
 
         <p className={styles.formFooter}>
@@ -189,11 +186,7 @@ export function ForgotPasswordPage() {
           {isSubmitting ? 'Sending…' : 'Send code'}
         </button>
 
-        {status ? (
-          <p className={styles.formStatus} role="status">
-            {status}
-          </p>
-        ) : null}
+        <FormStatus message={status} />
       </form>
 
       <p className={styles.formFooter}>

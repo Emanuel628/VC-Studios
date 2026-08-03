@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { EmailVerifiedBadge } from '../../components/account/EmailVerifiedBadge';
 import { PublicPageShell } from '../../components/layout/PublicPageShell';
 import { useSession } from '../../lib/authClient';
 import styles from '../../styles/Dashboard.module.css';
@@ -13,7 +14,7 @@ export function DashboardPage() {
   const { user } = session;
 
   return (
-    <PublicPageShell mainId="dashboard-content">
+    <PublicPageShell>
       <div className={`${styles.page} ${styles.main}`}>
         <h1>Welcome back, {user.firstName}.</h1>
         <p className={styles.subtitle}>
@@ -32,11 +33,7 @@ export function DashboardPage() {
               </dd>
             </dl>
             <div>
-              <span
-                className={`${styles.badge} ${user.emailVerified ? styles.badgeVerified : styles.badgeUnverified}`}
-              >
-                {user.emailVerified ? 'Email verified' : 'Email not verified'}
-              </span>
+              <EmailVerifiedBadge verified={user.emailVerified} />
             </div>
             <Link className={styles.cardLink} to="/account">
               Manage account settings →

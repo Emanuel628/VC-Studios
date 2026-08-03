@@ -3,18 +3,14 @@ import { Footer } from '../landing/Footer';
 import { Nav } from '../landing/Nav';
 import styles from '../../styles/Landing.module.css';
 
-type PublicPageShellProps = PropsWithChildren<{
-  mainId?: string;
-}>;
-
-export function PublicPageShell({ mainId = 'main-content', children }: PublicPageShellProps) {
+export function PublicPageShell({ children }: PropsWithChildren) {
   return (
     <>
-      <a className={styles.skipLink} href={`#${mainId}`}>
+      <a className={styles.skipLink} href="#main-content">
         Skip to main content
       </a>
       <Nav />
-      <main id={mainId}>{children}</main>
+      <main id="main-content">{children}</main>
       <Footer />
     </>
   );

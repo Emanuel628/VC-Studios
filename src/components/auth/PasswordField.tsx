@@ -1,4 +1,5 @@
 import { useState, type InputHTMLAttributes } from 'react';
+import { FieldMessage, getFieldDescriptionId } from './FieldMessage';
 import styles from '../../styles/Auth.module.css';
 
 type PasswordFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
@@ -10,7 +11,6 @@ type PasswordFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & 
 
 export function PasswordField({ id, label, error, hint, ...inputProps }: PasswordFieldProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const descriptionId = error ? `${id}-error` : hint ? `${id}-hint` : undefined;
 
   return (
     <div className={styles.fieldGroup}>
@@ -21,7 +21,7 @@ export function PasswordField({ id, label, error, hint, ...inputProps }: Passwor
           className={`${styles.input} ${error ? styles.inputError : ''}`}
           type={isVisible ? 'text' : 'password'}
           aria-invalid={Boolean(error)}
-          aria-describedby={descriptionId}
+          aria-describedby={getFieldDescriptionId(id, error, hint)}
           {...inputProps}
         />
         <button
@@ -33,15 +33,7 @@ export function PasswordField({ id, label, error, hint, ...inputProps }: Passwor
           {isVisible ? 'Hide' : 'Show'}
         </button>
       </div>
-      {error ? (
-        <p className={styles.fieldError} id={`${id}-error`}>
-          {error}
-        </p>
-      ) : hint ? (
-        <p className={styles.fieldHint} id={`${id}-hint`}>
-          {hint}
-        </p>
-      ) : null}
+      <FieldMessage id={id} error={error} hint={hint} />
     </div>
   );
 }

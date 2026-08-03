@@ -31,6 +31,17 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL,
   trustedOrigins: [process.env.CLIENT_ORIGIN ?? 'http://localhost:5183'],
+  advanced: {
+    // The frontend (Vercel) and this backend (Railway) are on different domains in
+    // production, so the session cookie needs SameSite=None to survive a cross-origin
+    // fetch. In dev, Vite proxies /api to this server so the browser sees one origin -
+    // SameSite=None without HTTPS would just get the cookie silently dropped (browsers
+    // require Secure alongside SameSite=None), so this only applies once BETTER_AUTH_URL
+    // is actually an HTTPS deployment rather than local dev's http://localhost.
+    defaultCookieAttributes: process.env.BETTER_AUTH_URL?.startsWith('https://')
+      ? { sameSite: 'none' }
+      : undefined,
+  },
   emailAndPassword: {
     enabled: true,
   },

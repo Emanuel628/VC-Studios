@@ -5,8 +5,8 @@
 **VC means:** Vibe Code  
 **Product:** One connected course platform with separately gated learning programs  
 **Current program:** Website Foundations  
-**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module mapping is the next build artifact; landing and frontend authentication interfaces are implemented  
-**Last fully audited:** August 2, 2026
+**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module map drafted and pending audit; a Better Auth proof of concept (registration, login, sessions, verification, password reset, account deletion) is implemented and passes locally against real PostgreSQL, but is not yet deployed to production - see §18.2  
+**Last fully audited:** August 3, 2026
 
 ## Source-of-Truth Order
 
@@ -1011,19 +1011,28 @@ The landing page now markets Website Foundations specifically. It does not promi
 
 ## 18.2 Current Authentication Interface State
 
-The registration and forgot-password pages currently provide frontend validation only.
+The registration, login, forgot-password, and account pages are wired to a real
+Better Auth backend (`server/`) backed by Prisma and PostgreSQL. Implemented and
+covered by an integration test (`server/src/auth-flow.test.ts`):
 
-They do not yet:
+- Account creation, with `firstName`/`lastName` stored on the user record
+- Sessions and a protected `/api/me` endpoint gating the dashboard and account pages
+- Email verification and password reset, both delivered as a one-time code through
+  Resend
+- Account deletion
 
-- Create accounts
-- Store student profiles
-- Create sessions
-- Verify email addresses
-- Generate recovery codes
-- Send email
-- Communicate with a backend
+**This does not yet work in production.** No Railway service for `server/` has been
+deployed, so `prisma migrate deploy` (which runs automatically on `npm start`) has
+never executed against the real Railway Postgres database - it has no tables. Even
+once the backend is deployed, the frontend has no `VITE_API_URL` configured anywhere,
+so a Vercel-deployed frontend has no way to reach it. Until both are done, the
+production site behaves exactly like the old frontend-only mockup: forms validate,
+but nothing is created, stored, or sent. See
+[`docs/backend-production-deployment.md`](docs/backend-production-deployment.md) for
+the exact steps to close this gap.
 
-Their development-state messages must remain honest until those behaviors exist.
+Any remaining development-state messaging in the interface must stay honest about
+this until the production deployment above is completed and verified end to end.
 
 ## 18.3 Frontend Hosting Decision and Current Configuration
 
@@ -1103,7 +1112,7 @@ Platinum VC Studios will not use Supabase for its database, authentication, stor
 
 Authentication must be server-controlled and use Railway PostgreSQL.
 
-Better Auth remains the leading candidate, but it is not final until a focused proof of concept confirms registration, login, sessions, verification, password reset, protected routes, and account deletion work cleanly with Express and Railway.
+Better Auth's proof of concept confirms registration, login, sessions, verification, password reset, protected routes, and account deletion work cleanly with Express against a local PostgreSQL database (`server/src/auth-flow.test.ts`). It is not yet confirmed against a deployed Railway backend and Railway PostgreSQL, since neither has been deployed to production - see §18.2 and [`docs/backend-production-deployment.md`](docs/backend-production-deployment.md). Better Auth is not final until that production verification passes end to end.
 
 The final server-side password policy must be chosen with the authentication proof of concept and kept consistent with the frontend criteria.
 
@@ -1358,7 +1367,7 @@ The following may continue in parallel without blocking the module map:
 
 - Clean-account Vercel and Railway deployment walkthroughs
 - Current dashboard-label and screenshot verification
-- Vercel deployment configuration for the Platinum VC Studios frontend
+- Deploying the Platinum VC Studios backend to Railway and wiring the production frontend to it (`docs/backend-production-deployment.md`)
 - Accessibility corrections
 - Responsive behavior
 - Shared design-system components

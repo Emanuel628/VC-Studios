@@ -21,9 +21,7 @@ export function Nav() {
               <Link to="/dashboard">Dashboard</Link>
               <Link to="/learning-paths">Learning Paths</Link>
               <Link to="/roadmap">Roadmap</Link>
-              <span className={styles.navLinkDisabled} aria-disabled="true">
-                Resources
-              </span>
+              <Link to="/resources">Resources</Link>
               <span className={styles.navLinkDisabled} aria-disabled="true">
                 Community
               </span>

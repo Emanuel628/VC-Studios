@@ -9,6 +9,7 @@ import { DashboardPage } from '../pages/dashboard/DashboardPage';
 import { LearningPathsPage } from '../pages/learning-paths/LearningPathsPage';
 import { PrivacyPage } from '../pages/legal/PrivacyPage';
 import { TermsPage } from '../pages/legal/TermsPage';
+import { ResourcesPage } from '../pages/resources/ResourcesPage';
 import { RoadmapPage } from '../pages/roadmap/RoadmapPage';
 
 export function AppRoutes() {
@@ -49,6 +50,14 @@ export function AppRoutes() {
         element={
           <ProtectedRoute>
             <RoadmapPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/resources"
+        element={
+          <ProtectedRoute>
+            <ResourcesPage />
           </ProtectedRoute>
         }
       />

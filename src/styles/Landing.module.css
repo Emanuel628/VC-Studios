@@ -139,6 +139,7 @@ button.secondaryLink {
 
 .userMenuTrigger,
 .notificationBellTrigger {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -151,6 +152,24 @@ button.secondaryLink {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: #9a4f4f;
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .userMenuTrigger:hover,

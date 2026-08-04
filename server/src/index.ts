@@ -3,7 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import { fromNodeHeaders, toNodeHandler } from 'better-auth/node';
 import { auth, prisma } from './auth.js';
-import { getDashboardData, recordActivity } from './gamification.js';
+import { getDashboardData, getNotifications, markNotificationsRead, recordActivity } from './gamification.js';
 
 const PORT = Number(process.env.PORT ?? 3001);
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? 'http://localhost:5183';
@@ -73,6 +73,22 @@ export function createApp() {
     }
 
     res.json({ learningPath: path });
+  });
+
+  app.get('/api/notifications', async (req, res) => {
+    const session = await requireSession(req, res);
+    if (!session) return;
+
+    const data = await getNotifications(prisma, session.user.id);
+    res.json(data);
+  });
+
+  app.post('/api/notifications/read', async (req, res) => {
+    const session = await requireSession(req, res);
+    if (!session) return;
+
+    await markNotificationsRead(prisma, session.user.id);
+    res.json({ ok: true });
   });
 
   app.get('/', (_req, res) => {

@@ -52,18 +52,23 @@ export function LoginPage() {
     }
 
     setIsSubmitting(true);
-    const { error } = await authClient.signIn.email({
-      email: values.email,
-      password: values.password,
-    });
-    setIsSubmitting(false);
+    try {
+      const { error } = await authClient.signIn.email({
+        email: values.email,
+        password: values.password,
+      });
 
-    if (error) {
-      setStatus(error.message ?? 'That email and password did not match. Try again.');
-      return;
+      if (error) {
+        setStatus(error.message ?? 'That email and password did not match. Try again.');
+        return;
+      }
+
+      // Navigation happens reactively in the effect above once the session store updates.
+    } catch {
+      setStatus('Could not reach the server. Check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    // Navigation happens reactively in the effect above once the session store updates.
   }
 
   return (

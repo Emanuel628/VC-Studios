@@ -28,18 +28,26 @@ export function AccountPage() {
   const { user } = session;
 
   async function handleLogout() {
-    await authClient.signOut();
-    navigate('/');
+    try {
+      await authClient.signOut();
+    } finally {
+      navigate('/');
+    }
   }
 
   async function handleSendVerificationCode() {
     setVerifyStatus('Sending…');
-    const { error } = await authClient.emailOtp.sendVerificationOtp({
-      email: user.email,
-      type: 'email-verification',
-    });
-    setVerifySent(!error);
-    setVerifyStatus(error ? (error.message ?? 'Could not send a code. Try again.') : 'Code sent. Check your email.');
+    try {
+      const { error } = await authClient.emailOtp.sendVerificationOtp({
+        email: user.email,
+        type: 'email-verification',
+      });
+      setVerifySent(!error);
+      setVerifyStatus(error ? (error.message ?? 'Could not send a code. Try again.') : 'Code sent. Check your email.');
+    } catch {
+      setVerifySent(false);
+      setVerifyStatus('Could not reach the server. Check your connection and try again.');
+    }
   }
 
   async function handleVerifyCode(event: FormEvent<HTMLFormElement>) {
@@ -50,18 +58,23 @@ export function AccountPage() {
     }
 
     setIsVerifying(true);
-    const { error } = await authClient.emailOtp.verifyEmail({ email: user.email, otp: verifyCode });
-    setIsVerifying(false);
+    try {
+      const { error } = await authClient.emailOtp.verifyEmail({ email: user.email, otp: verifyCode });
 
-    if (error) {
-      setVerifyStatus(error.message ?? 'That code did not work. Send a new one and try again.');
-      return;
+      if (error) {
+        setVerifyStatus(error.message ?? 'That code did not work. Send a new one and try again.');
+        return;
+      }
+
+      setVerifyCode('');
+      setVerifySent(false);
+      setVerifyStatus('Email verified.');
+      await refetch();
+    } catch {
+      setVerifyStatus('Could not reach the server. Check your connection and try again.');
+    } finally {
+      setIsVerifying(false);
     }
-
-    setVerifyCode('');
-    setVerifySent(false);
-    setVerifyStatus('Email verified.');
-    await refetch();
   }
 
   async function handleDeleteAccount(event: FormEvent<HTMLFormElement>) {
@@ -72,15 +85,20 @@ export function AccountPage() {
     }
 
     setIsDeleting(true);
-    const { error } = await authClient.deleteUser({ password: deletePassword });
-    setIsDeleting(false);
+    try {
+      const { error } = await authClient.deleteUser({ password: deletePassword });
 
-    if (error) {
-      setDeleteError(error.message ?? 'That password did not match. Try again.');
-      return;
+      if (error) {
+        setDeleteError(error.message ?? 'That password did not match. Try again.');
+        return;
+      }
+
+      navigate('/');
+    } catch {
+      setDeleteError('Could not reach the server. Check your connection and try again.');
+    } finally {
+      setIsDeleting(false);
     }
-
-    navigate('/');
   }
 
   return (

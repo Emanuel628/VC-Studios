@@ -1,6 +1,6 @@
 # Website Foundations High-Level Module Map
 
-**Status:** Proposed — pending audit and approval
+**Status:** Locked. Audited line by line against the Completion Standard - the audit found three evidence items (§2.4/§3.4: protecting unrelated work during a change, identifying exposed secrets or API-key placement, correcting polished-but-goal-failing output) that did not yet trace to a module, and Modules 4 and 5 below now name them explicitly. Every other §2/§3 evidence item and all three checkpoints trace cleanly. Approved August 4, 2026.
 **Program:** Website Foundations
 **Derived from:** [`docs/website-foundations-completion-standard.md`](website-foundations-completion-standard.md) (Locked)
 **Purpose:** Define the module-level structure of Website Foundations — one cumulative outcome per module, the completion evidence it produces, and where the three required human-review checkpoints occur — before any chapter, lesson, quiz, or project content is written.
@@ -108,11 +108,11 @@ Nine modules, within the approximately seven-to-nine range set for this map. The
 
 **Cumulative capability:** Establish a modular project structure — one page per file, shared design tokens, clear route ownership — before the project grows to many pages.
 
-**Completion Standard evidence produced:** §2.3 Modular Project Structure (initial) / §3.2 Proposed Modular File Map, plus continued §3.4 exercises correcting monolithic or duplicated architecture.
+**Completion Standard evidence produced:** §2.3 Modular Project Structure (initial) / §3.2 Proposed Modular File Map, plus continued §3.4 exercises correcting monolithic or duplicated architecture and identifying exposed secrets or inappropriate API-key placement.
 
 **Guided evidence:** The shared foundation (tokens, shared styles, routing) and the first real page built on it, with no monolithic `App.tsx` and no mixed responsibilities.
 
-**Coursework evidence:** A proposed modular file map naming every page, shared component, route, and style responsibility, plus early architecture-correction exercises.
+**Coursework evidence:** A proposed modular file map naming every page, shared component, route, and style responsibility, plus early architecture-correction exercises and an exercise identifying where a secret or API key was placed where it does not belong.
 
 **Earlier knowledge and habits reused:** The plan (Module 2) that defines which pages are needed; the controlled-AI habits (Module 3) used to direct the build.
 
@@ -128,11 +128,11 @@ Nine modules, within the approximately seven-to-nine range set for this map. The
 
 **Cumulative capability:** Apply the approved foundation to build out the required pages by reusing shared patterns, rejecting scope creep, and correcting AI when it duplicates instead of reusing.
 
-**Completion Standard evidence produced:** Continues §2.2 (working pages) and §2.3 (no duplicated structures); adds the required §2.4 documented scope-control decision and documented architecture correction. Coursework continues §3.4 with duplicated-styles and scope-creep exercises.
+**Completion Standard evidence produced:** Continues §2.2 (working pages) and §2.3 (no duplicated structures); adds the required §2.4 documented scope-control decision, documented architecture correction, and evidence that unrelated working behavior was protected during a change. Coursework continues §3.4 with duplicated-styles, scope-creep, protecting-existing-work, and polished-but-goal-failing-output exercises.
 
-**Guided evidence:** The homepage plus at least two additional purposeful pages, built on the shared foundation, with one documented scope-control decision and one documented architecture correction.
+**Guided evidence:** The homepage plus at least two additional purposeful pages, built on the shared foundation, with one documented scope-control decision, one documented architecture correction, and one documented instance where unrelated working behavior was explicitly protected while making a change.
 
-**Coursework evidence:** Correction exercises covering duplicated CSS or components and AI-introduced scope creep, evaluated against the Module 2 plan.
+**Coursework evidence:** Correction exercises covering duplicated CSS or components, AI-introduced scope creep, protecting existing work during a change, and a page that looks finished but fails the stated user goal — all evaluated against the Module 2 plan.
 
 **Earlier knowledge and habits reused:** The foundation from Module 4; the plan boundaries from Module 2, used as the standard against which scope creep is rejected.
 
@@ -250,10 +250,11 @@ Consistent with the README's open-decisions list, this map does not set:
 
 - The exact chapter count within each module
 - The approved Guided website project catalog or default project
-- The preferred external AI tool or approved alternatives
 - Check Your Understanding question content
 - Chapter-level pacing or word count
 - Anything about later, separately gated programs
+
+The preferred-AI-tool question is already resolved separately (README §13.1): Website Foundations names no default tool, so it is not one of this map's open items.
 
 Those are the next decisions, not this one, and none of them are implied by this map being approved.
 
@@ -261,12 +262,11 @@ Those are the next decisions, not this one, and none of them are implied by this
 
 ## 6. Next Steps
 
-Per the README's Next Planning and Build Phase, once this map is audited and approved:
+Per the README's Next Planning and Build Phase, now that this map is audited and approved:
 
-1. Choose the preferred external AI tool and approved alternatives.
-2. Choose the small Guided website project catalog and default project.
-3. Divide approved modules into focused chapters.
-4. Define the practical action and Check Your Understanding activity for each chapter.
-5. Build one complete pilot module and observe real beginners using it before scaling the pattern to the rest of the program.
+1. Choose the small Guided website project catalog and default project.
+2. Divide approved modules into focused chapters.
+3. Define the practical action and Check Your Understanding activity for each chapter.
+4. Build one complete pilot module and observe real beginners using it before scaling the pattern to the rest of the program.
 
 Frontend platform work — including the authenticated Student App Shell — may begin using this map's module and checkpoint structure once it is approved, using placeholder data only and no invented backend behavior.

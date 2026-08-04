@@ -6,8 +6,10 @@ import { ForgotPasswordPage } from '../pages/auth/ForgotPasswordPage';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
 import { DashboardPage } from '../pages/dashboard/DashboardPage';
+import { LearningPathsPage } from '../pages/learning-paths/LearningPathsPage';
 import { PrivacyPage } from '../pages/legal/PrivacyPage';
 import { TermsPage } from '../pages/legal/TermsPage';
+import { RoadmapPage } from '../pages/roadmap/RoadmapPage';
 
 export function AppRoutes() {
   return (
@@ -31,6 +33,22 @@ export function AppRoutes() {
         element={
           <ProtectedRoute>
             <AccountPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/learning-paths"
+        element={
+          <ProtectedRoute>
+            <LearningPathsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/roadmap"
+        element={
+          <ProtectedRoute>
+            <RoadmapPage />
           </ProtectedRoute>
         }
       />

@@ -1,0 +1,72 @@
+.page {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.page h1 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  margin: 0 0 40px;
+  max-width: 620px;
+  color: var(--text-secondary);
+}
+
+.moduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 720px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.module {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.module:last-child {
+  border-bottom: none;
+}
+
+.moduleNumber {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.moduleTitle {
+  margin: 0;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.checkpointBadge {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+}

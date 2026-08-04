@@ -125,6 +125,108 @@ button.secondaryLink {
   text-underline-offset: 3px;
 }
 
+.navLinkDisabled {
+  color: var(--silver);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: default;
+}
+
+.userMenu,
+.notificationBell {
+  position: relative;
+}
+
+.userMenuTrigger,
+.notificationBellTrigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-button);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.userMenuTrigger:hover,
+.notificationBellTrigger:hover {
+  border-color: var(--border);
+}
+
+.userMenuTrigger:focus-visible,
+.notificationBellTrigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.userMenuInitial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.notificationBellTrigger svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--text);
+  stroke-width: 1.6;
+}
+
+.userMenuPanel,
+.notificationBellPanel {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-surface);
+  background: var(--white);
+  box-shadow: 0 12px 32px rgba(18, 18, 18, 0.1);
+}
+
+.userMenuPanel a,
+.userMenuPanel button {
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.userMenuPanel a:hover,
+.userMenuPanel button:hover {
+  background: var(--bg);
+}
+
+.notificationBellPanel p {
+  margin: 0;
+  padding: 10px 12px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);

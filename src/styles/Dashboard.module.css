@@ -1,31 +1,218 @@
 .page {
   width: min(100%, var(--max-width));
   margin: 0 auto;
-  padding-inline: 24px;
+  padding: 40px 24px 96px;
 }
 
-.main {
-  padding-top: 64px;
-  padding-bottom: 96px;
+.errorStatus {
+  margin: 0 0 24px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-button);
+  background: var(--white);
+  color: var(--text);
+  font-size: 14px;
 }
 
-.main h1 {
+.subtitle {
   margin: 0 0 8px;
-  font-size: clamp(28px, 3vw, 34px);
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Hero */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) auto minmax(180px, 0.7fr);
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 48px;
+  padding: 40px;
+  overflow: hidden;
+  border-radius: var(--radius-surface);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: var(--white);
+}
+
+.heroMain h1 {
+  margin: 4px 0 12px;
+  font-size: clamp(28px, 3.4vw, 38px);
   font-weight: 700;
   letter-spacing: -0.03em;
 }
 
-.subtitle {
-  margin: 0 0 40px;
-  max-width: 620px;
-  color: var(--text-secondary);
+.heroEyebrow {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  font-weight: 500;
 }
 
-.cardGrid {
+.heroSubtitle {
+  margin: 0 0 24px;
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+}
+
+.heroActions {
+  display: flex;
+  gap: 12px;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: var(--radius-button);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.primaryButton {
+  border: 1px solid var(--white);
+  background: var(--white);
+  color: var(--accent);
+}
+
+.secondaryButton {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: var(--white);
+}
+
+.heroProgress {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.progressRing {
+  width: 130px;
+  height: 130px;
+  transform: rotate(-90deg);
+}
+
+.progressRingTrack {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 10;
+}
+
+.progressRingValue {
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 300ms ease;
+}
+
+.progressRingLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.progressPercent {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.progressCaption {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.progressSubcaption {
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+}
+
+.heroStats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-button);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.heroStat strong {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.heroStat span {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+}
+
+/* Quick actions */
+
+.sectionTitle {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.quickActions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.quickAction {
+  display: block;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-surface);
+  background: var(--white);
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+
+.quickAction:hover {
+  border-color: var(--accent);
+}
+
+.quickAction h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.quickAction p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Cards */
+
+.twoColumn {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
+  margin-bottom: 24px;
 }
 
 .card {
@@ -36,7 +223,7 @@
 }
 
 .card h2 {
-  margin: 0 0 6px;
+  margin: 0 0 12px;
   font-size: 18px;
   font-weight: 650;
 }
@@ -48,79 +235,26 @@
   line-height: 1.6;
 }
 
-.comingSoon {
-  grid-column: 1 / -1;
-  border-style: dashed;
-  background: transparent;
-}
-
-.moduleList {
+.currentPathHeader {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 20px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.moduleList li {
-  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  align-items: baseline;
+  margin-bottom: 4px;
 }
 
-.moduleNumber {
-  flex-shrink: 0;
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 650;
-}
-
-.moduleTitle {
+.currentPathHeader h2 {
   margin: 0;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.5;
 }
 
-.checkpointBadge {
-  display: inline-block;
-  margin-top: 4px;
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.eyebrow {
-  display: inline-block;
-  margin: 0 0 10px;
+.pathBadge {
   padding: 3px 10px;
   border-radius: 999px;
-  background: rgba(47, 93, 94, 0.1);
+  background: rgba(47, 93, 94, 0.12);
   color: var(--accent);
   font-size: 12px;
   font-weight: 650;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 6px 16px;
-  margin: 18px 0 0;
-  font-size: 15px;
-}
-
-.row dt {
-  color: var(--text-secondary);
-}
-
-.row dd {
-  margin: 0;
-  color: var(--text);
-  font-weight: 500;
+  white-space: nowrap;
 }
 
 .cardLink {
@@ -137,8 +271,115 @@
   text-decoration: underline;
 }
 
-@media (max-width: 767px) {
-  .cardGrid {
+/* Badges */
+
+.badgeList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.badgeList li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.badgeStatus {
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.badgeEarned .badgeStatus {
+  color: var(--accent);
+}
+
+.badgeLocked .badgeStatus {
+  color: var(--silver);
+}
+
+.badgeLabel {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.badgeLocked .badgeLabel {
+  color: var(--text-secondary);
+}
+
+.badgeDescription {
+  margin: 2px 0 0 !important;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* Recent activity */
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activityList li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.activityList li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.activityDate {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .hero {
     grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .heroActions {
+    justify-content: center;
+  }
+
+  .heroStats {
+    flex-direction: row;
+  }
+
+  .quickActions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .twoColumn {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .quickActions {
+    grid-template-columns: 1fr;
+  }
+
+  .heroStats {
+    flex-direction: column;
   }
 }

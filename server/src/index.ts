@@ -2,10 +2,22 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import { fromNodeHeaders, toNodeHandler } from 'better-auth/node';
-import { auth } from './auth.js';
+import { auth, prisma } from './auth.js';
+import { getDashboardData, recordActivity } from './gamification.js';
 
 const PORT = Number(process.env.PORT ?? 3001);
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? 'http://localhost:5183';
+
+async function requireSession(req: express.Request, res: express.Response) {
+  const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
+
+  if (!session) {
+    res.status(401).json({ error: 'Not signed in.' });
+    return null;
+  }
+
+  return session;
+}
 
 export function createApp() {
   const app = express();
@@ -24,14 +36,43 @@ export function createApp() {
   app.use(express.json());
 
   app.get('/api/me', async (req, res) => {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
+    const session = await requireSession(req, res);
+    if (!session) return;
 
-    if (!session) {
-      res.status(401).json({ error: 'Not signed in.' });
+    res.json(session);
+  });
+
+  app.get('/api/dashboard', async (req, res) => {
+    const session = await requireSession(req, res);
+    if (!session) return;
+
+    const data = await getDashboardData(prisma, session.user.id);
+    res.json(data);
+  });
+
+  app.post('/api/learning-path', async (req, res) => {
+    const session = await requireSession(req, res);
+    if (!session) return;
+
+    const { path } = req.body ?? {};
+    if (path !== 'GUIDED' && path !== 'COURSEWORK') {
+      res.status(400).json({ error: 'path must be "GUIDED" or "COURSEWORK".' });
       return;
     }
 
-    res.json(session);
+    const existing = await prisma.user.findUniqueOrThrow({
+      where: { id: session.user.id },
+      select: { learningPath: true },
+    });
+
+    await prisma.user.update({ where: { id: session.user.id }, data: { learningPath: path } });
+
+    if (!existing.learningPath) {
+      const label = path === 'GUIDED' ? 'Guided Build-Along' : 'Coursework-Only';
+      await recordActivity(prisma, session.user.id, 'LEARNING_PATH_CHOSEN', 25, `Chose the ${label} path`);
+    }
+
+    res.json({ learningPath: path });
   });
 
   app.get('/', (_req, res) => {

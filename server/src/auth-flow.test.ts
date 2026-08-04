@@ -1,57 +1,19 @@
-import { createServer } from 'node:http';
-import type { AddressInfo } from 'node:net';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { cookieJar, postJson, startTestServer } from './test/server-test-utils.js';
 
 let baseURL: string;
-let server: ReturnType<typeof createServer>;
-let createApp: (typeof import('./index.js'))['createApp'];
 let prisma: (typeof import('./auth.js'))['prisma'];
 let lastSentOtps: (typeof import('./auth.js'))['lastSentOtps'];
+let close: () => Promise<void>;
 
 beforeAll(async () => {
-  ({ createApp } = await import('./index.js'));
-  ({ prisma, lastSentOtps } = await import('./auth.js'));
-
-  const app = createApp();
-  server = createServer(app);
-  await new Promise<void>((resolve) => server.listen(0, resolve));
-  const { port } = server.address() as AddressInfo;
-  baseURL = `http://localhost:${port}`;
+  ({ baseURL, prisma, close } = await startTestServer());
+  ({ lastSentOtps } = await import('./auth.js'));
 });
 
 afterAll(async () => {
-  await new Promise((resolve) => server.close(resolve));
-  await prisma.$disconnect();
+  await close();
 });
-
-function cookieJar() {
-  const cookies = new Map<string, string>();
-  return {
-    async fetch(path: string, init: RequestInit = {}) {
-      const headers = new Headers(init.headers);
-      if (cookies.size) {
-        headers.set('cookie', [...cookies.entries()].map(([key, value]) => `${key}=${value}`).join('; '));
-      }
-      const response = await fetch(`${baseURL}${path}`, { ...init, headers });
-      const setCookies =
-        typeof response.headers.getSetCookie === 'function' ? response.headers.getSetCookie() : [];
-      for (const setCookie of setCookies) {
-        const pair = setCookie.split(';')[0];
-        const separatorIndex = pair.indexOf('=');
-        cookies.set(pair.slice(0, separatorIndex), pair.slice(separatorIndex + 1));
-      }
-      return response;
-    },
-  };
-}
-
-function postJson(client: ReturnType<typeof cookieJar>, path: string, body: unknown) {
-  return client.fetch(path, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-}
 
 describe('Better Auth proof of concept', () => {
   const email = `otp-flow-${Date.now()}@example.com`;
@@ -68,7 +30,7 @@ describe('Better Auth proof of concept', () => {
   });
 
   it('covers the full register, verify, reset, and delete lifecycle', async () => {
-    const client = cookieJar();
+    const client = cookieJar(baseURL);
 
     const signUpResponse = await postJson(client, '/api/auth/sign-up/email', {
       email,
@@ -121,17 +83,19 @@ describe('Better Auth proof of concept', () => {
     });
     expect(resetResponse.status).toBe(200);
 
-    const oldPasswordAttempt = await postJson(cookieJar(), '/api/auth/sign-in/email', { email, password });
+    const oldPasswordAttempt = await postJson(cookieJar(baseURL), '/api/auth/sign-in/email', { email, password });
     expect(oldPasswordAttempt.status).toBeGreaterThanOrEqual(400);
 
-    const newPasswordClient = cookieJar();
+    const newPasswordClient = cookieJar(baseURL);
     const newPasswordSignIn = await postJson(newPasswordClient, '/api/auth/sign-in/email', {
       email,
       password: newPassword,
     });
     expect(newPasswordSignIn.status).toBe(200);
 
-    const unauthenticatedDelete = await postJson(cookieJar(), '/api/auth/delete-user', { password: newPassword });
+    const unauthenticatedDelete = await postJson(cookieJar(baseURL), '/api/auth/delete-user', {
+      password: newPassword,
+    });
     expect(unauthenticatedDelete.status).toBeGreaterThanOrEqual(400);
 
     const deleteResponse = await postJson(newPasswordClient, '/api/auth/delete-user', { password: newPassword });

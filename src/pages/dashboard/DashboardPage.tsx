@@ -1,90 +1,188 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { EmailVerifiedBadge } from '../../components/account/EmailVerifiedBadge';
 import { PublicPageShell } from '../../components/layout/PublicPageShell';
+import { fetchDashboard, type DashboardData } from '../../lib/dashboardClient';
 import { useSession } from '../../lib/authClient';
 import styles from '../../styles/Dashboard.module.css';
 
-// Structure preview only, from the approved module map (docs/website-foundations-high-level-module-map.md).
-// No chapters or lessons exist yet, and no progress is tracked yet - see README §9.7 and §14.2 on honest completion
-// and progress claims.
-const modules = [
-  { title: 'Program Orientation, Path Selection, and the First Plan Entry', checkpoint: null },
-  { title: 'Planning Before Prompting', checkpoint: 'Plan or blueprint approval' },
-  { title: 'Tool Selection and Directing AI With Control', checkpoint: null },
-  { title: 'Architecture and the Shared Foundation', checkpoint: 'Architecture or file-map checkpoint' },
-  { title: 'Building Pages With Purpose', checkpoint: null },
-  { title: 'Responsive, Accessible, and Working', checkpoint: null },
-  { title: 'Testing, Defects, and Recovery', checkpoint: null },
-  { title: 'Publishing the Website', checkpoint: null },
-  { title: 'Structured Explanation and Final Completion Review', checkpoint: 'Final completion review' },
-];
+const RADIUS = 54;
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+function formatRelativeDate(isoDate: string): string {
+  const date = new Date(isoDate);
+  const dayDiff = Math.floor((Date.now() - date.getTime()) / 86_400_000);
+
+  if (dayDiff <= 0) return 'Today';
+  if (dayDiff === 1) return 'Yesterday';
+  return `${dayDiff} days ago`;
+}
+
+const PATH_LABELS: Record<string, string> = {
+  GUIDED: 'Guided Build-Along',
+  COURSEWORK: 'Coursework-Only',
+};
 
 export function DashboardPage() {
   const { data: session } = useSession();
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchDashboard()
+      .then(setData)
+      .catch(() => setError('Could not load your dashboard. Try refreshing the page.'));
+  }, []);
 
   if (!session?.user) {
     return null;
   }
 
   const { user } = session;
+  const progressPercent = data ? Math.round((data.checkpoints.passed / data.checkpoints.total) * 100) : 0;
+  const ringOffset = CIRCUMFERENCE - (CIRCUMFERENCE * progressPercent) / 100;
 
   return (
     <PublicPageShell>
-      <div className={`${styles.page} ${styles.main}`}>
-        <h1>Welcome back, {user.firstName}.</h1>
-        <p className={styles.subtitle}>
-          This is where your Website Foundations progress will live. The program is still being built, so there
-          is not much here yet — but your account and plan will carry forward once it opens.
-        </p>
+      <div className={styles.page}>
+        {error ? (
+          <p className={styles.errorStatus} role="alert">
+            {error}
+          </p>
+        ) : null}
 
-        <div className={styles.cardGrid}>
-          <section className={styles.card} aria-labelledby="dashboard-account-title">
-            <h2 id="dashboard-account-title">Your account</h2>
-            <p>{user.email}</p>
-            <dl className={styles.row}>
-              <dt>Name</dt>
-              <dd>
-                {user.firstName} {user.lastName}
-              </dd>
-            </dl>
-            <div>
-              <EmailVerifiedBadge verified={user.emailVerified} />
+        <section className={styles.hero} aria-labelledby="dashboard-welcome-title">
+          <div className={styles.heroMain}>
+            <h1 id="dashboard-welcome-title">
+              <span className={styles.heroEyebrow}>Welcome back,</span> {user.firstName} 👋
+            </h1>
+            <p className={styles.heroSubtitle}>Let's keep building. You're making progress.</p>
+
+            <div className={styles.heroActions}>
+              <Link className={styles.primaryButton} to="/roadmap">
+                Continue Learning →
+              </Link>
+              <Link className={styles.secondaryButton} to="/roadmap">
+                View Roadmap
+              </Link>
             </div>
-            <Link className={styles.cardLink} to="/account">
-              Manage account settings →
+          </div>
+
+          <div className={styles.heroProgress}>
+            <svg className={styles.progressRing} viewBox="0 0 120 120" aria-hidden="true">
+              <circle className={styles.progressRingTrack} cx="60" cy="60" r={RADIUS} />
+              <circle
+                className={styles.progressRingValue}
+                cx="60"
+                cy="60"
+                r={RADIUS}
+                strokeDasharray={CIRCUMFERENCE}
+                strokeDashoffset={ringOffset}
+              />
+            </svg>
+            <div className={styles.progressRingLabel}>
+              <span className={styles.progressPercent}>{progressPercent}%</span>
+            </div>
+            <p className={styles.progressCaption}>Overall Progress</p>
+            <p className={styles.progressSubcaption}>Website Foundations</p>
+          </div>
+
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <strong>{data?.streak ?? 0}</strong>
+              <span>Day Streak</span>
+            </div>
+            <div className={styles.heroStat}>
+              <strong>{data?.points ?? 0}</strong>
+              <span>Points Earned</span>
+            </div>
+            <div className={styles.heroStat}>
+              <strong>
+                {data?.checkpoints.passed ?? 0} / {data?.checkpoints.total ?? 3}
+              </strong>
+              <span>Checkpoints Passed</span>
+            </div>
+          </div>
+        </section>
+
+        <h2 className={styles.sectionTitle}>Quick Actions</h2>
+        <div className={styles.quickActions}>
+          <Link className={styles.quickAction} to="/roadmap">
+            <h3>Continue Learning</h3>
+            <p>See the program roadmap and pick up from here.</p>
+          </Link>
+          <Link className={styles.quickAction} to="/learning-paths">
+            <h3>Choose Learning Path</h3>
+            <p>Guided Build-Along or Coursework-Only.</p>
+          </Link>
+          <Link className={styles.quickAction} to="/roadmap">
+            <h3>View Roadmap</h3>
+            <p>See the full program structure and checkpoints.</p>
+          </Link>
+          <a className={styles.quickAction} href="#rewards">
+            <h3>Earn Rewards</h3>
+            <p>See what you've earned and what's next.</p>
+          </a>
+        </div>
+
+        <div className={styles.twoColumn}>
+          <section className={styles.card} aria-labelledby="current-path-title">
+            <div className={styles.currentPathHeader}>
+              <h2 id="current-path-title">Your Current Path</h2>
+              {data?.learningPath ? (
+                <span className={styles.pathBadge}>{PATH_LABELS[data.learningPath]}</span>
+              ) : null}
+            </div>
+
+            {data?.learningPath ? (
+              <>
+                <p className={styles.subtitle}>Website Foundations</p>
+                <p>Build professional websites with AI guidance and structured learning.</p>
+              </>
+            ) : (
+              <p>
+                You haven't chosen a path yet.{' '}
+                <Link to="/learning-paths">Choose Guided Build-Along or Coursework-Only</Link> to get started.
+              </p>
+            )}
+
+            <Link className={styles.cardLink} to="/roadmap">
+              See the program roadmap →
             </Link>
           </section>
 
-          <section className={styles.card} aria-labelledby="dashboard-path-title">
-            <h2 id="dashboard-path-title">Learning path</h2>
-            <p>
-              You will be able to choose Guided Build-Along or Coursework-Only here once Website Foundations
-              opens. Both paths teach the same process.
-            </p>
-          </section>
-
-          <section className={`${styles.card} ${styles.comingSoon}`} aria-labelledby="dashboard-program-title">
-            <span className={styles.eyebrow}>Structure preview</span>
-            <h2 id="dashboard-program-title">Website Foundations</h2>
-            <p>
-              The module map is approved. Chapters and lessons are still being written, so this list previews the
-              program's structure - it is not your live progress yet.
-            </p>
-            <ol className={styles.moduleList}>
-              {modules.map((module, index) => (
-                <li key={module.title}>
-                  <span className={styles.moduleNumber}>{index + 1}</span>
+          <section className={styles.card} aria-labelledby="rewards-title" id="rewards">
+            <h2 id="rewards-title">Rewards &amp; Progress</h2>
+            <ul className={styles.badgeList}>
+              {data?.badges.map((badge) => (
+                <li key={badge.key} className={badge.earned ? styles.badgeEarned : styles.badgeLocked}>
+                  <span className={styles.badgeStatus} aria-hidden="true">
+                    {badge.earned ? '✓' : '○'}
+                  </span>
                   <div>
-                    <p className={styles.moduleTitle}>{module.title}</p>
-                    {module.checkpoint ? (
-                      <span className={styles.checkpointBadge}>Checkpoint: {module.checkpoint}</span>
-                    ) : null}
+                    <p className={styles.badgeLabel}>{badge.label}</p>
+                    <p className={styles.badgeDescription}>{badge.description}</p>
                   </div>
                 </li>
               ))}
-            </ol>
+            </ul>
           </section>
         </div>
+
+        <section className={styles.card} aria-labelledby="activity-title">
+          <h2 id="activity-title">Recent Activity</h2>
+          {data && data.recentActivity.length > 0 ? (
+            <ul className={styles.activityList}>
+              {data.recentActivity.map((event, index) => (
+                <li key={index}>
+                  <span>{event.message}</span>
+                  <span className={styles.activityDate}>{formatRelativeDate(event.createdAt)}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className={styles.subtitle}>No activity yet.</p>
+          )}
+        </section>
       </div>
     </PublicPageShell>
   );

@@ -1,10 +1,12 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { Link } from 'react-router';
 import { AuthPageShell } from '../../components/auth/AuthPageShell';
 import { FormField } from '../../components/auth/FormField';
+import { FormStatus } from '../../components/auth/FormStatus';
 import { PasswordField } from '../../components/auth/PasswordField';
 import { PasswordStrength } from '../../components/auth/PasswordStrength';
-import { authClient, useSession } from '../../lib/authClient';
+import { authClient } from '../../lib/authClient';
+import { useRedirectWhenSignedIn } from '../../lib/useRedirectWhenSignedIn';
 import { isPasswordValid } from '../../utils/password';
 import styles from '../../styles/Auth.module.css';
 
@@ -46,8 +48,7 @@ function validate(values: RegisterValues): RegisterErrors {
 }
 
 export function RegisterPage() {
-  const navigate = useNavigate();
-  const { data: session } = useSession();
+  useRedirectWhenSignedIn('/dashboard');
   const [values, setValues] = useState<RegisterValues>(initialValues);
   const [errors, setErrors] = useState<RegisterErrors>({});
   const [status, setStatus] = useState('');
@@ -56,15 +57,6 @@ export function RegisterPage() {
   const passwordsDoNotMatch = Boolean(
     values.password && values.confirmPassword && values.password !== values.confirmPassword,
   );
-
-  // Navigate once the shared session store actually reflects the new session, rather than
-  // right after the API call resolves - the store can update a beat later, and ProtectedRoute
-  // would otherwise see a stale "no session" and bounce straight back to /login.
-  useEffect(() => {
-    if (session?.user) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [session, navigate]);
 
   function updateField(field: keyof RegisterValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -190,11 +182,7 @@ export function RegisterPage() {
           Create account
         </button>
 
-        {status ? (
-          <p className={styles.formStatus} role="status">
-            {status}
-          </p>
-        ) : null}
+        <FormStatus message={status} />
 
         <p className={styles.formFooter}>
           By creating an account, you agree to our <Link to="/terms">Terms &amp; Conditions</Link> and{' '}

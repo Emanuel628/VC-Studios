@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router';
+import { EmailVerifiedBadge } from '../../components/account/EmailVerifiedBadge';
 import { FormField } from '../../components/auth/FormField';
+import { FormStatus } from '../../components/auth/FormStatus';
 import { PasswordField } from '../../components/auth/PasswordField';
 import { PublicPageShell } from '../../components/layout/PublicPageShell';
 import { authClient, useSession } from '../../lib/authClient';
@@ -82,7 +84,7 @@ export function AccountPage() {
   }
 
   return (
-    <PublicPageShell mainId="account-content">
+    <PublicPageShell>
       <div className={`${styles.page} ${styles.main}`}>
         <h1>Your account</h1>
         <p className={styles.subtitle}>This is the one protected page in Website Foundations today.</p>
@@ -102,9 +104,7 @@ export function AccountPage() {
             </div>
           </dl>
 
-          <span className={`${styles.badge} ${user.emailVerified ? styles.badgeVerified : styles.badgeUnverified}`}>
-            {user.emailVerified ? 'Email verified' : 'Email not verified'}
-          </span>
+          <EmailVerifiedBadge verified={user.emailVerified} />
 
           {!user.emailVerified ? (
             <div className={styles.verifySection}>
@@ -134,11 +134,7 @@ export function AccountPage() {
                 </form>
               )}
 
-              {verifyStatus ? (
-                <p className={`${authStyles.formStatus} ${styles.verifyStatus}`} role="status">
-                  {verifyStatus}
-                </p>
-              ) : null}
+              <FormStatus message={verifyStatus} className={styles.verifyStatus} />
             </div>
           ) : null}
         </section>

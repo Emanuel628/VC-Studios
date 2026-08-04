@@ -31,10 +31,12 @@ function nextStreak(user: Pick<User, 'currentStreak' | 'lastActivityOn'>, now: D
 }
 
 async function awardBadge(prisma: PrismaClient, userId: string, badge: BadgeKey): Promise<void> {
-  await prisma.userBadge.upsert({
-    where: { userId_badge: { userId, badge } },
-    create: { userId, badge },
-    update: {},
+  const alreadyEarned = await prisma.userBadge.findUnique({ where: { userId_badge: { userId, badge } } });
+  if (alreadyEarned) return;
+
+  await prisma.userBadge.create({ data: { userId, badge } });
+  await prisma.notification.create({
+    data: { userId, message: `You earned the "${BADGE_DEFINITIONS[badge].label}" badge.` },
   });
 }
 
@@ -81,6 +83,29 @@ export type DashboardData = {
   badges: Array<{ key: BadgeKey; label: string; description: string; earned: boolean }>;
   recentActivity: Array<{ type: ActivityEventType; message: string; points: number; createdAt: Date }>;
 };
+
+export type NotificationsData = {
+  notifications: Array<{ id: string; message: string; read: boolean; createdAt: Date }>;
+  unreadCount: number;
+};
+
+export async function getNotifications(prisma: PrismaClient, userId: string): Promise<NotificationsData> {
+  const [notifications, unreadCount] = await Promise.all([
+    prisma.notification.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      take: 20,
+      select: { id: true, message: true, read: true, createdAt: true },
+    }),
+    prisma.notification.count({ where: { userId, read: false } }),
+  ]);
+
+  return { notifications, unreadCount };
+}
+
+export async function markNotificationsRead(prisma: PrismaClient, userId: string): Promise<void> {
+  await prisma.notification.updateMany({ where: { userId, read: false }, data: { read: true } });
+}
 
 export async function getDashboardData(prisma: PrismaClient, userId: string): Promise<DashboardData> {
   const [user, pointsTotal, checkpointCompletions, earnedBadges, recentActivity] = await Promise.all([

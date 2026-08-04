@@ -51,6 +51,7 @@ model User {
   activityEvents        ActivityEvent[]
   checkpointCompletions CheckpointCompletion[]
   badges                UserBadge[]
+  notifications         Notification[]
 
   @@unique([email])
   @@map("user")
@@ -143,4 +144,18 @@ model UserBadge {
 
   @@unique([userId, badge])
   @@map("user_badge")
+}
+
+// Created only for real, meaningful moments (currently: newly earning a badge) -
+// never a placeholder count.
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("notification")
 }

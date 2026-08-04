@@ -63,3 +63,27 @@ export async function markNotificationsRead(): Promise<void> {
     throw new Error('Could not update notifications.');
   }
 }
+
+export async function fetchModuleNote(moduleIndex: number): Promise<string> {
+  const response = await fetch(`${API_BASE_URL}/api/notes/${moduleIndex}`, { credentials: 'include' });
+
+  if (!response.ok) {
+    throw new Error('Could not load your notes.');
+  }
+
+  const { content } = await response.json();
+  return content;
+}
+
+export async function saveModuleNote(moduleIndex: number, content: string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/api/notes/${moduleIndex}`, {
+    method: 'PUT',
+    credentials: 'include',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ content }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not save your notes.');
+  }
+}

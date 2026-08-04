@@ -107,6 +107,28 @@ export async function markNotificationsRead(prisma: PrismaClient, userId: string
   await prisma.notification.updateMany({ where: { userId, read: false }, data: { read: true } });
 }
 
+// Matches src/lib/moduleMap.ts's WEBSITE_FOUNDATIONS_MODULES length - there is no
+// Module table yet since modules are still static approved structure, not dynamic data.
+export const MODULE_COUNT = 9;
+
+export async function getModuleNote(prisma: PrismaClient, userId: string, moduleIndex: number): Promise<string> {
+  const note = await prisma.moduleNote.findUnique({ where: { userId_moduleIndex: { userId, moduleIndex } } });
+  return note?.content ?? '';
+}
+
+export async function saveModuleNote(
+  prisma: PrismaClient,
+  userId: string,
+  moduleIndex: number,
+  content: string,
+): Promise<void> {
+  await prisma.moduleNote.upsert({
+    where: { userId_moduleIndex: { userId, moduleIndex } },
+    create: { userId, moduleIndex, content },
+    update: { content },
+  });
+}
+
 export async function getDashboardData(prisma: PrismaClient, userId: string): Promise<DashboardData> {
   const [user, pointsTotal, checkpointCompletions, earnedBadges, recentActivity] = await Promise.all([
     prisma.user.findUniqueOrThrow({ where: { id: userId }, select: { learningPath: true, currentStreak: true } }),

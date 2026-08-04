@@ -5,7 +5,7 @@
 **VC means:** Vibe Code  
 **Product:** One connected course platform with separately gated learning programs  
 **Current program:** Website Foundations  
-**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module map audited line by line against the Completion Standard and pending approval (see `docs/website-foundations-high-level-module-map.md`); a Better Auth proof of concept (registration, login, sessions, verification, password reset, account deletion) is implemented and passes locally against real PostgreSQL, but is not yet deployed to production - see §18.2  
+**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module map audited and approved (see `docs/website-foundations-high-level-module-map.md`); the preferred-AI-tool decision resolved to "student's own choice, none supplied" (§13.1); next up is the Guided project catalog and chapter breakdown; a Better Auth proof of concept (registration, login, sessions, verification, password reset, account deletion) is implemented and passes locally against real PostgreSQL, but is not yet deployed to production - see §18.2  
 **Last fully audited:** August 4, 2026
 
 ## Source-of-Truth Order
@@ -25,7 +25,7 @@ Implemented code shows current behavior. It does not silently override a later a
 
 Suggestions, examples, research findings, and working labels must not silently become requirements. Open decisions are listed explicitly near the end of this document.
 
-The complete Website Foundations module and chapter sequence has **not** been approved. Full lesson content must not be invented before the high-level module map is approved.
+The high-level module map is approved. The complete chapter sequence within those modules is **not** yet approved. Full lesson content must not be invented before modules are divided into chapters per §22.2.
 
 ---
 
@@ -725,7 +725,7 @@ Platinum VC Studios will not provide or control the student’s external develop
 The Guided path will require or may require:
 
 - **Visual Studio Code**
-- **A preferred external AI tool or approved alternative**
+- **An AI tool of the student's own choosing**
 - **GitHub**
 - **Vercel**, the default frontend deployment service
 - **Railway**, an approved alternative frontend deployment service
@@ -737,7 +737,7 @@ The official-documentation baseline currently contains five Vercel sources serve
 
 The candidate deployment guides remain under `docs/deployment/`. They are not production-verified student instructions until clean-account dashboard walkthroughs confirm current labels, generated URLs, routing behavior, build logs, custom-domain behavior, and screenshots for both providers.
 
-The preferred external AI tool remains open.
+Website Foundations does not name one preferred AI tool or a fixed list of approved alternatives. The AI tool is the student's own choice and the student's own account, consistent with §13.3 and the locked no-AI-API-integration decision in §16 - Platinum VC Studios will not supply, recommend a single default for, or connect to a specific AI provider on the student's behalf.
 
 Resend, PostgreSQL, Prisma, authentication services, backend development, and application API keys are not Website Foundations student requirements.
 
@@ -757,7 +757,7 @@ Setup should be separated into:
 
 The student uses their own AI account outside Platinum VC Studios. It may be free or paid.
 
-The course must explain the preferred tool, acceptable alternatives, possible free-plan limits, separate subscription costs, and the rule that students must never share passwords, payment information, private keys, or sensitive data.
+The course must explain that the AI tool is the student's own choice, along with possible free-plan limits, separate subscription costs, and the rule that students must never share passwords, payment information, private keys, or sensitive data.
 
 ## 13.4 External Account Responsibility
 
@@ -1298,13 +1298,11 @@ A page or feature is not production-ready unless it:
 
 The following have not been finalized:
 
-- Website Foundations high-level module map
 - Exact module and chapter count
 - Full chapter sequence
 - Exact website project catalog and default project
 - Rules for changing learning paths or projects
 - Catch-up process for beginning a Guided project later
-- Preferred external AI tool and approved alternatives
 - Exact final names and boundaries of later programs
 - Whether “software” and “desktop applications” are one program or separate concepts
 - Final release order after the shared web-application foundation
@@ -1330,6 +1328,10 @@ The primary platform frontend host and the default Website Foundations deploymen
 
 The deployment documentation baseline is also no longer open. Authenticated dashboard verification remains required work, but it does not reopen the hosting decision.
 
+The Website Foundations high-level module map is no longer open: it is approved (see `docs/website-foundations-high-level-module-map.md`).
+
+The preferred-AI-tool decision is also no longer open, and it did not resolve to naming one tool: Website Foundations does not recommend or supply a default AI tool. The AI tool is entirely the student's own choice and account, per §13.1 and §13.3, consistent with the locked no-AI-API-integration rule in §16.
+
 ---
 
 # 22. Next Planning and Build Phase
@@ -1338,13 +1340,11 @@ The Website Foundations Completion Standard is locked.
 
 ## 22.1 Immediate Next Build Artifact
 
-The next overall build step is the **Website Foundations High-Level Module Map**.
-
-Create:
+The **Website Foundations High-Level Module Map** is built and approved:
 
 `docs/website-foundations-high-level-module-map.md`
 
-The map should be derived directly from the Completion Standard and should aim for approximately seven to nine modules without forcing an arbitrary count. Each proposed module must define:
+It was derived directly from the Completion Standard, audited line by line against it, and defines nine modules. Each module defines:
 
 - One cumulative student capability
 - The Completion Standard evidence it produces
@@ -1361,21 +1361,22 @@ The module map must place the three review checkpoints naturally:
 2. Architecture or file-map checkpoint
 3. Final completion review
 
-It must not contain full lessons, invented chapter counts, detailed quizzes, or unapproved project instructions. Those come only after the module map is audited and approved.
+It does not contain full lessons, invented chapter counts, detailed quizzes, or unapproved project instructions. Those come only now that the module map is audited and approved.
 
 ## 22.2 Work Immediately After the Module Map
 
-After the module map is locked:
+The preferred-AI-tool decision is resolved and does not block this list - see §13.1: Website Foundations names no default tool, the choice belongs to the student.
 
-1. Choose the preferred external AI tool and approved alternatives.
-2. Choose the small Guided website project catalog and default project.
-3. Divide approved modules into focused chapters.
-4. Define the practical action and Check Your Understanding activity for each chapter.
-5. Build one complete pilot module.
-6. Observe real beginners using it without intervention.
-7. Correct the lesson pattern, workload, language, progress messages, and support level.
-8. Scale the corrected pattern across the remaining program.
-9. Beta test the full student journey before public release.
+Now that the module map is locked:
+
+1. Choose the small Guided website project catalog and default project.
+2. Divide approved modules into focused chapters.
+3. Define the practical action and Check Your Understanding activity for each chapter.
+4. Build one complete pilot module.
+5. Observe real beginners using it without intervention.
+6. Correct the lesson pattern, workload, language, progress messages, and support level.
+7. Scale the corrected pattern across the remaining program.
+8. Beta test the full student journey before public release.
 
 ## 22.3 Parallel Technical Work
 

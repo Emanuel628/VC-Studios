@@ -54,6 +54,44 @@
   background: transparent;
 }
 
+.moduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.moduleList li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.moduleNumber {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.moduleTitle {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.checkpointBadge {
+  display: inline-block;
+  margin-top: 4px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .eyebrow {
   display: inline-block;
   margin: 0 0 10px;

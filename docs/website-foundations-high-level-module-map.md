@@ -1,6 +1,6 @@
 # Website Foundations High-Level Module Map
 
-**Status:** Audited against the Completion Standard, line by line — pending approval. The audit found three evidence items (§2.4/§3.4: protecting unrelated work during a change, identifying exposed secrets or API-key placement, correcting polished-but-goal-failing output) that did not yet trace to a module; Modules 4 and 5 below now name them explicitly. Every other §2/§3 evidence item and all three checkpoints trace cleanly.
+**Status:** Locked. Audited line by line against the Completion Standard - the audit found three evidence items (§2.4/§3.4: protecting unrelated work during a change, identifying exposed secrets or API-key placement, correcting polished-but-goal-failing output) that did not yet trace to a module, and Modules 4 and 5 below now name them explicitly. Every other §2/§3 evidence item and all three checkpoints trace cleanly. Approved August 4, 2026.
 **Program:** Website Foundations
 **Derived from:** [`docs/website-foundations-completion-standard.md`](website-foundations-completion-standard.md) (Locked)
 **Purpose:** Define the module-level structure of Website Foundations — one cumulative outcome per module, the completion evidence it produces, and where the three required human-review checkpoints occur — before any chapter, lesson, quiz, or project content is written.
@@ -250,10 +250,11 @@ Consistent with the README's open-decisions list, this map does not set:
 
 - The exact chapter count within each module
 - The approved Guided website project catalog or default project
-- The preferred external AI tool or approved alternatives
 - Check Your Understanding question content
 - Chapter-level pacing or word count
 - Anything about later, separately gated programs
+
+The preferred-AI-tool question is already resolved separately (README §13.1): Website Foundations names no default tool, so it is not one of this map's open items.
 
 Those are the next decisions, not this one, and none of them are implied by this map being approved.
 
@@ -261,12 +262,11 @@ Those are the next decisions, not this one, and none of them are implied by this
 
 ## 6. Next Steps
 
-Per the README's Next Planning and Build Phase, once this map is audited and approved:
+Per the README's Next Planning and Build Phase, now that this map is audited and approved:
 
-1. Choose the preferred external AI tool and approved alternatives.
-2. Choose the small Guided website project catalog and default project.
-3. Divide approved modules into focused chapters.
-4. Define the practical action and Check Your Understanding activity for each chapter.
-5. Build one complete pilot module and observe real beginners using it before scaling the pattern to the rest of the program.
+1. Choose the small Guided website project catalog and default project.
+2. Divide approved modules into focused chapters.
+3. Define the practical action and Check Your Understanding activity for each chapter.
+4. Build one complete pilot module and observe real beginners using it before scaling the pattern to the rest of the program.
 
 Frontend platform work — including the authenticated Student App Shell — may begin using this map's module and checkpoint structure once it is approved, using placeholder data only and no invented backend behavior.

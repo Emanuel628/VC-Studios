@@ -4,6 +4,21 @@ import { PublicPageShell } from '../../components/layout/PublicPageShell';
 import { useSession } from '../../lib/authClient';
 import styles from '../../styles/Dashboard.module.css';
 
+// Structure preview only, from the approved module map (docs/website-foundations-high-level-module-map.md).
+// No chapters or lessons exist yet, and no progress is tracked yet - see README §9.7 and §14.2 on honest completion
+// and progress claims.
+const modules = [
+  { title: 'Program Orientation, Path Selection, and the First Plan Entry', checkpoint: null },
+  { title: 'Planning Before Prompting', checkpoint: 'Plan or blueprint approval' },
+  { title: 'Tool Selection and Directing AI With Control', checkpoint: null },
+  { title: 'Architecture and the Shared Foundation', checkpoint: 'Architecture or file-map checkpoint' },
+  { title: 'Building Pages With Purpose', checkpoint: null },
+  { title: 'Responsive, Accessible, and Working', checkpoint: null },
+  { title: 'Testing, Defects, and Recovery', checkpoint: null },
+  { title: 'Publishing the Website', checkpoint: null },
+  { title: 'Structured Explanation and Final Completion Review', checkpoint: 'Final completion review' },
+];
+
 export function DashboardPage() {
   const { data: session } = useSession();
 
@@ -49,12 +64,25 @@ export function DashboardPage() {
           </section>
 
           <section className={`${styles.card} ${styles.comingSoon}`} aria-labelledby="dashboard-program-title">
-            <span className={styles.eyebrow}>Coming soon</span>
+            <span className={styles.eyebrow}>Structure preview</span>
             <h2 id="dashboard-program-title">Website Foundations</h2>
             <p>
-              The module map and lessons are still being planned and built. Once they are ready, your chapters,
-              Build Plan, and progress will appear here.
+              The module map is approved. Chapters and lessons are still being written, so this list previews the
+              program's structure - it is not your live progress yet.
             </p>
+            <ol className={styles.moduleList}>
+              {modules.map((module, index) => (
+                <li key={module.title}>
+                  <span className={styles.moduleNumber}>{index + 1}</span>
+                  <div>
+                    <p className={styles.moduleTitle}>{module.title}</p>
+                    {module.checkpoint ? (
+                      <span className={styles.checkpointBadge}>Checkpoint: {module.checkpoint}</span>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+            </ol>
           </section>
         </div>
       </div>

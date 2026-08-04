@@ -22,9 +22,6 @@ export function Nav() {
               <Link to="/learning-paths">Learning Paths</Link>
               <Link to="/roadmap">Roadmap</Link>
               <Link to="/resources">Resources</Link>
-              <span className={styles.navLinkDisabled} aria-disabled="true">
-                Community
-              </span>
             </nav>
 
             <div className={styles.accountLinks}>

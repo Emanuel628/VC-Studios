@@ -125,13 +125,6 @@ button.secondaryLink {
   text-underline-offset: 3px;
 }
 
-.navLinkDisabled {
-  color: var(--silver);
-  font-size: 16px;
-  font-weight: 500;
-  cursor: default;
-}
-
 .userMenu,
 .notificationBell {
   position: relative;

@@ -5,7 +5,7 @@
 **VC means:** Vibe Code  
 **Product:** One connected course platform with separately gated learning programs  
 **Current program:** Website Foundations  
-**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module map audited and approved (see `docs/website-foundations-high-level-module-map.md`); the preferred-AI-tool decision resolved to "student's own choice, none supplied" (§13.1); next up is the Guided project catalog and chapter breakdown; a Better Auth proof of concept (registration, login, sessions, verification, password reset, account deletion) is implemented and passes locally against real PostgreSQL, but is not yet deployed to production - see §18.2  
+**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module map audited and approved (see `docs/website-foundations-high-level-module-map.md`); the preferred-AI-tool decision resolved to "student's own choice, none supplied" (§13.1); next up is the Guided project catalog and chapter breakdown; the Better Auth backend (registration, login, sessions, verification, password reset, account deletion) is deployed to Railway with real Postgres tables, alongside a same-origin proxy fix for a cross-site cookie issue - see §18.2/§18.3, end-to-end production sign-in not yet reconfirmed  
 **Last fully audited:** August 4, 2026
 
 ## Source-of-Truth Order
@@ -1036,36 +1036,31 @@ covered by an integration test (`server/src/auth-flow.test.ts`):
   Resend
 - Account deletion
 
-**This does not yet work in production.** No Railway service for `server/` has been
-deployed, so `prisma migrate deploy` (which runs automatically on `npm start`) has
-never executed against the real Railway Postgres database - it has no tables. Even
-once the backend is deployed, the frontend has no `VITE_API_URL` configured anywhere,
-so a Vercel-deployed frontend has no way to reach it. Until both are done, the
-production site behaves exactly like the old frontend-only mockup: forms validate,
-but nothing is created, stored, or sent. See
+**Production status:** the backend is deployed to Railway with real Postgres tables,
+and account creation itself works there - a registered user's row is created
+correctly. What did not initially work was staying signed in: the frontend and
+backend were deployed on two separate Railway-generated subdomains, which are
+different *sites* to a browser (Railway's `up.railway.app` is a registered Public
+Suffix List entry), so the session cookie was dropped as a cross-site cookie
+regardless of correct `SameSite` configuration - most visibly in Safari. The fix is
+`frontend-server.js`, a small proxy that serves the built frontend and forwards
+`/api/*` to the backend so the browser only ever sees one origin. See
 [`docs/backend-production-deployment.md`](docs/backend-production-deployment.md) for
-the exact steps to close this gap.
+the full architecture and setup. End-to-end sign-in persistence after this fix is
+deployed has not yet been reconfirmed in production.
 
 Any remaining development-state messaging in the interface must stay honest about
-this until the production deployment above is completed and verified end to end.
+this until it is.
 
 ## 18.3 Frontend Hosting Decision and Current Configuration
 
-**Vercel is the primary production frontend host for Platinum VC Studios.**
+**Railway is the current production frontend host for Platinum VC Studios**, alongside the backend and PostgreSQL, as three services in one Railway project. This corrects the earlier record here, which named Vercel as primary before either service was actually deployed.
 
-Railway remains an approved alternative frontend host. It may be used for quick previews, temporary deployments, fallback hosting, or projects where its generated public URL and unified deployment experience are useful.
+The frontend is not a plain static host: `frontend-server.js` (repo root) serves the built `dist/` files and proxies every `/api/*` request to the backend service, so the browser only ever talks to the frontend's own origin. This is required, not incidental - Railway's generated `*.up.railway.app` subdomains are each registered in the Public Suffix List, so a frontend and backend on two separate Railway subdomains are different *sites* to a browser, and Safari (among others) drops cross-site session cookies outright regardless of `SameSite` configuration. Routing through the proxy makes the session cookie first-party without needing a custom domain. See [`docs/backend-production-deployment.md`](docs/backend-production-deployment.md) for the full architecture and setup steps.
 
-The repository currently contains Railway frontend deployment configuration:
+Vercel remains a documented option (`vercel.json` is still maintained, with a rewrite excluding `/api/(.*)` from its SPA fallback) if the frontend is moved there later, but it is not the current deployment.
 
-- Railpack builder
-- `npm run build`
-- `npm run start`
-- Static single-page fallback through `serve`
-- `/` health check
-
-That current Railway configuration does not change the primary Vercel decision. Vercel deployment configuration must be added before the platform frontend is treated as production-ready. The Railway configuration may remain only when it is intentionally supported as a secondary deployment path.
-
-The Platinum VC Studios backend and PostgreSQL database remain hosted on Railway.
+This is the platform's own hosting decision and is separate from §13.1, which describes what Guided students are taught to use for their own projects (Vercel as the default teaching path, Railway as an approved alternative) - that remains unchanged.
 
 ## 18.3.1 Deployment Documentation Research State
 
@@ -1324,7 +1319,9 @@ The following have not been finalized:
 - Final logo mark and tagline
 - Final expanded backend and commerce repository structure
 
-The primary platform frontend host and the default Website Foundations deployment service are no longer open decisions: both use Vercel, with Railway approved as an alternative frontend deployment service.
+The default Website Foundations deployment service taught to students is no longer an open decision: Vercel, with Railway approved as an alternative (§13.1) - this is unchanged.
+
+The platform's own frontend hosting is also no longer open, and it did not resolve to Vercel: Railway is the platform's current production frontend host, alongside the backend and database (§18.3).
 
 The deployment documentation baseline is also no longer open. Authenticated dashboard verification remains required work, but it does not reopen the hosting decision.
 

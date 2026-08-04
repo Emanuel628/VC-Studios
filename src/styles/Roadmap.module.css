@@ -37,15 +37,23 @@
 }
 
 .module {
-  display: flex;
-  gap: 16px;
-  align-items: baseline;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
 }
 
 .module:last-child {
   border-bottom: none;
+}
+
+.moduleLink {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  text-decoration: none;
+}
+
+.moduleLink:hover .moduleTitle {
+  color: var(--accent);
 }
 
 .moduleNumber {

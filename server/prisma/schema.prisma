@@ -52,6 +52,7 @@ model User {
   checkpointCompletions CheckpointCompletion[]
   badges                UserBadge[]
   notifications         Notification[]
+  moduleNotes           ModuleNote[]
 
   @@unique([email])
   @@map("user")
@@ -158,4 +159,20 @@ model Notification {
 
   @@index([userId, createdAt])
   @@map("notification")
+}
+
+// A student's own free-form notes for a module (keyed by its position in the
+// approved module map, since modules are still static structure, not a database
+// table). Real content the student wrote, not a placeholder for a feature that
+// doesn't exist yet.
+model ModuleNote {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleIndex Int
+  content     String
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, moduleIndex])
+  @@map("module_note")
 }

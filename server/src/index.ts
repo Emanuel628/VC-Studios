@@ -3,7 +3,24 @@ import cors from 'cors';
 import express from 'express';
 import { fromNodeHeaders, toNodeHandler } from 'better-auth/node';
 import { auth, prisma } from './auth.js';
-import { getDashboardData, getNotifications, markNotificationsRead, recordActivity } from './gamification.js';
+import {
+  getDashboardData,
+  getModuleNote,
+  getNotifications,
+  markNotificationsRead,
+  MODULE_COUNT,
+  recordActivity,
+  saveModuleNote,
+} from './gamification.js';
+
+function parseModuleIndex(req: express.Request, res: express.Response): number | null {
+  const moduleIndex = Number(req.params.moduleIndex);
+  if (!Number.isInteger(moduleIndex) || moduleIndex < 0 || moduleIndex >= MODULE_COUNT) {
+    res.status(400).json({ error: `moduleIndex must be an integer between 0 and ${MODULE_COUNT - 1}.` });
+    return null;
+  }
+  return moduleIndex;
+}
 
 const PORT = Number(process.env.PORT ?? 3001);
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? 'http://localhost:5183';
@@ -89,6 +106,34 @@ export function createApp() {
 
     await markNotificationsRead(prisma, session.user.id);
     res.json({ ok: true });
+  });
+
+  app.get('/api/notes/:moduleIndex', async (req, res) => {
+    const session = await requireSession(req, res);
+    if (!session) return;
+
+    const moduleIndex = parseModuleIndex(req, res);
+    if (moduleIndex === null) return;
+
+    const content = await getModuleNote(prisma, session.user.id, moduleIndex);
+    res.json({ content });
+  });
+
+  app.put('/api/notes/:moduleIndex', async (req, res) => {
+    const session = await requireSession(req, res);
+    if (!session) return;
+
+    const moduleIndex = parseModuleIndex(req, res);
+    if (moduleIndex === null) return;
+
+    const { content } = req.body ?? {};
+    if (typeof content !== 'string') {
+      res.status(400).json({ error: 'content must be a string.' });
+      return;
+    }
+
+    await saveModuleNote(prisma, session.user.id, moduleIndex, content);
+    res.json({ content });
   });
 
   app.get('/', (_req, res) => {

@@ -10,6 +10,7 @@ import { LearningPathsPage } from '../pages/learning-paths/LearningPathsPage';
 import { PrivacyPage } from '../pages/legal/PrivacyPage';
 import { TermsPage } from '../pages/legal/TermsPage';
 import { ResourcesPage } from '../pages/resources/ResourcesPage';
+import { ModulePage } from '../pages/roadmap/ModulePage';
 import { RoadmapPage } from '../pages/roadmap/RoadmapPage';
 
 export function AppRoutes() {
@@ -50,6 +51,14 @@ export function AppRoutes() {
         element={
           <ProtectedRoute>
             <RoadmapPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/roadmap/:moduleIndex"
+        element={
+          <ProtectedRoute>
+            <ModulePage />
           </ProtectedRoute>
         }
       />

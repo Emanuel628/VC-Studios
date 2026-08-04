@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { PublicPageShell } from '../../components/layout/PublicPageShell';
 import { WEBSITE_FOUNDATIONS_MODULES } from '../../lib/moduleMap';
 import styles from '../../styles/Roadmap.module.css';
@@ -16,11 +17,15 @@ export function RoadmapPage() {
         <ol className={styles.moduleList}>
           {WEBSITE_FOUNDATIONS_MODULES.map((module, index) => (
             <li key={module.title} className={styles.module}>
-              <span className={styles.moduleNumber}>{index + 1}</span>
-              <div>
-                <p className={styles.moduleTitle}>{module.title}</p>
-                {module.checkpoint ? <span className={styles.checkpointBadge}>Checkpoint: {module.checkpoint}</span> : null}
-              </div>
+              <Link to={`/roadmap/${index}`} className={styles.moduleLink}>
+                <span className={styles.moduleNumber}>{index + 1}</span>
+                <div>
+                  <p className={styles.moduleTitle}>{module.title}</p>
+                  {module.checkpoint ? (
+                    <span className={styles.checkpointBadge}>Checkpoint: {module.checkpoint}</span>
+                  ) : null}
+                </div>
+              </Link>
             </li>
           ))}
         </ol>

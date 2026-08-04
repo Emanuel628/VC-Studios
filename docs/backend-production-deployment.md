@@ -78,6 +78,17 @@ environment) to the backend's public HTTPS URL from step 3. Vite bakes environme
 variables in at build time, so **redeploy the frontend** after setting this - it will
 not take effect on the existing build.
 
+**If the frontend is instead deployed on Railway** (the approved alternative to Vercel,
+per README §18.3): the same `VITE_API_URL` variable must be set on *that* Railway
+service too, before its build runs, for the same reason. This matters more on Railway
+than on Vercel: the frontend there is served by `serve --single`
+(`server/package.json`'s root-level sibling, the frontend's own `package.json`
+`start` script), which has no equivalent to `vercel.json`'s rewrite that excludes
+`/api/(.*)` from the SPA fallback. Without `VITE_API_URL`, every auth request goes to
+a relative `/api/...` path on the frontend's own Railway domain, `serve --single`
+rewrites it to `index.html` regardless of HTTP method, and the frontend receives HTML
+where it expected JSON.
+
 ## Verification (do this once, end to end, with a real account)
 
 1. Visit the production frontend and register a new account.
@@ -111,3 +122,12 @@ not take effect on the existing build.
   output:** this service is running the repo root's `package.json` (the frontend), not
   `server/package.json`. Re-check Root Directory is set to `server` on this specific
   service and redeploy.
+- **Register/login form does nothing at all - no error, no redirect, button doesn't
+  even look like it was clicked:** this was a real bug (fixed) where every auth call
+  in the frontend was unguarded - if the request throws instead of resolving with an
+  error (exactly what happens when `VITE_API_URL` is unset on a Railway-hosted
+  frontend, see step 5), the exception was unhandled and nothing appeared. The forms
+  now catch this and show "Could not reach the server. Check your connection and try
+  again." If you still see nothing at all, you're on a build from before this fix -
+  redeploy. If you see that message, the fix is working and the real problem is
+  `VITE_API_URL` per step 5.

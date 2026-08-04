@@ -75,21 +75,26 @@ export function RegisterPage() {
     }
 
     setIsSubmitting(true);
-    const { error } = await authClient.signUp.email({
-      email: values.email,
-      password: values.password,
-      name: `${values.firstName} ${values.lastName}`.trim(),
-      firstName: values.firstName,
-      lastName: values.lastName,
-    });
-    setIsSubmitting(false);
+    try {
+      const { error } = await authClient.signUp.email({
+        email: values.email,
+        password: values.password,
+        name: `${values.firstName} ${values.lastName}`.trim(),
+        firstName: values.firstName,
+        lastName: values.lastName,
+      });
 
-    if (error) {
-      setStatus(error.message ?? 'That account could not be created. Try again.');
-      return;
+      if (error) {
+        setStatus(error.message ?? 'That account could not be created. Try again.');
+        return;
+      }
+
+      // Navigation happens reactively in the effect above once the session store updates.
+    } catch {
+      setStatus('Could not reach the server. Check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    // Navigation happens reactively in the effect above once the session store updates.
   }
 
   return (
@@ -178,8 +183,8 @@ export function RegisterPage() {
           </p>
         ) : null}
 
-        <button className={styles.submitButton} type="submit">
-          Create account
+        <button className={styles.submitButton} type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Creating…' : 'Create account'}
         </button>
 
         <FormStatus message={status} />

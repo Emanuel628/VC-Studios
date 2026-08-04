@@ -36,16 +36,21 @@ export function ForgotPasswordPage() {
 
     setErrors({});
     setIsSubmitting(true);
-    const { error } = await authClient.emailOtp.requestPasswordReset({ email });
-    setIsSubmitting(false);
+    try {
+      const { error } = await authClient.emailOtp.requestPasswordReset({ email });
 
-    if (error) {
-      setStatus(error.message ?? 'Could not send a code. Try again.');
-      return;
+      if (error) {
+        setStatus(error.message ?? 'Could not send a code. Try again.');
+        return;
+      }
+
+      setStatus('');
+      setStep('reset');
+    } catch {
+      setStatus('Could not reach the server. Check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setStatus('');
-    setStep('reset');
   }
 
   async function handleResetPassword(event: FormEvent<HTMLFormElement>) {
@@ -62,15 +67,20 @@ export function ForgotPasswordPage() {
     if (Object.keys(nextErrors).length > 0) return;
 
     setIsSubmitting(true);
-    const { error } = await authClient.emailOtp.resetPassword({ email, otp: code, password });
-    setIsSubmitting(false);
+    try {
+      const { error } = await authClient.emailOtp.resetPassword({ email, otp: code, password });
 
-    if (error) {
-      setStatus(error.message ?? 'That code did not work. Request a new one and try again.');
-      return;
+      if (error) {
+        setStatus(error.message ?? 'That code did not work. Request a new one and try again.');
+        return;
+      }
+
+      navigate('/login');
+    } catch {
+      setStatus('Could not reach the server. Check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    navigate('/login');
   }
 
   if (step === 'reset') {

@@ -1,30 +1,20 @@
-import { createServer } from 'node:http';
-import type { AddressInfo } from 'node:net';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { startTestServer } from './test/server-test-utils.js';
 
 // Override before any other module reads it. Simulates a real Railway deployment,
 // where BETTER_AUTH_URL is an https URL rather than dev's http://localhost.
 process.env.BETTER_AUTH_URL = 'https://backend.example.com';
 
 let baseURL: string;
-let server: ReturnType<typeof createServer>;
-let createApp: (typeof import('./index.js'))['createApp'];
 let prisma: (typeof import('./auth.js'))['prisma'];
+let close: () => Promise<void>;
 
 beforeAll(async () => {
-  ({ createApp } = await import('./index.js'));
-  ({ prisma } = await import('./auth.js'));
-
-  const app = createApp();
-  server = createServer(app);
-  await new Promise<void>((resolve) => server.listen(0, resolve));
-  const { port } = server.address() as AddressInfo;
-  baseURL = `http://localhost:${port}`;
+  ({ baseURL, prisma, close } = await startTestServer());
 });
 
 afterAll(async () => {
-  await new Promise((resolve) => server.close(resolve));
-  await prisma.$disconnect();
+  await close();
 });
 
 describe('cross-origin session cookie', () => {

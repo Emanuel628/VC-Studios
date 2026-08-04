@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import { Nav } from './Nav';
@@ -34,12 +35,18 @@ describe('Nav', () => {
     expect(screen.getByRole('link', { name: 'Start learning' })).toBeInTheDocument();
   });
 
-  it('shows the signed-in state when a real session with a user exists', () => {
+  it('shows the signed-in app nav and user menu when a real session with a user exists', async () => {
     useSessionMock.mockReturnValue({
       data: { user: { firstName: 'Ada', email: 'ada@example.com' } },
     });
     renderNav();
-    expect(screen.getByRole('link', { name: 'Welcome, Ada' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Log out' })).toBeInTheDocument();
+
+    expect(screen.getByRole('link', { name: 'Dashboard' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Learning Paths' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Roadmap' })).toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: 'Ada' }));
+    expect(screen.getByRole('menuitem', { name: 'Log out' })).toBeInTheDocument();
   });
 });

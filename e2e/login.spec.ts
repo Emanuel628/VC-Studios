@@ -15,19 +15,20 @@ test.describe('Real login flow', () => {
 
     // Successful registration auto-signs in and redirects to the dashboard.
     await expect(page).toHaveURL('/dashboard');
-    await expect(page.getByRole('link', { name: 'Welcome, Ada' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Welcome back, Ada.' })).toBeVisible();
-    await expect(page.getByText(email)).toBeVisible();
+    await expect(page.getByRole('banner').getByRole('button', { name: 'Ada' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Welcome back/ })).toContainText('Ada');
 
-    // The dashboard links to the full account page.
-    await page.getByRole('link', { name: 'Manage account settings →' }).click();
+    // The user menu links to the full account page.
+    await page.getByRole('banner').getByRole('button', { name: 'Ada' }).click();
+    await page.getByRole('menuitem', { name: 'Account settings' }).click();
     await expect(page).toHaveURL('/account');
     await expect(page.getByText('Ada Lovelace')).toBeVisible();
     await expect(page.getByText(email)).toBeVisible();
     await expect(page.getByText('Email not verified')).toBeVisible();
 
     // Logging out from a protected page correctly bounces to /login via the route guard.
-    await page.getByRole('banner').getByRole('button', { name: 'Log out' }).click();
+    await page.getByRole('banner').getByRole('button', { name: 'Ada' }).click();
+    await page.getByRole('menuitem', { name: 'Log out' }).click();
     await expect(page).toHaveURL('/login');
 
     // The logged-out state persists on the public site too, and both protected pages redirect.
@@ -44,7 +45,7 @@ test.describe('Real login flow', () => {
     await page.getByRole('button', { name: 'Sign in' }).click();
 
     await expect(page).toHaveURL('/dashboard');
-    await expect(page.getByRole('link', { name: 'Welcome, Ada' })).toBeVisible();
+    await expect(page.getByRole('banner').getByRole('button', { name: 'Ada' })).toBeVisible();
   });
 
   test('a signed-out visitor is redirected away from the protected dashboard and account pages', async ({

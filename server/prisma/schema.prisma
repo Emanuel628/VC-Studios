@@ -7,6 +7,32 @@ datasource db {
   provider = "postgresql"
 }
 
+enum LearningPath {
+  GUIDED
+  COURSEWORK
+}
+
+// Matches the three locked review checkpoints in
+// docs/website-foundations-completion-standard.md §4 - not the module count.
+enum CheckpointKey {
+  PLAN_OR_BLUEPRINT_APPROVAL
+  ARCHITECTURE_OR_FILE_MAP
+  FINAL_COMPLETION_REVIEW
+}
+
+enum BadgeKey {
+  GETTING_STARTED
+  LEARNING_PATH_CHOSEN
+  FIRST_CHECKPOINT
+  STREAK_STARTER
+}
+
+enum ActivityEventType {
+  ACCOUNT_CREATED
+  LEARNING_PATH_CHOSEN
+  CHECKPOINT_PASSED
+}
+
 model User {
   id            String    @id
   name          String
@@ -17,8 +43,14 @@ model User {
   updatedAt     DateTime  @updatedAt
   firstName     String
   lastName      String
+  learningPath   LearningPath?
+  currentStreak  Int           @default(0)
+  lastActivityOn DateTime?
   sessions      Session[]
   accounts      Account[]
+  activityEvents        ActivityEvent[]
+  checkpointCompletions CheckpointCompletion[]
+  badges                UserBadge[]
 
   @@unique([email])
   @@map("user")
@@ -70,4 +102,45 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+// A real, append-only log of things a user actually did. Doubles as the points ledger
+// (points earned = sum of ActivityEvent.points) and the Recent Activity feed - one
+// honest source instead of two things that could drift apart.
+model ActivityEvent {
+  id        String            @id @default(cuid())
+  userId    String
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      ActivityEventType
+  points    Int               @default(0)
+  message   String
+  createdAt DateTime          @default(now())
+
+  @@index([userId, createdAt])
+  @@map("activity_event")
+}
+
+// Empty for everyone until real checkpoint-review tooling exists - the Completion
+// Standard requires human review to pass a checkpoint, so there is no automated way
+// to create one of these rows yet.
+model CheckpointCompletion {
+  id         String        @id @default(cuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  checkpoint CheckpointKey
+  passedAt   DateTime      @default(now())
+
+  @@unique([userId, checkpoint])
+  @@map("checkpoint_completion")
+}
+
+model UserBadge {
+  id       String   @id @default(cuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge    BadgeKey
+  earnedAt DateTime @default(now())
+
+  @@unique([userId, badge])
+  @@map("user_badge")
 }

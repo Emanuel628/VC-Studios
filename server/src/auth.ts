@@ -4,6 +4,7 @@ import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { emailOTP } from 'better-auth/plugins';
 import { Resend } from 'resend';
+import { recordActivity } from './gamification.js';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 export const prisma = new PrismaClient({ adapter });
@@ -58,6 +59,15 @@ export const auth = betterAuth({
     },
     deleteUser: {
       enabled: true,
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        async after(user) {
+          await recordActivity(prisma, user.id, 'ACCOUNT_CREATED', 10, 'Created your account');
+        },
+      },
     },
   },
   plugins: [

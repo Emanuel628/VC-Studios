@@ -5,8 +5,8 @@
 **VC means:** Vibe Code  
 **Product:** One connected course platform with separately gated learning programs  
 **Current program:** Website Foundations  
-**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module map drafted and pending audit; a Better Auth proof of concept (registration, login, sessions, verification, password reset, account deletion) is implemented and passes locally against real PostgreSQL, but is not yet deployed to production - see §18.2  
-**Last fully audited:** August 3, 2026
+**Current stage:** Website Foundations completion standard locked; nine-source Vercel and Railway documentation baseline accepted; high-level module map audited line by line against the Completion Standard and pending approval (see `docs/website-foundations-high-level-module-map.md`); a Better Auth proof of concept (registration, login, sessions, verification, password reset, account deletion) is implemented and passes locally against real PostgreSQL, but is not yet deployed to production - see §18.2  
+**Last fully audited:** August 4, 2026
 
 ## Source-of-Truth Order
 
@@ -984,6 +984,21 @@ The current frontend follows this rule with dedicated `pages`, `components`, `ro
 
 The final expanded repository tree will evolve deliberately as backend, data, commerce, and course features are added.
 
+## 17.3 Build Only What Is Necessary
+
+This is a locked platform-wide rule for Platinum VC Studios and every Guided project: write only the code the current, real requirement needs.
+
+Do not add:
+
+- Abstractions, wrappers, hooks, services, classes, or components used only once
+- Configuration, props, or parameters for a use case that does not exist yet
+- Duplicated logic, markup, or styles that should be one shared piece instead
+- Dependencies that replace something the platform or framework already provides
+- Code paths, flags, fallbacks, or options that nothing currently exercises
+- Files or indirection that make a simple feature harder to trace than writing it plainly
+
+A change is finished when it does exactly what was asked, in the plainest form that preserves current behavior, validation, security, accessibility, and error handling. Simpler and occasionally repetitive is better than clever and hard to follow. Do not design for hypothetical future requirements, and do not leave dead code, unused exports, or abandoned code paths behind after a change.
+
 ---
 
 # 18. Approved Platform Technology and Current Implementation
@@ -1267,6 +1282,7 @@ A page or feature is not production-ready unless it:
 - Uses one dedicated page file for each page or screen
 - Uses focused supporting components and utilities
 - Does not mix unrelated interface, routing, auth, data, integration, and business responsibilities
+- Builds only what the feature currently needs, per §17.3
 - Works responsively
 - Handles relevant loading, empty, success, error, validation, disabled, and permission states
 - Meets accessibility expectations
